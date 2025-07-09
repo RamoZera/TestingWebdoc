@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
+             xmlns:converters="clr-namespace:WebDocMobile.Converters"
+             x:Class="WebDocMobile.Pages.Mobile.ReLoginPageMobile"
+             Title="ReLoginPageMobile">
+    <Page.Behaviors>
+        <mct:StatusBarBehavior x:Name="statusbar"
+                               StatusBarColor="#262930" />
+    </Page.Behaviors>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:BoolToColorConverter x:Key="BoolToColorConverter" />
+            <converters:BoolToOpacityConverter x:Key="BoolToOpacityConverter" />
+            <Style x:Key="PinDigitButton" TargetType="Button">
+                <Setter Property="HeightRequest" Value="64" />
+                <Setter Property="WidthRequest" Value="64" />
+                <Setter Property="CornerRadius" Value="4" />
+                <Setter Property="BorderColor" Value="#EBEBEB" />
+                <Setter Property="BorderWidth" Value="1" />
+                <Setter Property="BackgroundColor" Value="White" />
+                <Setter Property="TextColor" Value="#1F2125" />
+                <Setter Property="FontFamily" Value="RobotoMedium" />
+                <Setter Property="FontSize" Value="34" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <VerticalStackLayout BackgroundColor="#262930">
+
+        <StackLayout Spacing="24">
+            <Grid Margin="30,30,0,0">
+                <Button BackgroundColor="#262930"
+                        BorderColor="#FFFFFF"
+                        BorderWidth="1"
+                        Opacity="0.15"
+                        CornerRadius="4"
+                        HeightRequest="56"
+                        WidthRequest="56"
+                        HorizontalOptions="StartAndExpand"/>
+                <Image HeightRequest="18.4"
+                       WidthRequest="24"
+                       Source="icon_anterior"
+                       HorizontalOptions="StartAndExpand"
+                       Margin="15,0,0,0"
+                       RotationY="180" />
+            </Grid>
+
+            <Label Text="Segurança"
+                   TextColor="White"
+                   FontSize="32"
+                   FontFamily="RobotoLight"
+                   Margin="30,0,0,0" />
+            <Label Text="{Binding Username, StringFormat='Bem-vindo de volta, {0}'}"
+                   TextColor="#F6FCFF"
+                   Margin="30,0,30,0"
+                   FontSize="16"
+                   FontFamily="RobotoRegular" />
+            
+            <!-- This layout will automatically create a circle for each item in the PinDigits collection -->
+            <HorizontalStackLayout BindableLayout.ItemsSource="{Binding PinDigits}"
+                                   Spacing="16"
+                                   HorizontalOptions="Center"
+                                   Margin="0,10,0,0">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <!-- The visual representation of a single PIN digit -->
+                        <Ellipse Fill="{Binding IsFilled, Converter={StaticResource BoolToColorConverter}}"
+                                 Stroke="{Binding IsFilled, Converter={StaticResource BoolToColorConverter}}"
+                                 HeightRequest="32"
+                                 WidthRequest="32"
+                                 Opacity="{Binding IsFilled, Converter={StaticResource BoolToOpacityConverter}}"/>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </HorizontalStackLayout>
+
+            <Frame Margin="0,35,0,0"
+                   CornerRadius="32"
+                   BackgroundColor="White"
+                   VerticalOptions="FillAndExpand">
+                <Grid RowDefinitions="*, Auto" RowSpacing="20">
+                    <!-- This Grid creates a clean, maintainable layout for the number pad -->
+                    <Grid Grid.Row="0"
+                          RowDefinitions="*,*,*,*"
+                          ColumnDefinitions="*,*,*"
+                          RowSpacing="16"
+                          ColumnSpacing="16"
+                          HorizontalOptions="Center"
+                          VerticalOptions="Center">
+
+                        <!-- Row 0 -->
+                        <Button Grid.Row="0" Grid.Column="0" Text="1" Command="{Binding AddDigitCommand}" CommandParameter="1" Style="{StaticResource PinDigitButton}" />
+                        <Button Grid.Row="0" Grid.Column="1" Text="2" Command="{Binding AddDigitCommand}" CommandParameter="2" Style="{StaticResource PinDigitButton}" />
+                        <Button Grid.Row="0" Grid.Column="2" Text="3" Command="{Binding AddDigitCommand}" CommandParameter="3" Style="{StaticResource PinDigitButton}" />
+
+                        <!-- Row 1 -->
+                        <Button Grid.Row="1" Grid.Column="0" Text="4" Command="{Binding AddDigitCommand}" CommandParameter="4" Style="{StaticResource PinDigitButton}" />
+                        <Button Grid.Row="1" Grid.Column="1" Text="5" Command="{Binding AddDigitCommand}" CommandParameter="5" Style="{StaticResource PinDigitButton}" />
+                        <Button Grid.Row="1" Grid.Column="2" Text="6" Command="{Binding AddDigitCommand}" CommandParameter="6" Style="{StaticResource PinDigitButton}" />
+
+                        <!-- Row 2 -->
+                        <Button Grid.Row="2" Grid.Column="0" Text="7" Command="{Binding AddDigitCommand}" CommandParameter="7" Style="{StaticResource PinDigitButton}" />
+                        <Button Grid.Row="2" Grid.Column="1" Text="8" Command="{Binding AddDigitCommand}" CommandParameter="8" Style="{StaticResource PinDigitButton}" />
+                        <Button Grid.Row="2" Grid.Column="2" Text="9" Command="{Binding AddDigitCommand}" CommandParameter="9" Style="{StaticResource PinDigitButton}" />
+
+                        <!-- Row 3 -->
+                        <Button Grid.Row="3" Grid.Column="0" ImageSource="icon_biometrico" Command="{Binding BiometricButtonPressedCommand}" BackgroundColor="White" />
+                        <Button Grid.Row="3" Grid.Column="1" Text="0" Command="{Binding AddDigitCommand}" CommandParameter="0" Style="{StaticResource PinDigitButton}" />
+                        <Button Grid.Row="3" Grid.Column="2" ImageSource="icon_apagar" Command="{Binding DeleteDigitCommand}" BackgroundColor="White" />
+                    </Grid>
+                </Grid>
+            </Frame>
+        </StackLayout>
+    </VerticalStackLayout>
+</ContentPage>

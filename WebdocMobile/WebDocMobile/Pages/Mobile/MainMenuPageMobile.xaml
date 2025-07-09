@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:telerik="http://schemas.telerik.com/2022/xaml/maui"
+             xmlns:models="clr-namespace:WebDocMobile.Models"
+             x:Class="WebDocMobile.Pages.Mobile.MainMenuPageMobile"
+             Title="Menu Principal"
+             BackgroundColor="#F6F6F6">
+
+    <VerticalStackLayout BackgroundColor="#F6F6F6">
+
+        <Frame BackgroundColor="#262930"
+               CornerRadius="0"
+               Scale="1.1"
+               HeightRequest="320">
+            <StackLayout Margin="20,16,0,0"
+                         Spacing="40">
+                <Grid>
+                    <Grid>
+                        <Button Margin="250,0,0, 0"
+                                HeightRequest="37"
+                                WidthRequest="37"
+                                CornerRadius="4"
+                                BackgroundColor="Transparent"
+                                BorderColor="#FFFFFF"
+                                BorderWidth="1"
+                                Opacity="0.15" />
+                        <Image Source="icon_pesquisar"
+                               HeightRequest="16"
+                               Margin="250,0,0,0" />
+                    </Grid>
+                    <Label Text="{Binding date}"
+                           TextColor="#F1F1F1"
+                           FontFamily="RobotoMedium"
+                           FontSize="10"
+                           HorizontalOptions="Start"
+                           Margin="0, 0,0, 0" />
+                    <Label Text="{Binding username}"
+                           TextColor="White"
+                           FontFamily="RobotoBold"
+                           FontSize="18"
+                           HorizontalOptions="StartAndExpand"
+                           Margin="0, 14, 0, 0" />
+                </Grid>
+                <Grid RowDefinitions="*, Auto"
+                      ColumnDefinitions="*,*,*"
+                      ColumnSpacing="15"
+                      RowSpacing="1.5"
+                      Margin="5,0,0,0"
+                      HorizontalOptions="StartAndExpand">
+                    <Button Grid.Row="0"
+                            Grid.Column="0"
+                            HeightRequest="25"
+                            WidthRequest="25"
+                            BackgroundColor="Transparent"
+                            Command="{Binding ToggleChartCommand}"
+                            CommandParameter="documents" />
+                    <Image Source="icon_documentos"
+                           Margin="0,0,0,0"
+                           HeightRequest="18"
+                           Grid.Row="0"
+                           Grid.Column="0" />
+                    <Rectangle Fill="#0074C8" HeightRequest="4" WidthRequest="24" Grid.Column="0" Grid.Row="1">
+                        <Rectangle.Triggers>
+                            <DataTrigger TargetType="Rectangle" Binding="{Binding IsShowingDocuments}" Value="False">
+                                <Setter Property="Opacity" Value="0" />
+                            </DataTrigger>
+                            <DataTrigger TargetType="Rectangle" Binding="{Binding IsShowingDocuments}" Value="True">
+                                <Setter Property="Opacity" Value="1" />
+                            </DataTrigger>
+                        </Rectangle.Triggers>
+                    </Rectangle>
+
+                    <Button Grid.Row="0"
+                            Grid.Column="1"
+                            HeightRequest="26"
+                            WidthRequest="26"
+                            BackgroundColor="#262930"
+                            Command="{Binding ToggleChartCommand}"
+                            CommandParameter="processes" />
+                    <Image Source="icon_processos"
+                           Margin="0,0,0,0"
+                           HeightRequest="18"
+                           Grid.Row="0"
+                           Grid.Column="1" />
+                    <Rectangle Fill="#0074C8" HeightRequest="4" WidthRequest="24" Grid.Column="1" Grid.Row="1">
+                        <Rectangle.Triggers>
+                            <DataTrigger TargetType="Rectangle" Binding="{Binding IsShowingDocuments}" Value="True">
+                                <Setter Property="Opacity" Value="0" />
+                            </DataTrigger>
+                            <DataTrigger TargetType="Rectangle" Binding="{Binding IsShowingDocuments}" Value="False">
+                                <Setter Property="Opacity" Value="1" />
+                            </DataTrigger>
+                        </Rectangle.Triggers>
+                    </Rectangle>
+                </Grid>
+
+                <!-- This Grid replaces the fragile overlapping layout with a clear two-column structure. -->
+                <Grid ColumnDefinitions="*, Auto" Margin="0,-75,20,0" ColumnSpacing="10">
+
+                    <!-- Column 0: The Chart -->
+                    <telerik:RadPieChart Grid.Column="0" x:Name="pieChart">
+                        <telerik:RadPieChart.Palette>
+                            <telerik:ChartPalette>
+                                <telerik:ChartPalette.Entries>
+                                    <telerik:PaletteEntry Fill="#072B8E" />
+                                    <telerik:PaletteEntry Fill="#1161FC" />
+                                    <telerik:PaletteEntry Fill="#63B6E3" />
+                                </telerik:ChartPalette.Entries>
+                            </telerik:ChartPalette>
+                        </telerik:RadPieChart.Palette>
+                        <telerik:RadPieChart.Series>
+                            <telerik:DonutSeries ItemsSource="{Binding ChartData}"
+                                                 RadiusFactor="0.5"
+                                                 InnerRadiusFactor="0.5"
+                                                 ShowLabels="False">
+                                <telerik:DonutSeries.ValueBinding>
+                                    <telerik:PropertyNameDataPointBinding PropertyName="Value" />
+                                </telerik:DonutSeries.ValueBinding>
+                                <telerik:DonutSeries.LegendTitleBinding>
+                                    <telerik:PropertyNameDataPointBinding PropertyName="Category" />
+                                </telerik:DonutSeries.LegendTitleBinding>
+                                <!-- The DataPointStyle is removed. Colors are now controlled by the ChartPalette. -->
+                            </telerik:DonutSeries>
+                        </telerik:RadPieChart.Series>
+                    </telerik:RadPieChart>
+
+                    <!-- Column 1: The Data-Bound Legend using a CollectionView -->
+                    <!-- This is a standard MAUI control and should be more robust against compiler issues. -->
+                    <CollectionView Grid.Column="1"
+                                    ItemsSource="{Binding ChartData}"
+                                    VerticalOptions="Center">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="models:CategoricalData">
+                                <Grid ColumnDefinitions="Auto, *" ColumnSpacing="10" Margin="0,0,0,15">
+                                    <Ellipse Grid.Column="0" Fill="{Binding Color}" HeightRequest="14" WidthRequest="14" VerticalOptions="Center"/>
+                                    <StackLayout Grid.Column="1" Spacing="-2">
+                                        <Label TextColor="#FFFFFF" Text="{Binding Value}" FontSize="22" FontFamily="RobotoBold" />
+                                        <Label TextColor="#F1F1F1" Text="{Binding Category}" FontSize="14" FontFamily="RobotoRegular" />
+                                    </StackLayout>
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </Grid>
+            </StackLayout>
+        </Frame>
+
+        <Button Command="{Binding HandleSignOutButtonCommand}"
+                IsVisible="true"
+                Text="Terminar Sessão -> Temporário"
+                Margin="30"/>
+
+    </VerticalStackLayout>
+</ContentPage>

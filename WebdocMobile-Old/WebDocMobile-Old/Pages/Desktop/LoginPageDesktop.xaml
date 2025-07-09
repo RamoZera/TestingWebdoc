@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WebDocMobile.Pages.Desktop.LoginPageDesktop"
+             Title="LoginPageDesktop">
+    <VerticalStackLayout>
+
+        <Image Source="ambisig_logo.jpg"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"
+               HeightRequest="150" />
+
+        <StackLayout Margin="20, 35, 20, 25"
+                     Spacing="10">
+            <Entry x:Name="strUserName"
+                   Placeholder="Nome Utilizador"
+                   Text="{Binding strUserName}"
+                   IsTextPredictionEnabled="False"
+                   IsSpellCheckEnabled="False" />
+
+            <Entry x:Name="strPassword"
+                   Placeholder="Palavra-Passe"
+                   IsTextPredictionEnabled="False"
+                   Text="{Binding strPassword}"
+                   IsSpellCheckEnabled="False"
+                   IsPassword="True" />
+
+            <Entry x:Name="strDomainName"
+                   Placeholder="Domínio"
+                   Text="{Binding strDomainName}"
+                   IsReadOnly="True" />
+        </StackLayout>
+
+        <StackLayout Margin="20, 0, 20, 25"
+                     Spacing="5">
+            <Button Text="Iniciar Sessão"
+                    Command="{Binding HandleLogInCommand}" />
+
+            <Label Text="ou"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   Padding="10" />
+
+            <Button Text="Utilizar Chave Móvel Digital" />
+        </StackLayout>
+    </VerticalStackLayout>
+</ContentPage>

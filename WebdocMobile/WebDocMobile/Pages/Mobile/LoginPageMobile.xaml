@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:customControls="clr-namespace:WebDocMobile.CustomControls"
+             x:Class="WebDocMobile.Pages.Mobile.LoginPageMobile"
+             Title="LoginPageMobile"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="#FFFFFF">
+
+    <VerticalStackLayout Spacing="15"
+                         Padding="30.0">
+
+        <Grid BackgroundColor="#262930"
+              WidthRequest="400"
+              HeightRequest="280"
+              Margin="-30"
+              RowDefinitions="Auto">
+            <StackLayout Spacing="50">
+                <Image Source="logo_temp_small"
+                       HorizontalOptions="Start"
+                       Margin="30,35,30,0" />
+                <Label Text="Utilizador"
+                       TextColor="White"
+                       FontFamily="RobotoLight"
+                       FontSize="36"
+                       Margin="30, 0,30, 0" />
+                <Label Text="Acede à tua conta com as mesmas credenciais que já utilizas na versão desktop"
+                       TextColor="White"
+                       FontFamily="RobotoRegular"
+                       FontSize="16" 
+                       Margin="30,-20,30,0"/>
+            </StackLayout>
+
+        </Grid>
+
+
+        <StackLayout Margin="-5, 50, -5, 25"
+                     Spacing="25">
+            <customControls:OutlinedControlEntry Placeholder="Utilizador"
+                                                 x:Name="UserEntry"
+                                                 Text="{Binding strUserName}"/>
+            
+            <customControls:OutlinedControlEntry Placeholder="Palavra-Passe"
+                                                 x:Name="PasswordEntry"
+                                                 Text="{Binding strPassword}"/>
+            
+            <customControls:OutlinedControlEntry x:Name="DomainEntry"
+                                                 Text="{Binding strDomainName}"
+                                                 IsVisible="False"/>
+
+        </StackLayout>
+
+        <StackLayout Margin="0, -20, 0, 25"
+                     Spacing="5">
+
+            <Button BackgroundColor="#003962"
+                               Text="Entrar"
+                               TextColor="#FFFFFF"
+                               FontFamily="RobotoBold"
+                               Padding="18"
+                               CornerRadius="5" 
+                               Margin="-5,0,-5,20"
+                               Command="{Binding HandleLogInCommand}"/>
+
+            <Grid>
+                <Button Background="#3C5DBC"
+                                   Padding="25"
+                                   CornerRadius="5"
+                                   Margin="-5,0,-5,0"/>
+                <Image 
+                    Source="logo_ag" 
+                    HorizontalOptions="Start"
+                    Scale="0.8"
+                    Margin="-2,0,0,0"/>
+                <Image Source="icon_abrir"
+                       Scale="1"
+                       HorizontalOptions="End"
+                       Margin="0,0,10,40"/>
+            </Grid>
+
+
+
+        </StackLayout>
+
+    </VerticalStackLayout>
+</ContentPage>
