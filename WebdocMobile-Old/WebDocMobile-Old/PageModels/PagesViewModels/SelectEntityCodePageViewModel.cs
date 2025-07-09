@@ -1,4 +1,4 @@
-﻿using CommunityToolkit.Mvvm.Input;
+﻿﻿using CommunityToolkit.Mvvm.Input;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -29,7 +29,7 @@ namespace WebDocMobile.PageModels
         }
 
         [RelayCommand]
-        private async void ValidateEntityCodeClicked()
+        private async Task ValidateEntityCodeClicked()
         {
             App.SE_LoadingScreen = true;
             await Task.Delay(500); //Testing Purposes
@@ -109,19 +109,19 @@ namespace WebDocMobile.PageModels
         }
 
         [RelayCommand]
-        private async void HowToObtainEntityCodeClicked()
+        private void HowToObtainEntityCodeClicked()
         {
             _alertService.ShowAlert("Erro", "Funcionalidade não implementada");
         }
 
         [RelayCommand]
-        private async void UseQRCodeClicked()
+        private void UseQRCodeClicked()
         {
             _alertService.ShowAlert("Erro", "Funcionalidade não implementada");
         }
 
         [RelayCommand]
-        private async void ErroInserirCodigoEntidade()
+        private void ErroInserirCodigoEntidade()
         {
             Preferences.Remove(nameof(App.codigoEntidade));
             App.codigoEntidade = null;
@@ -129,7 +129,7 @@ namespace WebDocMobile.PageModels
             App.SE_WrongCode = false;
         }
         [RelayCommand]
-        private async void ErroSicronizarComQrCode()
+        private void ErroSicronizarComQrCode()
         {
             _alertService.ShowAlert("Erro", "Funcionalidade não implementada");
         }

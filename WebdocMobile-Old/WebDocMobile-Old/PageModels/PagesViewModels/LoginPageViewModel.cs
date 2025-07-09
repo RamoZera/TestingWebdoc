@@ -1,4 +1,4 @@
-﻿using CommunityToolkit.Mvvm.Input;
+﻿﻿using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -55,7 +55,7 @@ namespace WebDocMobile.PageModels
         }
 
         [RelayCommand]
-        public async void HandleLogIn()
+        public async Task HandleLogIn()
         {
             Debug.WriteLine("strUserName: " + strUserName);
             Debug.WriteLine("strPassword: " + strPassword);

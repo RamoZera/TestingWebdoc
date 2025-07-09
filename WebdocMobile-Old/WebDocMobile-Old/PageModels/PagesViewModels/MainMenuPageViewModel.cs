@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -80,7 +80,7 @@ namespace WebDocMobile.PageModels
 
 
         [RelayCommand]
-        public async void HandleSeeDocumentsButton()
+        public async Task HandleSeeDocumentsButton()
         {
 #if ANDROID || IOS
             await _navigationService.PushAsync(new DocumentsPageMobile());
@@ -89,7 +89,7 @@ namespace WebDocMobile.PageModels
 #endif
         }
         [RelayCommand]
-        public async void HandleSeeProcessesButton()
+        public async Task HandleSeeProcessesButton()
         {
 #if ANDROID || IOS
             await _navigationService.PushAsync(new ProcessesPageMobile());
@@ -98,7 +98,7 @@ namespace WebDocMobile.PageModels
 #endif
         }
         [RelayCommand]
-        public async void HandleSignOutButton()
+        public void HandleSignOutButton()
         {
             if (Preferences.ContainsKey(nameof(App.UserDetails)))
             {

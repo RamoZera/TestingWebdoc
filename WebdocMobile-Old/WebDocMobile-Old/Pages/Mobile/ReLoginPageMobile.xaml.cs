@@ -20,20 +20,20 @@ public partial class ReLoginPageMobile : ContentPage
         // Dont no if it is needed
     }
 
-    public void AddDigit(Object sender, EventArgs e)
+    public async void AddDigit(Object sender, EventArgs e)
     {
         currentDigit++;
-        SetPINCircles();
+        await SetPINCircles();
     }
-    public void RemoveDigitPressed(Object sender, EventArgs e)
+    public async void RemoveDigitPressed(Object sender, EventArgs e)
     {
         if (currentDigit > 0)
         {
             currentDigit--;
-            SetPINCircles();
+            await SetPINCircles();
         }
     }
-    private async void SetPINCircles()
+    private async Task SetPINCircles()
     {
         switch (currentDigit)
         {

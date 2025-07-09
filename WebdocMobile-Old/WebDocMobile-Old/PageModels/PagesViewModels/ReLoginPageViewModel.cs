@@ -1,4 +1,4 @@
-﻿using CommunityToolkit.Mvvm.Input;
+﻿﻿using CommunityToolkit.Mvvm.Input;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -30,8 +30,6 @@ namespace WebDocMobile.PageModels
             InitialPINSet();
             BiometricButtonPressed();
         }
-
-        public void Void() { return; }
 
         public async Task GetDocuments(IDocumentService _documentService)
         {
@@ -127,8 +125,7 @@ namespace WebDocMobile.PageModels
                     }
                 }
 #if ANDROID || IOS
-                await GetDocuments(_documentService);
-                Void();
+                await GetDocuments(_documentService);                
                 var list = _navigationService.NavigationStack;
                 int x = 0;
                 while (x < list.Count)
@@ -149,11 +146,12 @@ namespace WebDocMobile.PageModels
                 }
 #else
                 var list = _navigationService.NavigationStack;
+                await GetDocuments(_documentService);
                 int x = 0;
                 while (x < list.Count)
                 {
                     Page p = list[x];
-                    if (!(list[x] is FirstPageDesktop))
+                    if (!(list[x] is MainMenuPageDesktop))
                     {
                         if (list[x] is ReLoginPageDesktop)
                         {

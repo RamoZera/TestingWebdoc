@@ -18,20 +18,20 @@ public partial class PINPageMobile : ContentPage
         InitialPINSet();
 
     }
-    public void AddDigit(Object sender, EventArgs e)
+    public async void AddDigit(Object sender, EventArgs e)
     {
         currentDigit++;
-        SetPINCircles();
+        await SetPINCircles();
     }
-    public void RemoveDigitPressed(Object sender, EventArgs e)
+    public async void RemoveDigitPressed(Object sender, EventArgs e)
     {
         if(currentDigit > 0)
         {
             currentDigit--;
-            SetPINCircles();
+            await SetPINCircles();
         }
     }
-    private async void SetPINCircles()
+    private async Task SetPINCircles()
     {
         switch (currentDigit)
         {
@@ -132,7 +132,7 @@ public partial class PINPageMobile : ContentPage
                 SelectionCircle4.IsVisible = false;
                 SelectionCircle5.IsVisible = false;
                 SelectionCircle6.IsVisible = false;
-                OpenBiometricsPage();
+                await OpenBiometricsPage();
                 break;
         }
     }
@@ -154,7 +154,7 @@ public partial class PINPageMobile : ContentPage
         SelectionCircle6.IsVisible = false;
     }
     
-    private async void OpenBiometricsPage()
+    private async Task OpenBiometricsPage()
     {
         await Task.Delay(300);
         if(Preferences.ContainsKey(nameof(App.UserDetails)) && App.UserDetails.PIN.Length > 0)

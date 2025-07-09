@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,7 +25,7 @@ namespace WebDocMobile.PageModels
 
         //This code has to go to the App.xaml.cs in the Constructor
         [RelayCommand]
-        private async void HandleGoToLogInPageClicked()
+        private async Task HandleGoToLogInPageClicked()
         {
             if (Preferences.ContainsKey(nameof(App.UserDetails)) && Preferences.ContainsKey(nameof(App.baseAddress)))
             {
