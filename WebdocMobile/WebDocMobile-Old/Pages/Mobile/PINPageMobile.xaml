@@ -1,0 +1,497 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WebDocMobile.Pages.Mobile.PINPageMobile"
+             Title="PINPageMobile"
+             BackgroundColor="#262930">
+    <Grid>
+        <VerticalStackLayout BackgroundColor="#262930" x:Name="MainPage" IsVisible="true">
+
+            <StackLayout Spacing="24">
+                <Grid Margin="30,30,0,0">
+                    <Button BackgroundColor="#262930"
+                            BorderColor="#FFFFFF"
+                            BorderWidth="1"
+                            Opacity="0.15"
+                            CornerRadius="4"
+                            HeightRequest="56"
+                            WidthRequest="56"
+                            HorizontalOptions="StartAndExpand"
+                            x:Name="ReturnButton"
+                            Command="{Binding ReturnButtonPressedCommand}" />
+                    <Image HeightRequest="18.4"
+                           WidthRequest="24"
+                           Source="icon_anterior"
+                           HorizontalOptions="StartAndExpand"
+                           Margin="15,0,0,0"
+                           RotationY="180" />
+                </Grid>
+
+                <Label Text="Segurança"
+                       TextColor="White"
+                       FontSize="36"
+                       FontFamily="RobotoLight"
+                       Margin="30,0,0,0" />
+                <Label Text="Proteje a tua conta em caso de perda ou furto do equipamento"
+                       TextColor="#F6FCFF"
+                       Margin="30,0,30,0"
+                       FontSize="16"
+                       FontFamily="RobotoRegular" />
+                <Grid Margin="28,0,43,0">
+
+                    <!-- Circles -->
+
+                    <Path Fill="White"
+                          Stroke="White"
+                          Opacity="0.15"
+                          Grid.Column="0"
+                          Margin="0,0,0,0"
+                          x:Name="Circle1">
+                        <Path.Data>
+                            <EllipseGeometry Center="50,50"
+                                             RadiusX="16"
+                                             RadiusY="16" />
+                        </Path.Data>
+                    </Path>
+                    <Path Fill="White"
+                          Stroke="White"
+                          Opacity="0.15"
+                          Grid.Column="1"
+                          Margin="48,0,0,0"
+                          x:Name="Circle2">
+                        <Path.Data>
+                            <EllipseGeometry Center="50,50"
+                                             RadiusX="16"
+                                             RadiusY="16" />
+                        </Path.Data>
+                    </Path>
+                    <Path Fill="White"
+                          Stroke="White"
+                          Opacity="0.15"
+                          Grid.Column="0"
+                          Margin="96,0,0,0"
+                          x:Name="Circle3">
+                        <Path.Data>
+                            <EllipseGeometry Center="50,50"
+                                             RadiusX="16"
+                                             RadiusY="16" />
+                        </Path.Data>
+                    </Path>
+                    <Path Fill="White"
+                          Stroke="White"
+                          Opacity="0.15"
+                          Grid.Column="0"
+                          Margin="144,0,0,0"
+                          x:Name="Circle4">
+                        <Path.Data>
+                            <EllipseGeometry Center="50,50"
+                                             RadiusX="16"
+                                             RadiusY="16" />
+                        </Path.Data>
+                    </Path>
+                    <Path Fill="White"
+                          Stroke="White"
+                          Opacity="0.15"
+                          Grid.Column="0"
+                          Margin="192,0,0,0"
+                          x:Name="Circle5">
+                        <Path.Data>
+                            <EllipseGeometry Center="50,50"
+                                             RadiusX="16"
+                                             RadiusY="16" />
+                        </Path.Data>
+                    </Path>
+                    <Path Fill="White"
+                          Stroke="White"
+                          Opacity="0.15"
+                          Grid.Column="0"
+                          Margin="240,0,0,0"
+                          x:Name="Circle6">
+                        <Path.Data>
+                            <EllipseGeometry Center="50,50"
+                                             RadiusX="16"
+                                             RadiusY="16" />
+                        </Path.Data>
+                    </Path>
+
+                    <!-- SelectionCircles -->
+
+                    <Path Fill="Transparent"
+                          Stroke="White"
+                          StrokeThickness="4"
+                          IsVisible="{Binding Path=SelectionCircle1}"
+                          Margin="0,0,0,0"
+                          x:Name="SelectionCircle1">
+                        <Path.Data>
+                            <EllipseGeometry Center="50,50"
+                                             RadiusX="14"
+                                             RadiusY="14" />
+                        </Path.Data>
+                    </Path>
+                    <Path Fill="Transparent"
+                          Stroke="White"
+                          StrokeThickness="4"
+                          IsVisible="{Binding Path=SelectionCircle2}"
+                          Margin="48,0,0,0"
+                          x:Name="SelectionCircle2">
+                        <Path.Data>
+                            <EllipseGeometry Center="50,50"
+                                             RadiusX="14"
+                                             RadiusY="14" />
+                        </Path.Data>
+                    </Path>
+                    <Path Fill="Transparent"
+                          Stroke="White"
+                          StrokeThickness="4"
+                          IsVisible="{Binding Path=SelectionCircle3}"
+                          Margin="96,0,0,0"
+                          x:Name="SelectionCircle3">
+                        <Path.Data>
+                            <EllipseGeometry Center="50,50"
+                                             RadiusX="14"
+                                             RadiusY="14" />
+                        </Path.Data>
+                    </Path>
+                    <Path Fill="Transparent"
+                          Stroke="White"
+                          StrokeThickness="4"
+                          IsVisible="{Binding Path=SelectionCircle4}"
+                          Margin="144,0,0,0"
+                          x:Name="SelectionCircle4">
+                        <Path.Data>
+                            <EllipseGeometry Center="50,50"
+                                             RadiusX="14"
+                                             RadiusY="14" />
+                        </Path.Data>
+                    </Path>
+                    <Path Fill="Transparent"
+                          Stroke="White"
+                          StrokeThickness="4"
+                          IsVisible="{Binding Path=SelectionCircle5}"
+                          Margin="192,0,0,0"
+                          x:Name="SelectionCircle5">
+                        <Path.Data>
+                            <EllipseGeometry Center="50,50"
+                                             RadiusX="14"
+                                             RadiusY="14" />
+                        </Path.Data>
+                    </Path>
+                    <Path Fill="Transparent"
+                          Stroke="White"
+                          StrokeThickness="4"
+                          IsVisible="{Binding Path=SelectionCircle6}"
+                          Margin="240,0,0,0"
+                          x:Name="SelectionCircle6">
+                        <Path.Data>
+                            <EllipseGeometry Center="50,50"
+                                             RadiusX="14"
+                                             RadiusY="14" />
+                        </Path.Data>
+                    </Path>
+
+                    <!-- SelectedCircles -->
+
+                    <Path Fill="#0074C8"
+                          Stroke="#0074C8"
+                          IsVisible="{Binding Path=SelectedCircle1}"
+                          Margin="0,0,0,0"
+                          x:Name="SelectedCircle1">
+                        <Path.Data>
+                            <EllipseGeometry Center="50,50"
+                                             RadiusX="16"
+                                             RadiusY="16" />
+                        </Path.Data>
+                    </Path>
+                    <Path Fill="#0074C8"
+                          Stroke="#0074C8"
+                          IsVisible="{Binding Path=SelectedCircle2}"
+                          Margin="48,0,0,0"
+                          x:Name="SelectedCircle2">
+                        <Path.Data>
+                            <EllipseGeometry Center="50,50"
+                                             RadiusX="16"
+                                             RadiusY="16" />
+                        </Path.Data>
+                    </Path>
+                    <Path Fill="#0074C8"
+                          Stroke="#0074C8"
+                          IsVisible="{Binding Path=SelectedCircle3}"
+                          Margin="96,0,0,0"
+                          x:Name="SelectedCircle3">
+                        <Path.Data>
+                            <EllipseGeometry Center="50,50"
+                                             RadiusX="16"
+                                             RadiusY="16" />
+                        </Path.Data>
+                    </Path>
+                    <Path Fill="#0074C8"
+                          Stroke="#0074C8"
+                          IsVisible="{Binding Path=SelectedCircle4}"
+                          Margin="144,0,0,0"
+                          x:Name="SelectedCircle4">
+                        <Path.Data>
+                            <EllipseGeometry Center="50,50"
+                                             RadiusX="16"
+                                             RadiusY="16" />
+                        </Path.Data>
+                    </Path>
+                    <Path Fill="#0074C8"
+                          Stroke="#0074C8"
+                          IsVisible="{Binding Path=SelectedCircle5}"
+                          Margin="192,0,0,0"
+                          x:Name="SelectedCircle5">
+                        <Path.Data>
+                            <EllipseGeometry Center="50,50"
+                                             RadiusX="16"
+                                             RadiusY="16" />
+                        </Path.Data>
+                    </Path>
+                    <Path Fill="#0074C8"
+                          Stroke="#0074C8"
+                          IsVisible="{Binding Path=SelectedCircle6}"
+                          Margin="240,0,0,0"
+                          x:Name="SelectedCircle6">
+                        <Path.Data>
+                            <EllipseGeometry Center="50,50"
+                                             RadiusX="16"
+                                             RadiusY="16" />
+                        </Path.Data>
+                    </Path>
+                </Grid>
+
+                <Frame Margin="0,35,0,0"
+                       CornerRadius="32"
+                       BackgroundColor="White"
+                       HeightRequest="460">
+                    <Grid>
+                        <Button HeightRequest="64"
+                                WidthRequest="64"
+                                CornerRadius="4"
+                                Grid.Column="0"
+                                BorderColor="#EBEBEB"
+                                BorderWidth="1"
+                                BackgroundColor="White"
+                                Margin="95,0,271,320"
+                                Text="1"
+                                TextColor="#1F2125"
+                                FontFamily="RobotoMedium"
+                                FontSize="34"
+                                x:Name="Digit1"
+                                Command="{Binding Digit1PressedCommand}"
+                                Clicked="AddDigit" />
+                        <Button HeightRequest="64"
+                                WidthRequest="64"
+                                CornerRadius="4"
+                                Grid.Column="0"
+                                BorderColor="#EBEBEB"
+                                BorderWidth="1"
+                                BackgroundColor="White"
+                                Margin="183,0,183,320"
+                                Text="2"
+                                TextColor="#1F2125"
+                                FontFamily="RobotoMedium"
+                                FontSize="34"
+                                x:Name="Digit2"
+                                Command="{Binding Digit2PressedCommand}"
+                                Clicked="AddDigit" />
+                        <Button HeightRequest="64"
+                                WidthRequest="64"
+                                CornerRadius="4"
+                                Grid.Column="0"
+                                BorderColor="#EBEBEB"
+                                BorderWidth="1"
+                                BackgroundColor="White"
+                                Margin="271,0,93,320"
+                                Text="3"
+                                TextColor="#1F2125"
+                                FontFamily="RobotoMedium"
+                                FontSize="34"
+                                x:Name="Digit3"
+                                Command="{Binding Digit3PressedCommand}"
+                                Clicked="AddDigit" />
+                        <Button HeightRequest="64"
+                                WidthRequest="64"
+                                CornerRadius="4"
+                                Grid.Column="0"
+                                BorderColor="#EBEBEB"
+                                BorderWidth="1"
+                                BackgroundColor="White"
+                                Margin="95,0,271,160"
+                                Text="4"
+                                TextColor="#1F2125"
+                                FontFamily="RobotoMedium"
+                                FontSize="34"
+                                x:Name="Digit4"
+                                Command="{Binding Digit4PressedCommand}"
+                                Clicked="AddDigit" />
+                        <Button HeightRequest="64"
+                                WidthRequest="64"
+                                CornerRadius="4"
+                                Grid.Column="0"
+                                BorderColor="#EBEBEB"
+                                BorderWidth="1"
+                                BackgroundColor="White"
+                                Margin="183,0,183,160"
+                                Text="5"
+                                TextColor="#1F2125"
+                                FontFamily="RobotoMedium"
+                                FontSize="34"
+                                x:Name="Digit5"
+                                Command="{Binding Digit5PressedCommand}"
+                                Clicked="AddDigit" />
+                        <Button HeightRequest="64"
+                                WidthRequest="64"
+                                CornerRadius="4"
+                                Grid.Column="0"
+                                BorderColor="#EBEBEB"
+                                BorderWidth="1"
+                                BackgroundColor="White"
+                                Margin="271,0,93,160"
+                                Text="6"
+                                TextColor="#1F2125"
+                                FontFamily="RobotoMedium"
+                                FontSize="34"
+                                x:Name="Digit6"
+                                Command="{Binding Digit6PressedCommand}"
+                                Clicked="AddDigit" />
+                        <Button HeightRequest="64"
+                                WidthRequest="64"
+                                CornerRadius="4"
+                                Grid.Column="0"
+                                BorderColor="#EBEBEB"
+                                BorderWidth="1"
+                                BackgroundColor="White"
+                                Margin="95,0,271, 0"
+                                Text="7"
+                                TextColor="#1F2125"
+                                FontFamily="RobotoMedium"
+                                FontSize="34"
+                                x:Name="Digit7"
+                                Command="{Binding Digit7PressedCommand}"
+                                Clicked="AddDigit" />
+                        <Button HeightRequest="64"
+                                WidthRequest="64"
+                                CornerRadius="4"
+                                Grid.Column="0"
+                                BorderColor="#EBEBEB"
+                                BorderWidth="1"
+                                BackgroundColor="White"
+                                Margin="183,0,183, 0"
+                                Text="8"
+                                TextColor="#1F2125"
+                                FontFamily="RobotoMedium"
+                                FontSize="34"
+                                x:Name="Digit8"
+                                Command="{Binding Digit8PressedCommand}"
+                                Clicked="AddDigit" />
+                        <Button HeightRequest="64"
+                                WidthRequest="64"
+                                CornerRadius="4"
+                                Grid.Column="0"
+                                BorderColor="#EBEBEB"
+                                BorderWidth="1"
+                                BackgroundColor="White"
+                                Margin="271,0,93, 0"
+                                Text="9"
+                                TextColor="#1F2125"
+                                FontFamily="RobotoMedium"
+                                FontSize="34"
+                                x:Name="Digit9"
+                                Command="{Binding Digit9PressedCommand}"
+                                Clicked="AddDigit" />
+                        <Button HeightRequest="64"
+                                WidthRequest="64"
+                                CornerRadius="4"
+                                Grid.Column="0"
+                                BorderColor="#EBEBEB"
+                                BorderWidth="1"
+                                BackgroundColor="White"
+                                Margin="183,0,183,-160"
+                                Text="0"
+                                TextColor="#1F2125"
+                                FontFamily="RobotoMedium"
+                                FontSize="34"
+                                x:Name="Digit0"
+                                Command="{Binding Digit0PressedCommand}"
+                                Clicked="AddDigit" />
+                        <Button HeightRequest="64"
+                                WidthRequest="64"
+                                Grid.Column="0"
+                                BackgroundColor="White"
+                                Margin="271,0,93,-160"
+                                x:Name="DeleteDigit"
+                                ImageSource="icon_apagar"
+                                Command="{Binding DeleteDigitPressedCommand}"
+                                Clicked="RemoveDigitPressed" />
+                        <Button BackgroundColor="White"
+                                HeightRequest="40"
+                                BorderWidth="1"
+                                BorderColor="#EBEBEB"
+                                Margin="0,295,0,0"
+                                Text="Configurar mais tarde"
+                                TextColor="Black"
+                                FontFamily="RobotoBold"
+                                x:Name="ConfigureLaterButton"
+                                Command="{Binding ConfigureLaterButtonPressedCommand}" />
+                    </Grid>
+                </Frame>
+
+
+
+            </StackLayout>
+
+        </VerticalStackLayout>
+        <VerticalStackLayout BackgroundColor="Transparent" x:Name="BiometricsPage" IsVisible="false">
+            <Grid>
+                <Frame BackgroundColor="Transparent">
+                    
+                </Frame>
+                <Frame Margin="0,460,0,0" HeightRequest="380" CornerRadius="32">
+                    <StackLayout Spacing="16">
+                        <Grid>
+                            <Image Source="icon_biometrico" HeightRequest="64" WidthRequest="56" Margin="0,5,0,10"/>
+                            <Image />
+                        </Grid>
+                        <Label Text="Biometria"
+                               FontSize="22"
+                               FontFamily="RobotoBold"
+                               TextColor="#000000"
+                               HorizontalTextAlignment="Center"
+                               x:Name="LabelCenter" 
+                               Margin="0,-15,0,12"/>
+
+                        <Label Text="Proteje a tua conta e aplicação através das opções de segurança do teu dispositivo"
+                               FontSize="16"
+                               FontFamily="RobotoRegular"
+                               TextColor="#959595"
+                               HorizontalTextAlignment="Center"
+                               />
+
+                        <Button Text="Configurar mais tarde" 
+                                FontFamily="RobotoBold"
+                                FontSize="16"
+                                TextColor="Black"
+                                CornerRadius="4"
+                                BackgroundColor="#FFFFFF"
+                                BorderColor="#EBEBEB"
+                                BorderWidth="1"
+                                x:Name="ConfigureBiometricsLaterButton"
+                                Command="{Binding ConfigureBiometricsLaterButtonPressedCommand}"
+                                />
+                        <Button Text="Ativar a segurança agora"
+                                FontFamily="RobotoBold"
+                                FontSize="16"
+                                TextColor="White"
+                                CornerRadius="4"
+                                BackgroundColor="#003962" 
+                                x:Name="ActivateBiometricsButton"
+                                Command="{Binding ActivateBiometricsButtonPressedCommand}"/>
+
+                    </StackLayout>
+                </Frame>
+            </Grid>
+        </VerticalStackLayout>
+    </Grid>
+    
+    
+</ContentPage>

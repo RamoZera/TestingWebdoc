@@ -1,24 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\goncalo.ramos\\Downloads\\WebdocMobile\\WebDocMobile\\WebDocMobile.csproj": {}
+    "C:\\Projetos\\WebdocMobile\\WebDocMobile\\WebDocMobile.csproj": {}
   },
   "projects": {
-    "C:\\Users\\goncalo.ramos\\Downloads\\WebdocMobile\\WebDocMobile\\WebDocMobile.csproj": {
+    "C:\\Projetos\\WebdocMobile\\WebDocMobile\\WebDocMobile.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\goncalo.ramos\\Downloads\\WebdocMobile\\WebDocMobile\\WebDocMobile.csproj",
+        "projectUniqueName": "C:\\Projetos\\WebdocMobile\\WebDocMobile\\WebDocMobile.csproj",
         "projectName": "WebDocMobile",
-        "projectPath": "C:\\Users\\goncalo.ramos\\Downloads\\WebdocMobile\\WebDocMobile\\WebDocMobile.csproj",
+        "projectPath": "C:\\Projetos\\WebdocMobile\\WebDocMobile\\WebDocMobile.csproj",
         "packagesPath": "C:\\Users\\goncalo.ramos\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\goncalo.ramos\\Downloads\\WebdocMobile\\WebDocMobile\\obj\\",
+        "outputPath": "C:\\Projetos\\WebdocMobile\\WebDocMobile\\obj\\",
         "projectStyle": "PackageReference",
         "crossTargeting": true,
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\goncalo.ramos\\Downloads\\WebdocMobile\\NuGet.Config",
+          "C:\\Projetos\\WebdocMobile\\NuGet.Config",
           "C:\\Users\\goncalo.ramos\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
@@ -29,10 +29,9 @@
           "net8.0-windows10.0.19041.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "C:\\Program Files\\dotnet\\library-packs": {},
-          "C:\\Users\\goncalo.ramos\\Downloads\\WebdocMobile\\WebDocMobile\\Telerik": {},
-          "https://api.nuget.org/v3/index.json": {}
+          "https://api.nuget.org/v3/index.json": {},
+          "https://nuget.telerik.com/v3/index.json": {}
         },
         "frameworks": {
           "net8.0-android34.0": {

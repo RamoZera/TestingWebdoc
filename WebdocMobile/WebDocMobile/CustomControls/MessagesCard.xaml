@@ -2,7 +2,6 @@
 <telerik:RadBorder
     x:Class="WebDocMobile.CustomControls.MessagesCard"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:telerik="http://schemas.telerik.com/2022/xaml/maui"
     x:Name="this"
@@ -63,3 +62,5 @@
 
     </Grid>
 </telerik:RadBorder>
+
+

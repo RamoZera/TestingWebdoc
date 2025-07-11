@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "1IkwqVgwBUg=",
+  "dgSpecHash": "a/WAn2RSpGs=",
   "success": true,
-  "projectFilePath": "C:\\Users\\goncalo.ramos\\Downloads\\WebdocMobile\\WebDocMobile\\WebDocMobile.csproj",
+  "projectFilePath": "C:\\Projetos\\WebdocMobile\\WebDocMobile\\WebDocMobile.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\goncalo.ramos\\.nuget\\packages\\acrylicview.maui\\2.1.3\\acrylicview.maui.2.1.3.nupkg.sha512",
     "C:\\Users\\goncalo.ramos\\.nuget\\packages\\communitytoolkit.maui\\9.1.0\\communitytoolkit.maui.9.1.0.nupkg.sha512",
@@ -149,11 +149,11 @@
     "C:\\Users\\goncalo.ramos\\.nuget\\packages\\xamarin.kotlinx.coroutines.core.jvm\\1.7.2.1\\xamarin.kotlinx.coroutines.core.jvm.1.7.2.1.nupkg.sha512",
     "C:\\Users\\goncalo.ramos\\.nuget\\packages\\microsoft.ios.ref.net8.0_18.0\\18.0.8324\\microsoft.ios.ref.net8.0_18.0.18.0.8324.nupkg.sha512",
     "C:\\Users\\goncalo.ramos\\.nuget\\packages\\microsoft.ios.runtime.iossimulator-x64.net8.0_18.0\\18.0.8324\\microsoft.ios.runtime.iossimulator-x64.net8.0_18.0.18.0.8324.nupkg.sha512",
+    "C:\\Users\\goncalo.ramos\\.nuget\\packages\\microsoft.android.runtime.34.android-x64\\34.0.154\\microsoft.android.runtime.34.android-x64.34.0.154.nupkg.sha512",
+    "C:\\Users\\goncalo.ramos\\.nuget\\packages\\microsoft.android.runtime.34.android-arm64\\34.0.154\\microsoft.android.runtime.34.android-arm64.34.0.154.nupkg.sha512",
     "C:\\Users\\goncalo.ramos\\.nuget\\packages\\microsoft.android.ref.34\\34.0.154\\microsoft.android.ref.34.34.0.154.nupkg.sha512",
     "C:\\Users\\goncalo.ramos\\.nuget\\packages\\microsoft.android.runtime.34.android-arm\\34.0.154\\microsoft.android.runtime.34.android-arm.34.0.154.nupkg.sha512",
-    "C:\\Users\\goncalo.ramos\\.nuget\\packages\\microsoft.android.runtime.34.android-arm64\\34.0.154\\microsoft.android.runtime.34.android-arm64.34.0.154.nupkg.sha512",
     "C:\\Users\\goncalo.ramos\\.nuget\\packages\\microsoft.android.runtime.34.android-x86\\34.0.154\\microsoft.android.runtime.34.android-x86.34.0.154.nupkg.sha512",
-    "C:\\Users\\goncalo.ramos\\.nuget\\packages\\microsoft.android.runtime.34.android-x64\\34.0.154\\microsoft.android.runtime.34.android-x64.34.0.154.nupkg.sha512",
     "C:\\Users\\goncalo.ramos\\.nuget\\packages\\microsoft.windows.sdk.net.ref\\10.0.19041.57\\microsoft.windows.sdk.net.ref.10.0.19041.57.nupkg.sha512"
   ],
   "logs": []

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:telerik="http://schemas.telerik.com/2022/xaml/maui"
+             x:Class="WebDocMobile.Pages.Mobile.MainMenuPageMobile"
+             Title="Menu Principal"
+             BackgroundColor="#F6F6F6">
+
+    <VerticalStackLayout BackgroundColor="#F6F6F6">
+
+        <Frame BackgroundColor="#262930"
+               CornerRadius="0"
+               Scale="1.1"
+               HeightRequest="320">
+            <StackLayout Margin="20,16,0,0"
+                         Spacing="40">
+                <Grid>
+                    <Grid>
+                        <Button Margin="250,0,0, 0"
+                                HeightRequest="37"
+                                WidthRequest="37"
+                                CornerRadius="4"
+                                BackgroundColor="Transparent"
+                                BorderColor="#FFFFFF"
+                                BorderWidth="1"
+                                Opacity="0.15" />
+                        <Image Source="icon_pesquisar"
+                               HeightRequest="16"
+                               Margin="250,0,0,0" />
+                    </Grid>
+                    <Label Text="{Binding date}"
+                           TextColor="#F1F1F1"
+                           FontFamily="RobotoMedium"
+                           FontSize="10"
+                           HorizontalOptions="Start"
+                           Margin="0, 0,0, 0" />
+                    <Label Text="{Binding username}"
+                           TextColor="White"
+                           FontFamily="RobotoBold"
+                           FontSize="18"
+                           HorizontalOptions="StartAndExpand"
+                           Margin="0, 14, 0, 0" />
+                </Grid>
+                <Grid RowDefinitions="*, Auto"
+                      ColumnDefinitions="*,*,*"
+                      ColumnSpacing="15"
+                      RowSpacing="1.5"
+                      Margin="5,0,0,0"
+                      HorizontalOptions="StartAndExpand">
+                    <Button Grid.Row="0"
+                            Grid.Column="0"
+                            HeightRequest="25"
+                            WidthRequest="25"
+                            BackgroundColor="Transparent"
+                            x:Name="documentsButton"
+                            Clicked="DocumentsButtonClicked" />
+                    <Image Source="icon_documentos"
+                           Margin="0,0,0,0"
+                           HeightRequest="18"
+                           Grid.Row="0"
+                           Grid.Column="0" />
+                    <Rectangle Fill="#0074C8"
+                               HeightRequest="4"
+                               WidthRequest="24"
+                               Grid.Column="0"
+                               Grid.Row="1"
+                               x:Name="documentsSelected"
+                               Opacity="1" />
+
+                    <Button Grid.Row="0"
+                            Grid.Column="1"
+                            HeightRequest="26"
+                            WidthRequest="26"
+                            BackgroundColor="#262930"
+                            x:Name="processesButton"
+                            Clicked="ProcessesButtonClicked" />
+                    <Image Source="icon_processos"
+                           Margin="0,0,0,0"
+                           HeightRequest="18"
+                           Grid.Row="0"
+                           Grid.Column="1" />
+                    <Rectangle Fill="#0074C8"
+                               HeightRequest="4"
+                               WidthRequest="24"
+                               Grid.Column="1"
+                               Grid.Row="1"
+                               Opacity="0"
+                               x:Name="processesSelected" />
+                </Grid>
+
+                <Grid>
+                    <StackLayout Spacing="15"
+                                 Margin="0,-75,0,0">
+                        <StackLayout Spacing="-2">
+                            <Grid Margin="0,0,0,0">
+                                <Label TextColor="#FFFFFF"
+                                       Text="{Binding MyDocumentsNumber}"
+                                       FontSize="22"
+                                       FontFamily="RobotoBold"
+                                       Margin="195,0,0,0" />
+                                <Ellipse Fill="#072B8E"
+                                         HeightRequest="14"
+                                         WidthRequest="14"
+                                         Margin="20,0,0,0" />
+                            </Grid>
+                            <Label TextColor="#F1F1F1"
+                                   Text="Comigo"
+                                   FontSize="14"
+                                   FontFamily="RobotoRegular"
+                                   Margin="195,0,0,0" />
+                        </StackLayout>
+                        <StackLayout Spacing="-2">
+                            <Grid Margin="0,0,0,0">
+                                <Label TextColor="#FFFFFF"
+                                       Text="{Binding DepartmentDocumentsNumber}"
+                                       FontSize="22"
+                                       FontFamily="RobotoBold"
+                                       Margin="195,0,0,0" />
+                                <Ellipse Fill="#1161FC"
+                                         HeightRequest="14"
+                                         WidthRequest="14"
+                                         Margin="20,0,0,0" />
+                            </Grid>
+                            <Label TextColor="#F1F1F1"
+                                   Text="Departamento"
+                                   FontSize="14"
+                                   FontFamily="RobotoRegular"
+                                   Margin="195,0,0,0" />
+                        </StackLayout>
+                        <StackLayout Spacing="-2">
+                            <Grid Margin="0,0,0,0">
+                                <Label TextColor="#FFFFFF"
+                                       Text="{Binding KnownDocumentsNumber}"
+                                       FontSize="22"
+                                       FontFamily="RobotoBold"
+                                       Margin="195,0,0,0" />
+                                <Ellipse Fill="#63B6E3"
+                                         HeightRequest="14"
+                                         WidthRequest="14"
+                                         Margin="20,0,0,0" />
+                            </Grid>
+                            <Label TextColor="#F1F1F1"
+                                   Text="Conhecimento"
+                                   FontSize="14"
+                                   FontFamily="RobotoRegular"
+                                   Margin="195,0,0,0" />
+                        </StackLayout>
+                    </StackLayout>
+                    <telerik:RadPieChart>
+                        <telerik:RadPieChart.Series>
+                            <telerik:DonutSeries RadiusFactor="0.5"
+                                                 InnerRadiusFactor="0.5"/>
+                        </telerik:RadPieChart.Series>
+                    </telerik:RadPieChart>
+                </Grid>
+            </StackLayout>
+        </Frame>
+
+        <Button Command="{Binding HandleSignOutButtonCommand}"
+                IsVisible="true"
+                Text="Terminar Sessão -> Temporário"
+                Margin="30"/>
+
+    </VerticalStackLayout>
+</ContentPage>

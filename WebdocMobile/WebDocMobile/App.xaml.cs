@@ -1,4 +1,4 @@
-﻿﻿using WebDocMobile.Helpers;
+﻿using WebDocMobile.Helpers;
 using WebDocMobile.Helpers.WsMethods;
 using WebDocMobile.Models;
 using WebDocMobile.Models.BookService;
@@ -14,12 +14,12 @@ public partial class App: Application
     internal static GetDashBoard DashBoard { get; set; }
 
     //Global loader and global modal alert
-    public static bool SE_Loader { get; set; } = false;
-    public static bool SE_ModalError { get; set; } = false;
+    public static bool SE_Loader = false;
+    public static bool SE_ModalError = false;
     public App()
     {
         InitializeComponent();
-
+        //Customize Entry
         Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping(nameof(CustomControls.BorderlessEntryC), (handler, view) =>
         {
 #if ANDROID

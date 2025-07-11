@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell x:Class="WebDocMobile.AppShell"
+       xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:pagesMobile="clr-namespace:WebDocMobile.Pages.Mobile"
+       xmlns:pagesDesktop="clr-namespace:WebDocMobile.Pages.Desktop"
+       Shell.FlyoutBehavior="Disabled"
+       Shell.TabBarIsVisible="False"
+       xmlns:mobilePages="clr-namespace:WebDocMobile.Pages.Mobile"
+       xmlns:desktopPages="clr-namespace:WebDocMobile.Pages.Desktop"
+       BackgroundColor="#262930">
+
+    <ShellContent Title="FirstPageDesktop"
+                  FlyoutItemIsVisible="False"
+                  Shell.FlyoutBehavior="Disabled"
+                  ContentTemplate="{DataTemplate desktopPages:FirstPageDesktop}"
+                  Route="FirstPageDesktop" />
+
+    <ShellContent Title="FirstPageMobile"
+                  FlyoutItemIsVisible="False" 
+                  Shell.FlyoutBehavior="Disabled"
+                  ContentTemplate="{DataTemplate mobilePages:FirstPageMobile}"
+                  Route="FirstPageMobile" />
+
+    <ShellContent Title="ReLoginPageMobile" 
+                  FlyoutItemIsVisible="False"
+                  Shell.FlyoutBehavior="Disabled"
+                  ContentTemplate="{DataTemplate mobilePages:ReLoginPageMobile}"
+                  Route="ReLoginPageMobile"/>
+
+    <ShellContent Title="ReLoginPageDesktop"
+                  FlyoutItemIsVisible="False"
+                  Shell.FlyoutBehavior="Disabled"
+                  ContentTemplate="{DataTemplate desktopPages:ReLoginPageDesktop}"
+                  Route="ReLoginPageDesktop" />
+
+    <ShellContent Title="SelectEntityCodePageMobile"
+                  FlyoutItemIsVisible="False"
+                  Shell.FlyoutBehavior="Disabled"
+                  ContentTemplate="{DataTemplate mobilePages:SelectEntityCodePageMobile}"
+                  Route="SelectEntityCodePageMobile"/>
+
+    <ShellContent Title="SelectEntityCodePageDesktop"
+                  FlyoutItemIsVisible="False"
+                  Shell.FlyoutBehavior="Disabled"
+                  ContentTemplate="{DataTemplate desktopPages:SelectEntityCodePageDesktop}"
+                  Route="SelectEntityCodePageDesktop"/>
+
+</Shell>

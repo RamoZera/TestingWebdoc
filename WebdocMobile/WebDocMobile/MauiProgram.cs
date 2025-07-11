@@ -1,4 +1,4 @@
-﻿﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using WebDocMobile.Pages.Mobile;
 using WebDocMobile.Services;
 using WebDocMobile.PageModels;
@@ -17,7 +17,7 @@ public static class MauiProgram
 		builder
             .UseTelerik()
             .UseMauiCommunityToolkit()
-			.UseMauiApp<App>()
+			.UseMauiApp<App>().UseMauiCommunityToolkit()
             .UseAcrylicView()
 			.ConfigureFonts(fonts =>
 			{
