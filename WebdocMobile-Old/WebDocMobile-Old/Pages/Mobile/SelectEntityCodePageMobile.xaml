@@ -16,9 +16,8 @@
 
         <Grid>
             <Grid BackgroundColor="#FFFFFF"
-                  HeightRequest="1000"
-                  Opacity="1"
-                  x:Name="MainContent">
+                  x:Name="MainContent"
+                  IsVisible="{Binding IsNormalState}">
                 <Grid BackgroundColor="#262930"
                       WidthRequest="400"
                       HeightRequest="380"
@@ -45,7 +44,7 @@
                                      Margin="0,385,0,0">
                     <customControls:OutlinedControlEntry Placeholder="Código de Entidade"
                                                          Margin="30,50,30,0"
-                                                         Text="{Binding codigoEntidade}" />
+                                                         Text="{Binding CodigoEntidade}" />
 
                     <Button CornerRadius="4"
                             Margin="30,0,30,0"
@@ -55,8 +54,7 @@
                             FontFamily="RobotoBold"
                             FontSize="15"
                             Padding="15"
-                            Command="{Binding ValidateEntityCodeClickedCommand}"
-                            Clicked="ValidateEntityCodeButtonPressed"/>
+                            Command="{Binding ValidateEntityCodeClickedCommand}"/>
 
                     <Button CornerRadius="4"
                             Margin="30,0,30,0"
@@ -93,10 +91,8 @@
             </Grid>
 
             <Frame HeightRequest="80"
-                   Margin="20,0,20,870"
-                   Opacity="0"
-                   IsVisible="false"
-                   x:Name="LoadingScreen">
+                   x:Name="LoadingScreen"
+                   IsVisible="{Binding IsLoading}">
                 <Grid Margin="-10,-30,0,-20">
                     <Frame CornerRadius="50"
                            WidthRequest="45"
@@ -126,7 +122,9 @@
                 </Grid>
             </Frame>
 
-            <Grid Opacity="0" x:Name="IncorrectCodeEntity" IsVisible="false">
+            <Grid x:Name="IncorrectCodeEntity" 
+                  IsVisible="{Binding IsWrongCode}"
+                  BackgroundColor="White">
                 <Frame HeightRequest="380"
                        Margin="0,400,0, 100"
                        CornerRadius="32" />
@@ -170,9 +168,7 @@
                             Text="Inserir código de entidade"
                             FontFamily="RobotoBold"
                             FontSize="13"
-                            Command="{Binding ErroInserirCodigoEntidadeCommand}"
-                            x:Name="ErroInserirCodigoEntidade"
-                            Clicked="ErroInserirCodigoEntidadeClicked"/>
+                            Command="{Binding ErroInserirCodigoEntidadeCommand}"/>
                 </StackLayout>
             </Grid>
 

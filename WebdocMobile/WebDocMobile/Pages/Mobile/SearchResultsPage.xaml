@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="WebDocMobile.Pages.Mobile.SearchResultsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:customControls="clr-namespace:WebDocMobile.CustomControls"
+    xmlns:telerik="http://schemas.telerik.com/2022/xaml/maui"
+    xmlns:vm="clr-namespace:WebDocMobile.PageModels.PagesViewModels"
+    Title="SearchResultsPage"
+    x:DataType="vm:SearchResultsViewModel">
+
+    <Grid BackgroundColor="#F3F3F3" RowDefinitions=".12*,.88*">
+        <!--  Header  -->
+        <customControls:Header>
+            <Grid
+                ColumnDefinitions="60, *, 60"
+                ColumnSpacing="20"
+                VerticalOptions="Center">
+                <!--  Go Back Button  -->
+                <Grid HorizontalOptions="Center" VerticalOptions="Center">
+                    <Button
+                        x:Name="ReturnButton"
+                        BackgroundColor="{StaticResource Primary}"
+                        BorderColor="#FFFFFF"
+                        BorderWidth="1"
+                        Command="{Binding GoBackCommand}"
+                        CornerRadius="4"
+                        HeightRequest="56"
+                        HorizontalOptions="StartAndExpand"
+                        Opacity="0.15"
+                        WidthRequest="56" />
+                    <Image
+                        Margin="15,0,0,0"
+                        HeightRequest="18.4"
+                        HorizontalOptions="StartAndExpand"
+                        RotationY="180"
+                        Source="icon_anterior"
+                        WidthRequest="24" />
+                </Grid>
+
+                <!--  Title & Description Page  -->
+                <Grid
+                    Grid.Column="1"
+                    HorizontalOptions="Center"
+                    RowDefinitions="*,2*"
+                    VerticalOptions="Center">
+                    <Label
+                        FontFamily="RobotoMedium"
+                        FontSize="11"
+                        Text="Pesquisa"
+                        TextColor="White"
+                        TextTransform="Uppercase" />
+                    <Label
+                        Grid.Row="1"
+                        FontAttributes="Bold"
+                        FontFamily="RobotoBold"
+                        FontSize="25"
+                        Text="{Binding ResultsNumber, StringFormat='{0} resultados'}"
+                        TextColor="White" />
+                </Grid>
+
+                <!--  Filter Options  -->
+                <Grid
+                    Grid.Column="2"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center">
+                    <telerik:RadBadgeView
+                        Margin="0,-8,0,0"
+                        AutomationId="badgeNotifications"
+                        BadgeAnimationDuration="300"
+                        BadgeAnimationType="Scale"
+                        BadgeBackgroundColor="{StaticResource Secondary}"
+                        BadgeCornerRadius="20"
+                        BadgeHorizontalAlignment="End"
+                        BadgeHorizontalPosition="End"
+                        BadgeMinimumHeight="20"
+                        BadgeMinimumWidth="20"
+                        BadgeOffsetX="8"
+                        BadgeOffsetY="2"
+                        BadgeText="2"
+                        BadgeTextColor="#FFFFFF"
+                        BadgeTextMargin="0"
+                        BadgeVerticalAlignment="Center"
+                        BadgeVerticalPosition="Start"
+                        BadgeVisibility="Visible"
+                        HorizontalOptions="CenterAndExpand"
+                        VerticalOptions="CenterAndExpand">
+                        <telerik:RadBadgeView.Content>
+                            <Grid>
+                                <Button
+                                    x:Name="RegisterFilterButton"
+                                    BackgroundColor="{StaticResource Primary}"
+                                    BorderColor="#FFFFFF"
+                                    BorderWidth="1"
+                                    Command="{Binding GoFilterRegisters}"
+                                    CornerRadius="4"
+                                    HeightRequest="56"
+                                    HorizontalOptions="StartAndExpand"
+                                    Opacity="0.15"
+                                    WidthRequest="56" />
+                                <Image
+                                    Margin="15,0,0,0"
+                                    HeightRequest="18.4"
+                                    HorizontalOptions="StartAndExpand"
+                                    RotationY="180"
+                                    Source="icon_filtrar"
+                                    WidthRequest="24" />
+                            </Grid>
+                        </telerik:RadBadgeView.Content>
+                    </telerik:RadBadgeView>
+                </Grid>
+            </Grid>
+        </customControls:Header>
+
+        <!--  Content Page  -->
+        <ScrollView Grid.Row="1" Padding="20">
+            <VerticalStackLayout Spacing="5">
+                <customControls:ProcessCard />
+                <customControls:ProcessCard />
+                <customControls:ProcessCard />
+                <customControls:ProcessCard />
+                <customControls:ProcessCard />
+                <customControls:ProcessCard />
+                <customControls:ProcessCard />
+                <customControls:ProcessCard />
+                <customControls:ProcessCard />
+                <customControls:ProcessCard />
+
+
+                <telerik:RadBorder
+                    Margin="0,0,0,-10"
+                    Padding="20"
+                    BackgroundColor="{StaticResource White}"
+                    BorderColor="Transparent"
+                    CornerRadius="16">
+                    <VerticalStackLayout>
+                        <Label Text="hola" />
+                        <Label Text="hola" />
+                        <Label Text="hola" />
+                        <Label Text="hola" />
+                    </VerticalStackLayout>
+                </telerik:RadBorder>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    x:Class="WebDocMobile.Pages.Mobile.MessagesExtra"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:customControl="clr-namespace:WebDocMobile.CustomControls"
+    xmlns:d="http://schemas.microsoft.com/dotnet/2021/maui/design"
+    xmlns:local="clr-namespace:WebDocMobile.Pages.Mobile"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:telerik="http://schemas.telerik.com/2022/xaml/maui"
+    xmlns:vm="clr-namespace:WebDocMobile.PageModels.PagesViewModels">
+    <ContentPage.BindingContext>
+        <vm:MessageExtraViewModel />
+    </ContentPage.BindingContext>
+    <Grid BackgroundColor="white" RowDefinitions=".1*,*">
+        <!--  Header  -->
+        <customControl:Header>
+            <Grid ColumnDefinitions="auto,*" VerticalOptions="Center">
+                <Grid Grid.Column="0" HorizontalOptions="Start">
+                    <Button
+                        x:Name="ReturnButton"
+                        Grid.Column="0"
+                        BackgroundColor="{StaticResource Primary}"
+                        BorderColor="#FFFFFF"
+                        BorderWidth="1"
+                        Clicked="HandleClickBackPage"
+                        CornerRadius="4"
+                        HeightRequest="37"
+                        HorizontalOptions="StartAndExpand"
+                        Opacity="0.15"
+                        WidthRequest="37" />
+                    <Image
+                        Grid.Column="0"
+                        HeightRequest="16"
+                        RotationY="180"
+                        Source="icon_anterior" />
+                </Grid>
+
+                <!--  User Info  -->
+                <Grid
+                    Padding="45,0,0,0"
+                    HorizontalOptions="Start"
+                    MaximumWidthRequest="300">
+                    <Label
+                        Padding="10,0,0,0"
+                        FontFamily="RobotoMedium"
+                        FontSize="10"
+                        HorizontalOptions="Start"
+                        Text="E/7203"
+                        TextColor="#F1F1F1"
+                        VerticalOptions="Start" />
+                    <Label
+                        Padding="0,15,0,0"
+                        FontFamily="RobotoBold"
+                        FontSize="24"
+                        HorizontalOptions="StartAndExpand"
+                        Text="Mensagens"
+                        TextColor="White" />
+                </Grid>
+                <Grid Grid.Column="1" HorizontalOptions="End">
+                    <Button
+                        BackgroundColor="Transparent"
+                        BorderColor="#FFFFFF"
+                        BorderWidth="1"
+                        CornerRadius="4"
+                        HeightRequest="37"
+                        IsVisible="False"
+                        Opacity="0.15"
+                        WidthRequest="37" />
+                    <Image
+                        HeightRequest="16"
+                        IsVisible="False"
+                        Source="icon_filtrar" />
+                </Grid>
+            </Grid>
+        </customControl:Header>
+
+        <!--  Content Page  -->
+        <Grid
+            Grid.Row="1"
+            Background="#F6F6F6"
+            RowDefinitions=".6*,*"
+            RowSpacing="40">
+            <VerticalStackLayout
+                Grid.Row="0"
+                Padding="20"
+                Spacing="20">
+                <Label
+                    FontFamily="RobotoBold"
+                    FontSize="22"
+                    Text="Não lidas"
+                    TextColor="#1F2125" />
+                <ScrollView>
+                    <VerticalStackLayout>
+                        <CollectionView HorizontalOptions="StartAndExpand" ItemsSource="{Binding Unread}">
+                            <CollectionView.ItemsLayout>
+                                <LinearItemsLayout ItemSpacing="10" Orientation="Vertical" />
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <customControl:MessagesExtraCard
+                                        HourText="{Binding dateString}"
+                                        PrimaryText="{Binding Name}"
+                                        SecondaryText="{Binding Description}" />
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </VerticalStackLayout>
+                </ScrollView>
+
+            </VerticalStackLayout>
+
+            <VerticalStackLayout
+                Grid.Row="1"
+                Padding="20"
+                Spacing="20">
+                <Label
+                    FontFamily="RobotoBold"
+                    FontSize="22"
+                    Text="Outras"
+                    TextColor="#1F2125" />
+                <ScrollView>
+                    <VerticalStackLayout>
+                        <CollectionView HorizontalOptions="StartAndExpand" ItemsSource="{Binding Others}">
+                            <CollectionView.ItemsLayout>
+                                <LinearItemsLayout ItemSpacing="10" Orientation="Vertical" />
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <customControl:MessagesExtraCard
+                                        Padding="5"
+                                        HourText="{Binding dateString}"
+                                        PrimaryText="{Binding Name}"
+                                        SecondaryText="{Binding Description}" />
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </VerticalStackLayout>
+                </ScrollView>
+            </VerticalStackLayout>
+        </Grid>
+    </Grid>
+
+</ContentPage>

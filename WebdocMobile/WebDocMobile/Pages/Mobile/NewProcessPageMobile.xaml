@@ -1,0 +1,987 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="WebDocMobile.Pages.Mobile.NewProcessPageMobile"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:customControl="clr-namespace:WebDocMobile.CustomControls"
+    xmlns:local="clr-namespace:WebDocMobile.PageModels.PagesViewModels"
+    xmlns:telerik="http://schemas.telerik.com/2022/xaml/maui"
+    xmlns:vm="clr-namespace:WebDocMobile.PageModels.PagesViewModels"
+    Title="NewProcessPageMobile"
+    x:DataType="vm:NewProcessPageViewModel"
+    BackgroundColor="#F6F6F6">
+
+    <Grid>
+        <Grid RowDefinitions=".2*,*,.1*">
+            <!--  Header  -->
+            <customControl:Header>
+                <Grid ColumnDefinitions="*,auto" VerticalOptions="Center">
+                    <VerticalStackLayout Spacing="5">
+                        <Label
+                            FontFamily="RobotoMedium"
+                            FontSize="12"
+                            Text="PROCESOS"
+                            TextColor="#F1F1F1" />
+                        <Label
+                            FontFamily="RobotoBold"
+                            FontSize="28"
+                            Text="Novo registo"
+                            TextColor="White" />
+                    </VerticalStackLayout>
+                    <Button
+                        Grid.Column="1"
+                        BackgroundColor="#3C2D33"
+                        Clicked="ShowCancelPopup"
+                        CornerRadius="4"
+                        FontAttributes="Bold"
+                        FontFamily="RobotoMedium"
+                        FontSize="12"
+                        HeightRequest="40"
+                        HorizontalOptions="End"
+                        Opacity="0.9"
+                        Text="Cancelar"
+                        TextColor="#DD4A4B"
+                        VerticalOptions="Center" />
+                </Grid>
+            </customControl:Header>
+
+            <!--  Content Page  -->
+            <ScrollView Grid.Row="1">
+                <VerticalStackLayout Spacing="20">
+                    <VerticalStackLayout
+                        Padding="20"
+                        Background="#262930"
+                        Spacing="20">
+                        <Label
+                            FontFamily="RobotoBold"
+                            FontSize="22"
+                            Text="Proceso"
+                            TextColor="White" />
+                        <Border
+                            Padding="20"
+                            Background="#1F2125"
+                            Stroke="#0074C8"
+                            StrokeDashArray="5,5"
+                            StrokeDashOffset="1.0"
+                            StrokeShape="RoundRectangle 5"
+                            StrokeThickness="1">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="ShowPopup" />
+                            </Border.GestureRecognizers>
+                            <Grid RowDefinitions="*,*" RowSpacing="15">
+                                <Image
+                                    Grid.Row="0"
+                                    HeightRequest="50"
+                                    Source="icon_adddocumento" />
+                                <Label
+                                    Grid.Row="1"
+                                    FontFamily="RobotoMedium"
+                                    FontSize="14"
+                                    HorizontalTextAlignment="Center"
+                                    Text="Adiciona o processo ao registo"
+                                    TextColor="White" />
+                            </Grid>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout
+                        Margin="0,-20,0,0"
+                        Padding="20"
+                        Background="White"
+                        Spacing="20">
+                        <Label
+                            FontFamily="RobotoBold"
+                            FontSize="22"
+                            Text="Dados"
+                            TextColor="#1F2125" />
+                        <!--  Input Asunto  -->
+                        <Border
+                            HorizontalOptions="FillAndExpand"
+                            Stroke="#ADB3BC"
+                            StrokeShape="RoundRectangle 5"
+                            StrokeThickness="2">
+                            <VerticalStackLayout Padding="10">
+                                <Grid>
+                                    <Label
+                                        Margin="7,0,0,0"
+                                        FontFamily="RobotoMedium"
+                                        FontSize="16"
+                                        HorizontalOptions="Start"
+                                        Text="Assunto"
+                                        TextColor="#959595" />
+                                    <Image
+                                        HeightRequest="24"
+                                        HorizontalOptions="End"
+                                        Source="chip_required" />
+                                </Grid>
+                                <telerik:RadEntry
+                                    x:Name="Topic"
+                                    AutomationId="radEntry"
+                                    BackgroundColor="Transparent"
+                                    BorderBrush="Transparent"
+                                    BorderThickness="0,0,0,0"
+                                    FocusedBorderBrush="Transparent"
+                                    FocusedBorderThickness="0,0,0,0"
+                                    FontSize="16"
+                                    Placeholder="Escreva os detalhes necessários"
+                                    PlaceholderColor="#343A40"
+                                    Text="{Binding Topic.Value, Mode=TwoWay}"
+                                    Unfocused="TopicEntry_Unfocused" />
+                                <Label
+                                    FontSize="16"
+                                    IsVisible="False"
+                                    Text="{Binding Topic.Error}"
+                                    TextColor="Red"
+                                    VerticalOptions="End" />
+                            </VerticalStackLayout>
+                        </Border>
+
+                        <!--  Combo Type  -->
+                        <Border
+                            HorizontalOptions="FillAndExpand"
+                            Stroke="#ADB3BC"
+                            StrokeShape="RoundRectangle 5"
+                            StrokeThickness="2">
+                            <VerticalStackLayout Padding="10">
+                                <Grid>
+                                    <Label
+                                        Margin="7,0,0,0"
+                                        FontFamily="RobotoMedium"
+                                        FontSize="16"
+                                        HorizontalOptions="Start"
+                                        Text="Tipo"
+                                        TextColor="#959595" />
+                                    <Image
+                                        HeightRequest="24"
+                                        HorizontalOptions="End"
+                                        Source="chip_required" />
+                                </Grid>
+                                <telerik:RadComboBox
+                                    x:Name="Type"
+                                    AutomationId="radEntry"
+                                    BackgroundColor="Transparent"
+                                    BorderBrush="Transparent"
+                                    BorderThickness="0,0,0,0"
+                                    DisplayMemberPath="Name"
+                                    FocusedBorderBrush="Transparent"
+                                    FontSize="16"
+                                    HorizontalOptions="Fill"
+                                    ItemsSource="{Binding DocumentType}"
+                                    Placeholder="Selecione uma opção"
+                                    PlaceholderColor="#343A40"
+                                    SelectionMode="Single"
+                                    Text="{Binding Type.Value, Mode=TwoWay}"
+                                    Unfocused="Type_Unfocused" />
+                                <Label
+                                    FontSize="16"
+                                    IsVisible="False"
+                                    Text="{Binding Type.Error}"
+                                    TextColor="Red"
+                                    VerticalOptions="End" />
+                            </VerticalStackLayout>
+                        </Border>
+
+                        <!--  Combo Envio / Receção  -->
+                        <Border
+                            HorizontalOptions="FillAndExpand"
+                            Stroke="#ADB3BC"
+                            StrokeShape="RoundRectangle 5"
+                            StrokeThickness="2">
+                            <VerticalStackLayout Padding="10">
+                                <Grid>
+                                    <Label
+                                        Margin="7,0,0,0"
+                                        FontFamily="RobotoMedium"
+                                        FontSize="16"
+                                        HorizontalOptions="Start"
+                                        Text="Envio / Receção"
+                                        TextColor="#959595" />
+                                    <Image
+                                        HeightRequest="24"
+                                        HorizontalOptions="End"
+                                        Source="chip_required" />
+                                </Grid>
+                                <telerik:RadComboBox
+                                    x:Name="SendR"
+                                    AutomationId="radEntry"
+                                    BackgroundColor="Transparent"
+                                    BorderBrush="Transparent"
+                                    BorderThickness="0,0,0,0"
+                                    DisplayMemberPath="Name"
+                                    FocusedBorderBrush="Transparent"
+                                    FontSize="16"
+                                    HorizontalOptions="Fill"
+                                    ItemsSource="{Binding SendReceive}"
+                                    Placeholder="Selecione uma opção"
+                                    PlaceholderColor="#343A40"
+                                    SelectionMode="Single"
+                                    Text="{Binding SendR.Value, Mode=TwoWay}"
+                                    Unfocused="SendR_Unfocused" />
+                                <Label
+                                    FontSize="16"
+                                    IsVisible="False"
+                                    Text="{Binding SendR.Error}"
+                                    TextColor="Red"
+                                    VerticalOptions="End" />
+                            </VerticalStackLayout>
+                        </Border>
+
+                        <!--  Combo Classificador  -->
+                        <Border
+                            HorizontalOptions="FillAndExpand"
+                            Stroke="#ADB3BC"
+                            StrokeShape="RoundRectangle 5"
+                            StrokeThickness="2">
+                            <VerticalStackLayout Padding="10">
+                                <Grid Grid.Row="0">
+                                    <Label
+                                        Margin="7,0,0,0"
+                                        FontFamily="RobotoMedium"
+                                        FontSize="16"
+                                        HorizontalOptions="Start"
+                                        Text="Classificador"
+                                        TextColor="#959595" />
+                                    <Image
+                                        HeightRequest="24"
+                                        HorizontalOptions="End"
+                                        Source="chip_required" />
+                                </Grid>
+                                <telerik:RadComboBox
+                                    x:Name="Classify"
+                                    Grid.Row="1"
+                                    AutomationId="radEntry"
+                                    BackgroundColor="Transparent"
+                                    BorderBrush="Transparent"
+                                    BorderThickness="0,0,0,0"
+                                    DisplayMemberPath="Name"
+                                    FocusedBorderBrush="Transparent"
+                                    FontSize="16"
+                                    HorizontalOptions="Fill"
+                                    ItemsSource="{Binding Classify}"
+                                    Placeholder="Selecione uma opção"
+                                    PlaceholderColor="#343A40"
+                                    SelectionMode="Single"
+                                    Text="{Binding Classifier.Value, Mode=TwoWay}"
+                                    Unfocused="Classify_Unfocused" />
+                                <Label
+                                    FontSize="16"
+                                    IsVisible="False"
+                                    Text="{Binding Classifier.Error}"
+                                    TextColor="Red"
+                                    VerticalOptions="End" />
+                            </VerticalStackLayout>
+                        </Border>
+
+                        <!--  Data Picker Carimbo  -->
+                        <Border
+                            HorizontalOptions="FillAndExpand"
+                            Stroke="#ADB3BC"
+                            StrokeShape="RoundRectangle 5"
+                            StrokeThickness="2">
+                            <VerticalStackLayout Padding="10">
+                                <Label
+                                    Margin="7,0,0,0"
+                                    FontFamily="RobotoMedium"
+                                    FontSize="16"
+                                    HorizontalOptions="Start"
+                                    Text="Data de carimbo"
+                                    TextColor="#959595" />
+                                <telerik:RadDatePicker
+                                    AutomationId="datePicker"
+                                    BackgroundColor="Transparent"
+                                    BorderColor="Transparent"
+                                    DisplayLabelStyle="{StaticResource displayLabelStyleDatePicker}"
+                                    Placeholder="Defina uma data"
+                                    PlaceholderLabelStyle="{StaticResource placeholderLabelStyleDatePicker}"
+                                    Style="{StaticResource RadDatePickerStyle}"
+                                    VerticalOptions="End" />
+                            </VerticalStackLayout>
+                        </Border>
+
+                        <!--  Data Picker límite de Resposta  -->
+                        <Border
+                            HorizontalOptions="FillAndExpand"
+                            Stroke="#ADB3BC"
+                            StrokeShape="RoundRectangle 5"
+                            StrokeThickness="2">
+                            <VerticalStackLayout Padding="10">
+                                <Label
+                                    Margin="7,0,0,0"
+                                    FontFamily="RobotoMedium"
+                                    FontSize="16"
+                                    HorizontalOptions="Start"
+                                    Text="Data límite de Resposta"
+                                    TextColor="#959595" />
+                                <telerik:RadDatePicker
+                                    AutomationId="datePicker"
+                                    BackgroundColor="Transparent"
+                                    BorderColor="Transparent"
+                                    DisplayLabelStyle="{StaticResource displayLabelStyleDatePicker}"
+                                    Placeholder="Defina uma data"
+                                    PlaceholderLabelStyle="{StaticResource placeholderLabelStyleDatePicker}"
+                                    Style="{StaticResource RadDatePickerStyle}"
+                                    VerticalOptions="End" />
+                            </VerticalStackLayout>
+                        </Border>
+
+                        <!--  Data Picker do documento  -->
+                        <Border
+                            HorizontalOptions="FillAndExpand"
+                            Stroke="#ADB3BC"
+                            StrokeShape="RoundRectangle 5"
+                            StrokeThickness="2">
+                            <VerticalStackLayout Padding="10">
+                                <Label
+                                    Margin="7,0,0,0"
+                                    FontFamily="RobotoMedium"
+                                    FontSize="16"
+                                    HorizontalOptions="Start"
+                                    Text="Data do documento"
+                                    TextColor="#959595" />
+                                <telerik:RadDatePicker
+                                    AutomationId="datePicker"
+                                    BackgroundColor="Transparent"
+                                    BorderColor="Transparent"
+                                    DisplayLabelStyle="{StaticResource displayLabelStyleDatePicker}"
+                                    Placeholder="Defina uma data"
+                                    PlaceholderLabelStyle="{StaticResource placeholderLabelStyleDatePicker}"
+                                    Style="{StaticResource RadDatePickerStyle}"
+                                    VerticalOptions="End" />
+                            </VerticalStackLayout>
+                        </Border>
+
+                        <!--  Input Referencia  -->
+                        <Border
+                            HorizontalOptions="FillAndExpand"
+                            Stroke="#ADB3BC"
+                            StrokeShape="RoundRectangle 5"
+                            StrokeThickness="2">
+                            <VerticalStackLayout Padding="10">
+                                <Label
+                                    Margin="7,0,0,0"
+                                    FontFamily="RobotoMedium"
+                                    FontSize="16"
+                                    HorizontalOptions="Start"
+                                    Text="Referência"
+                                    TextColor="#959595" />
+                                <telerik:RadEntry
+                                    x:Name="Reference"
+                                    AutomationId="radEntry"
+                                    BackgroundColor="Transparent"
+                                    BorderBrush="Transparent"
+                                    BorderThickness="0,0,0,0"
+                                    FocusedBorderBrush="Transparent"
+                                    FocusedBorderThickness="0,0,0,0"
+                                    FontSize="16"
+                                    Placeholder="Escreva a referência"
+                                    PlaceholderColor="#343A40"
+                                    Unfocused="TopicEntry_Unfocused" />
+                            </VerticalStackLayout>
+                        </Border>
+
+                        <!--  Input Observações  -->
+                        <Border
+                            HorizontalOptions="FillAndExpand"
+                            Stroke="#ADB3BC"
+                            StrokeShape="RoundRectangle 5"
+                            StrokeThickness="2">
+                            <VerticalStackLayout Padding="10">
+                                <Label
+                                    Margin="7,0,0,0"
+                                    FontFamily="RobotoMedium"
+                                    FontSize="16"
+                                    HorizontalOptions="Start"
+                                    Text="Observações"
+                                    TextColor="#959595" />
+                                <telerik:RadEntry
+                                    x:Name="Observations"
+                                    AutomationId="radEntry"
+                                    BackgroundColor="Transparent"
+                                    BorderBrush="Transparent"
+                                    BorderThickness="0,0,0,0"
+                                    FocusedBorderBrush="Transparent"
+                                    FocusedBorderThickness="0,0,0,0"
+                                    FontSize="16"
+                                    Placeholder="Escreva detalhes ou comentários"
+                                    PlaceholderColor="#343A40"
+                                    Unfocused="TopicEntry_Unfocused" />
+                            </VerticalStackLayout>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout
+                        Padding="20"
+                        Background="White"
+                        Spacing="20">
+                        <Label
+                            FontFamily="RobotoBold"
+                            FontSize="22"
+                            Text="Entidade"
+                            TextColor="#1F2125" />
+                        <!--  Input Entidade  -->
+                        <Border
+                            HorizontalOptions="FillAndExpand"
+                            Stroke="#ADB3BC"
+                            StrokeShape="RoundRectangle 5"
+                            StrokeThickness="2">
+                            <Grid
+                                Padding="10"
+                                ColumnDefinitions="*,.2*"
+                                ColumnSpacing="5">
+                                <VerticalStackLayout Grid.Column="0">
+                                    <Label
+                                        Margin="7,0,0,0"
+                                        FontFamily="RobotoMedium"
+                                        FontSize="16"
+                                        HorizontalOptions="Start"
+                                        Text="Pesquisar entidade"
+                                        TextColor="#959595" />
+                                    <telerik:RadEntry
+                                        AutomationId="radEntry"
+                                        BackgroundColor="Transparent"
+                                        BorderBrush="Transparent"
+                                        BorderThickness="0,0,0,0"
+                                        FocusedBorderBrush="Transparent"
+                                        FocusedBorderThickness="0,0,0,0"
+                                        FontSize="16"
+                                        Placeholder="Escreva um critério"
+                                        PlaceholderColor="#343A40" />
+                                </VerticalStackLayout>
+                                <Button
+                                    Grid.Column="1"
+                                    BackgroundColor="#0074C8"
+                                    CornerRadius="4"
+                                    HeightRequest="35"
+                                    WidthRequest="35" />
+                                <Image
+                                    Grid.Column="1"
+                                    HeightRequest="20"
+                                    Source="icon_pesquisar" />
+                            </Grid>
+                        </Border>
+
+                        <!--  Combo Entidade  -->
+                        <Border
+                            HorizontalOptions="FillAndExpand"
+                            Stroke="#ADB3BC"
+                            StrokeShape="RoundRectangle 5"
+                            StrokeThickness="2">
+                            <VerticalStackLayout Padding="10">
+                                <Grid>
+                                    <Label
+                                        Margin="7,0,0,0"
+                                        FontFamily="RobotoMedium"
+                                        FontSize="16"
+                                        HorizontalOptions="Start"
+                                        Text="Entidade"
+                                        TextColor="#959595" />
+                                    <Image
+                                        HeightRequest="24"
+                                        HorizontalOptions="End"
+                                        Source="chip_required" />
+                                </Grid>
+                                <telerik:RadComboBox
+                                    AutomationId="radEntry"
+                                    BackgroundColor="Transparent"
+                                    BorderBrush="Transparent"
+                                    BorderThickness="0,0,0,0"
+                                    DisplayMemberPath="Name"
+                                    FocusedBorderBrush="Transparent"
+                                    FontSize="16"
+                                    HorizontalOptions="Fill"
+                                    Placeholder="Selecione uma opção"
+                                    PlaceholderColor="#343A40"
+                                    SelectionMode="Single" />
+                            </VerticalStackLayout>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout
+                        Padding="20"
+                        Background="White"
+                        Spacing="10">
+                        <Grid>
+                            <Label
+                                FontFamily="RobotoBold"
+                                FontSize="16"
+                                HorizontalOptions="Start"
+                                Text="Urgente"
+                                TextColor="Black"
+                                VerticalOptions="Center" />
+                            <Switch
+                                HorizontalOptions="End"
+                                OnColor="Blue"
+                                VerticalOptions="Center" />
+                        </Grid>
+                        <BoxView HeightRequest="2" Color="#EBEBEB" />
+                        <Grid>
+                            <Label
+                                FontFamily="RobotoBold"
+                                FontSize="16"
+                                HorizontalOptions="Start"
+                                Text="Suporte papel"
+                                TextColor="Black"
+                                VerticalOptions="Center" />
+                            <Switch
+                                HorizontalOptions="End"
+                                OnColor="Blue"
+                                VerticalOptions="Center" />
+                        </Grid>
+                        <BoxView HeightRequest="2" Color="#EBEBEB" />
+                        <Grid>
+                            <Label
+                                FontFamily="RobotoBold"
+                                FontSize="16"
+                                HorizontalOptions="Start"
+                                Text="Documento"
+                                TextColor="Black"
+                                VerticalOptions="Center" />
+                            <Switch
+                                HorizontalOptions="End"
+                                OnColor="Blue"
+                                VerticalOptions="Center" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </ScrollView>
+
+            <!--  Save Button  -->
+            <Grid Grid.Row="2" Padding="20,0">
+                <Button
+                    BackgroundColor="{StaticResource Gray400}"
+                    Clicked="ShowSavePopup"
+                    IsEnabled="False"
+                    Text="Gravar"
+                    TextColor="White" />
+            </Grid>
+        </Grid>
+
+        <!--  Modal Loader  -->
+        <Grid
+            x:Name="ModalLoader"
+            IsVisible="{Binding GbLoader}"
+            RowDefinitions="auto,*">
+            <Grid
+                Grid.Row="0"
+                Padding="20"
+                BackgroundColor="#BF000000"
+                Opacity="1">
+                <Border
+                    Padding="15"
+                    Background="White"
+                    StrokeShape="RoundRectangle 16"
+                    StrokeThickness="1">
+                    <Grid ColumnDefinitions="auto,*" ColumnSpacing="10">
+                        <Border
+                            Grid.Column="0"
+                            Padding="5"
+                            Background="{StaticResource Secondary}"
+                            HeightRequest="54"
+                            StrokeShape="RoundRectangle 50"
+                            StrokeThickness="1"
+                            WidthRequest="54">
+                            <ActivityIndicator
+                                BackgroundColor="Transparent"
+                                HeightRequest="30"
+                                IsRunning="True"
+                                WidthRequest="30"
+                                Color="White" />
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1">
+                            <Label
+                                FontFamily="RobotoBold"
+                                FontSize="22"
+                                HorizontalTextAlignment="Start"
+                                Text="Aguarde"
+                                TextColor="#1F2125" />
+                            <Label
+                                FontFamily="RobotoBold"
+                                FontSize="16"
+                                HorizontalTextAlignment="Start"
+                                Text="Validação em progresso"
+                                TextColor="#959595" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+            </Grid>
+            <Grid
+                Grid.Row="1"
+                BackgroundColor="#000000"
+                Opacity="0.75" />
+        </Grid>
+    </Grid>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Grid x:Key="NewProcessPopup">
+                <Frame
+                    Margin="0,0,0,-10"
+                    BorderColor="Transparent"
+                    CornerRadius="16"
+                    HeightRequest="380">
+                    <StackLayout Padding="0" Spacing="40">
+                        <!--  Header Popup  -->
+                        <Grid RowDefinitions="*,*" RowSpacing="20">
+                            <!--  Title  -->
+                            <Label
+                                FontFamily="RobotoBold"
+                                FontSize="18"
+                                HorizontalTextAlignment="Start"
+                                Text="Adicionar processo"
+                                TextColor="Black" />
+
+                            <!--  Close Button  -->
+                            <Frame
+                                Margin="0,0,15,0"
+                                Padding="0"
+                                BackgroundColor="#EBEBEB"
+                                BorderColor="Transparent"
+                                CornerRadius="30"
+                                HeightRequest="30"
+                                HorizontalOptions="End"
+                                WidthRequest="30">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="ClosePopup" />
+                                </Frame.GestureRecognizers>
+                                <Frame.Content>
+                                    <Grid>
+                                        <Image Aspect="AspectFit" Source="icon_close" />
+                                    </Grid>
+                                </Frame.Content>
+                            </Frame>
+
+                            <!--  Description  -->
+                            <Label
+                                Grid.Row="1"
+                                FontFamily="RobotoRegular"
+                                FontSize="16"
+                                LineHeight="1.2"
+                                Text="Seleciona uma das opções abaixo indicadas para inserires o documento atrvés do teu dispositivo"
+                                TextColor="#959595" />
+                        </Grid>
+
+                        <!--  Button Actions  -->
+                        <Grid RowDefinitions="*,*" RowSpacing="10">
+                            <!--  Create new Document Button  -->
+                            <Frame
+                                BackgroundColor="#FFFFFF"
+                                BorderColor="#EBEBEB"
+                                CornerRadius="4"
+                                HeightRequest="80">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                                </Frame.GestureRecognizers>
+                                <Grid>
+                                    <Grid ColumnDefinitions="auto,*" ColumnSpacing="10">
+                                        <Frame
+                                            Padding="10"
+                                            BackgroundColor="#EBEBEB"
+                                            BorderColor="Transparent"
+                                            CornerRadius="20"
+                                            HeightRequest="40"
+                                            WidthRequest="40">
+                                            <Grid>
+                                                <Image Aspect="AspectFit" Source="icon_carregar" />
+                                            </Grid>
+                                        </Frame>
+                                        <Label
+                                            Grid.Column="1"
+                                            FontFamily="RobotoBold"
+                                            FontSize="20"
+                                            HorizontalTextAlignment="Start"
+                                            Text="Carregar do dispositivo "
+                                            TextColor="Black"
+                                            VerticalTextAlignment="Center" />
+                                    </Grid>
+                                </Grid>
+                            </Frame>
+
+                            <!--  Create new Process Button  -->
+                            <Frame
+                                Grid.Row="1"
+                                BackgroundColor="#FFFFFF"
+                                BorderColor="#EBEBEB"
+                                CornerRadius="4"
+                                HeightRequest="80">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="TapGestureRecognizerCamera_Tapped" />
+                                </Frame.GestureRecognizers>
+                                <Grid>
+                                    <Grid ColumnDefinitions="auto,*" ColumnSpacing="10">
+                                        <Frame
+                                            Padding="10"
+                                            BackgroundColor="#EBEBEB"
+                                            BorderColor="Transparent"
+                                            CornerRadius="20"
+                                            HeightRequest="40"
+                                            WidthRequest="40">
+                                            <Grid>
+                                                <Image Aspect="AspectFit" Source="icon_digitalizar" />
+                                            </Grid>
+                                        </Frame>
+                                        <Label
+                                            Grid.Column="1"
+                                            FontFamily="RobotoBold"
+                                            FontSize="20"
+                                            HorizontalTextAlignment="Start"
+                                            Text="Digitalizar"
+                                            TextColor="Black"
+                                            VerticalTextAlignment="Center" />
+                                    </Grid>
+                                </Grid>
+                            </Frame>
+                        </Grid>
+                    </StackLayout>
+                </Frame>
+            </Grid>
+
+            <Grid x:Key="SaveProcessPopup">
+                <Frame
+                    Margin="0,0,0,-10"
+                    BorderColor="Transparent"
+                    CornerRadius="16"
+                    HeightRequest="380">
+                    <StackLayout Padding="0" Spacing="40">
+                        <!--  Header Popup  -->
+                        <Grid RowDefinitions="*,*" RowSpacing="20">
+                            <!--  Title  -->
+                            <Label
+                                FontFamily="RobotoBold"
+                                FontSize="18"
+                                HorizontalTextAlignment="Start"
+                                Text="Gravar"
+                                TextColor="Black" />
+
+                            <!--  Close Button  -->
+                            <Frame
+                                Margin="0,0,15,0"
+                                Padding="0"
+                                BackgroundColor="#EBEBEB"
+                                BorderColor="Transparent"
+                                CornerRadius="30"
+                                HeightRequest="30"
+                                HorizontalOptions="End"
+                                WidthRequest="30">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="CloseSavePopup" />
+                                </Frame.GestureRecognizers>
+                                <Frame.Content>
+                                    <Grid>
+                                        <Image Aspect="AspectFit" Source="icon_close" />
+                                    </Grid>
+                                </Frame.Content>
+                            </Frame>
+
+                            <!--  Description  -->
+                            <Label
+                                Grid.Row="1"
+                                FontFamily="RobotoRegular"
+                                FontSize="16"
+                                LineHeight="1.2"
+                                Text="Seleciona uma das opções abaixo indicadas para gravar"
+                                TextColor="#959595" />
+                        </Grid>
+                        <ScrollView VerticalOptions="FillAndExpand">
+
+                            <!--  Button Actions  -->
+                            <Grid RowDefinitions="*,*,*" RowSpacing="10">
+                                <!--  Create new Document Button  -->
+                                <Frame
+                                    Grid.Row="0"
+                                    BackgroundColor="#FFFFFF"
+                                    BorderColor="#EBEBEB"
+                                    CornerRadius="4"
+                                    HeightRequest="80">
+                                    <Grid>
+                                        <Grid ColumnDefinitions="auto,*" ColumnSpacing="10">
+                                            <Label
+                                                Grid.Column="1"
+                                                FontFamily="RobotoBold"
+                                                FontSize="18"
+                                                HorizontalTextAlignment="Start"
+                                                Text="Consultar o registo criado "
+                                                TextColor="Black"
+                                                VerticalTextAlignment="Center" />
+                                        </Grid>
+                                    </Grid>
+
+                                </Frame>
+
+                                <!--  Create new criar novo Button  -->
+                                <Frame
+                                    Grid.Row="1"
+                                    BackgroundColor="#FFFFFF"
+                                    BorderColor="#EBEBEB"
+                                    CornerRadius="4"
+                                    HeightRequest="80">
+                                    <Grid>
+                                        <Grid ColumnDefinitions="auto,*" ColumnSpacing="10">
+
+
+                                            <Label
+                                                Grid.Column="1"
+                                                FontFamily="RobotoBold"
+                                                FontSize="18"
+                                                HorizontalTextAlignment="Start"
+                                                Text="Criar novo processo"
+                                                TextColor="Black"
+                                                VerticalTextAlignment="Center" />
+                                        </Grid>
+                                    </Grid>
+                                </Frame>
+                                <!--  Create new voltar ao inicio Button  -->
+                                <Frame
+                                    Grid.Row="4"
+                                    BackgroundColor="#FFFFFF"
+                                    BorderColor="#EBEBEB"
+                                    CornerRadius="4"
+                                    HeightRequest="80">
+
+                                    <Grid>
+                                        <Grid ColumnDefinitions="auto,*" ColumnSpacing="10">
+                                            <Label
+                                                Grid.Column="1"
+                                                FontFamily="RobotoBold"
+                                                FontSize="18"
+                                                HorizontalTextAlignment="Start"
+                                                Text="Voltar ao inicio"
+                                                TextColor="Black"
+                                                VerticalTextAlignment="Center" />
+                                        </Grid>
+                                    </Grid>
+                                </Frame>
+
+                            </Grid>
+
+                        </ScrollView>
+                    </StackLayout>
+                </Frame>
+            </Grid>
+
+            <Grid x:Key="CancelDocumentPopup">
+                <Frame
+                    Margin="0,0,0,-10"
+                    BorderColor="Transparent"
+                    CornerRadius="16"
+                    HeightRequest="380"
+                    WidthRequest="400">
+                    <StackLayout Padding="0" Spacing="40">
+                        <!--  Header Popup  -->
+                        <Grid RowDefinitions="*,*" RowSpacing="20">
+                            <!--  Title  -->
+                            <Image
+                                Grid.Row="0"
+                                Background="Transparent"
+                                HeightRequest="30"
+                                HorizontalOptions="CenterAndExpand"
+                                Source="icon_alerta_red"
+                                VerticalOptions="CenterAndExpand"
+                                WidthRequest="30" />
+
+
+                            <!--  Description  -->
+                            <Grid
+                                Margin="0,40,0,0"
+                                RowDefinitions="auto,*"
+                                RowSpacing="20">
+                                <Label
+                                    Grid.Row="1"
+                                    FontFamily="RobotoBold"
+                                    FontSize="16"
+                                    HorizontalOptions="Center"
+                                    HorizontalTextAlignment="Start"
+                                    Text="Atenção"
+                                    TextColor="Black"
+                                    VerticalOptions="CenterAndExpand"
+                                    VerticalTextAlignment="Center" />
+                                <Label
+                                    Grid.Row="2"
+                                    Margin="0,50,0,0"
+                                    FontFamily="RobotoRegular"
+                                    FontSize="14"
+                                    HorizontalTextAlignment="Center"
+                                    LineHeight="1.2"
+                                    Text="Ao cancelar perde os dados já inseridos"
+                                    TextColor="#959595"
+                                    VerticalOptions="End"
+                                    VerticalTextAlignment="End" />
+                            </Grid>
+                        </Grid>
+
+                        <!--  Button Actions  -->
+                        <Grid
+                            Padding="20,0"
+                            RowDefinitions="*,*"
+                            RowSpacing="10">
+                            <!--  Create voltar ao registo Button  -->
+                            <Frame
+                                Grid.Row="0"
+                                BackgroundColor="#FFFFFF"
+                                BorderColor="#EBEBEB"
+                                CornerRadius="3"
+                                HeightRequest="60">
+
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="CloseCancelPopup" />
+                                </Frame.GestureRecognizers>
+                                <Frame.Content>
+                                    <Grid>
+                                        <Grid ColumnDefinitions="auto,*" ColumnSpacing="10">
+                                            <Label
+                                                Grid.Column="1"
+                                                FontFamily="RobotoBold"
+                                                FontSize="14"
+                                                HorizontalTextAlignment="Center"
+                                                Text="Voltar ao registo"
+                                                TextColor="Black"
+                                                VerticalTextAlignment="Center" />
+                                        </Grid>
+                                    </Grid>
+                                </Frame.Content>
+                            </Frame>
+
+                            <!--  Create new criar novo Button  -->
+                            <Frame
+                                Grid.Row="1"
+                                BackgroundColor="#FFFFFF"
+                                BorderColor="#EBEBEB"
+                                CornerRadius="3"
+                                HeightRequest="60">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="ConfirmCancelPopup" />
+                                </Frame.GestureRecognizers>
+                                <Frame.Content>
+                                    <Grid>
+                                        <Grid ColumnDefinitions="auto,*" ColumnSpacing="10">
+                                            <Label
+                                                Grid.Column="1"
+                                                FontFamily="RobotoBold"
+                                                FontSize="14"
+                                                HorizontalTextAlignment="Center"
+                                                Text="Confirmar"
+                                                TextColor="Black"
+                                                VerticalTextAlignment="Center" />
+                                        </Grid>
+                                    </Grid>
+                                </Frame.Content>
+                            </Frame>
+                        </Grid>
+                    </StackLayout>
+                </Frame>
+            </Grid>
+
+            <ControlTemplate x:Key="CardViewControlTemplate">
+                <Grid>
+                    <HorizontalStackLayout HorizontalOptions="Start" Spacing="10">
+                        <Label
+                            Grid.Row="0"
+                            Text="Select Dates"
+                            VerticalTextAlignment="Center" />
+                        <telerik:DataFormSwitchEditor Grid.Column="1" PropertyName="Urgency" />
+                    </HorizontalStackLayout>
+                </Grid>
+            </ControlTemplate>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+
+</ContentPage>

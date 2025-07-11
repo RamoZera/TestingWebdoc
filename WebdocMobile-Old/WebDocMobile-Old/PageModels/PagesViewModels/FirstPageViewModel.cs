@@ -1,54 +1,42 @@
-﻿﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.Input;
+﻿﻿using CommunityToolkit.Mvvm.Input;
 using WebDocMobile.Pages.Mobile;
 using WebDocMobile.Pages.Desktop;
 using WebDocMobile.Services;
-using System.Text.Json.Serialization;
-using Newtonsoft.Json;
-using WebDocMobile.Models;
 
 namespace WebDocMobile.PageModels
 {
     public partial class FirstPageViewModel
     {
-        private AlertService _alertService;
-        private INavigation _navigationService;
-        public FirstPageViewModel(INavigation navigation)
+        private readonly IAlertService _alertService;
+        private readonly ISettingsService _settingsService;
+
+        public FirstPageViewModel(IAlertService alertService, ISettingsService settingsService)
         {
-            this._navigationService = navigation;
-            this._alertService = new AlertService();
+            _alertService = alertService;
+            _settingsService = settingsService;
         }
 
-        //This code has to go to the App.xaml.cs in the Constructor
         [RelayCommand]
         private async Task HandleGoToLogInPageClicked()
         {
-            if (Preferences.ContainsKey(nameof(App.UserDetails)) && Preferences.ContainsKey(nameof(App.baseAddress)))
+            // This logic is now handled by AppShell.xaml.cs on startup.
+            // This command might be for a button to manually trigger login.
+            if (_settingsService.UserInfo != null)
             {
-                var address = JsonConvert.DeserializeObject<string>(Preferences.Get(nameof(App.baseAddress), ""));
-                var userInfo = JsonConvert.DeserializeObject<UserBasicInfo>(Preferences.Get(nameof(App.UserDetails), ""));
-                App.UserDetails = userInfo;
-                App.baseAddress = address;
 #if ANDROID || IOS
-                await _navigationService.PushAsync(new ReLoginPageMobile());
+                await Shell.Current.GoToAsync($"//{nameof(ReLoginPageMobile)}");
 #else
-                await _navigationService.PushAsync(new ReLoginPageDesktop());
+                await Shell.Current.GoToAsync($"//{nameof(ReLoginPageDesktop)}");
 #endif
             }
             else
             {
-                _alertService.ShowAlert("Warning", "There is no previous login");
 #if ANDROID || IOS
-                await _navigationService.PushAsync(new SelectEntityCodePageMobile());
+                await Shell.Current.GoToAsync($"//{nameof(SelectEntityCodePageMobile)}");
 #else
-                await _navigationService.PushAsync(new SelectEntityCodePageDesktop());
+                await Shell.Current.GoToAsync($"//{nameof(SelectEntityCodePageDesktop)}");
 #endif
             }
         }
-
     }
 }

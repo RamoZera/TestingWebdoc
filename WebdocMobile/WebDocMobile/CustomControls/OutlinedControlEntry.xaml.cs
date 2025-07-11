@@ -1,3 +1,4 @@
+using System.Formats.Tar;
 using WebDocMobile.Handlers;
 
 namespace WebDocMobile.CustomControls;
@@ -7,10 +8,7 @@ public partial class OutlinedControlEntry : Grid
 	public OutlinedControlEntry()
 	{
 		InitializeComponent();
-        txtEntry.Focused += OnEntryFocused;
-        txtEntry.Unfocused += OnEntryUnfocused;
-        txtEntry.TextChanged += OnEntryTextChanged;
-	}
+    }
 
     public Entry entry
     {
@@ -44,26 +42,31 @@ public partial class OutlinedControlEntry : Grid
         set { SetValue(PlaceholderProperty, value); }
     }
 
-    private void OnEntryFocused(object sender, FocusEventArgs e)
+    private void txtEntry_Focused(object sender, FocusEventArgs e)
     {
-        UpdateVisualState();
+
+        lblPlaceholder.FontSize = 14;
+        lblPlaceholder.TextColor = Color.FromRgba("#0074C8");
+        lblPlaceholder.Opacity = 1;
+        lblPlaceholder.TranslateTo(0, -25, 80, easing: Easing.Linear);
     }
 
-    private void OnEntryUnfocused(object sender, FocusEventArgs e)
+    private void txtEntry_Unfocused(object sender, FocusEventArgs e)
     {
-        UpdateVisualState();
-    }
-
-    private void OnEntryTextChanged(object sender, TextChangedEventArgs e)
-    {
-        UpdateVisualState();
-    }
-
-    private void UpdateVisualState()
-    {
-        // The placeholder should float up if the entry is focused OR if it has text.
-        string state = txtEntry.IsFocused || !string.IsNullOrEmpty(Text) ? "Focused" : "Normal";
-        VisualStateManager.GoToState(this, state);
+        if (!string.IsNullOrWhiteSpace(Text))
+        {
+            lblPlaceholder.FontSize = 14;
+            lblPlaceholder.TextColor = Color.FromRgba("#0074C8");
+            lblPlaceholder.Opacity = 1;
+            lblPlaceholder.TranslateTo(0, -25, 80, easing: Easing.Linear);
+        }
+        else
+        {
+            lblPlaceholder.FontSize = 16;
+            lblPlaceholder.TextColor = Colors.Gray;
+            lblPlaceholder.Opacity = 0.5;
+            lblPlaceholder.TranslateTo(0, 0, 80, easing: Easing.Linear);
+        }
     }
 
     private void TapGestureRecognizer_Tapped(object sender, EventArgs e)

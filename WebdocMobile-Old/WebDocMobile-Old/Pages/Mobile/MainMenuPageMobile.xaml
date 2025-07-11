@@ -3,9 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:telerik="http://schemas.telerik.com/2022/xaml/maui"
              x:Class="WebDocMobile.Pages.Mobile.MainMenuPageMobile"
+             xmlns:converters="clr-namespace:WebDocMobile.Converters"
              Title="Menu Principal"
              BackgroundColor="#F6F6F6">
 
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:BoolToOpacityConverter x:Key="BoolToOpacity" TrueOpacity="1" FalseOpacity="0" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <VerticalStackLayout BackgroundColor="#F6F6F6">
 
         <Frame BackgroundColor="#262930"
@@ -51,9 +57,9 @@
                             Grid.Column="0"
                             HeightRequest="25"
                             WidthRequest="25"
-                            BackgroundColor="Transparent"
-                            x:Name="documentsButton"
-                            Clicked="DocumentsButtonClicked" />
+                            BackgroundColor="Transparent" 
+                            Command="{Binding ToggleChartCommand}"
+                            CommandParameter="documents"/>
                     <Image Source="icon_documentos"
                            Margin="0,0,0,0"
                            HeightRequest="18"
@@ -63,17 +69,16 @@
                                HeightRequest="4"
                                WidthRequest="24"
                                Grid.Column="0"
-                               Grid.Row="1"
-                               x:Name="documentsSelected"
-                               Opacity="1" />
+                               Grid.Row="1" 
+                               Opacity="{Binding IsDocumentsChartSelected, Converter={StaticResource BoolToOpacity}}" />
 
                     <Button Grid.Row="0"
                             Grid.Column="1"
                             HeightRequest="26"
                             WidthRequest="26"
-                            BackgroundColor="#262930"
-                            x:Name="processesButton"
-                            Clicked="ProcessesButtonClicked" />
+                            BackgroundColor="Transparent" 
+                            Command="{Binding ToggleChartCommand}"
+                            CommandParameter="processes"/>
                     <Image Source="icon_processos"
                            Margin="0,0,0,0"
                            HeightRequest="18"
@@ -83,9 +88,8 @@
                                HeightRequest="4"
                                WidthRequest="24"
                                Grid.Column="1"
-                               Grid.Row="1"
-                               Opacity="0"
-                               x:Name="processesSelected" />
+                               Grid.Row="1" 
+                               Opacity="{Binding IsProcessesChartSelected, Converter={StaticResource BoolToOpacity}}" />
                 </Grid>
 
                 <Grid>

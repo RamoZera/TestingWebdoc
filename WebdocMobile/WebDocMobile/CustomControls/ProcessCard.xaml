@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<telerik:RadBorder
+    x:Class="WebDocMobile.CustomControls.ProcessCard"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:telerik="http://schemas.telerik.com/2022/xaml/maui"
+    x:Name="this"
+    Padding="20"
+    BackgroundColor="{Binding Source={x:Reference this}, Path=BackgroundColor}"
+    BorderThickness="1"
+    CornerRadius="8">
+
+    <telerik:RadBorder.Shadow>
+        <Shadow
+            Brush="{StaticResource Gray300}"
+            Opacity="0.5"
+            Radius="30"
+            Offset="0,0" />
+    </telerik:RadBorder.Shadow>
+    <Grid
+        ColumnDefinitions="*,*,*"
+        RowDefinitions="Auto,Auto,Auto"
+        RowSpacing="10">
+
+        <!--  Number Tag  -->
+        <telerik:RadBorder
+            Grid.Row="0"
+            Grid.Column="0"
+            Padding="8,3"
+            BackgroundColor="{Binding Source={x:Reference this}, Path=NumberTagBackgroundColor}"
+            CornerRadius="15"
+            HorizontalOptions="Start"
+            VerticalOptions="Center">
+            <Label
+                FontFamily="RobotoBold"
+                FontSize="12"
+                HorizontalTextAlignment="Center"
+                MaxLines="1"
+                Text="{Binding Source={x:Reference this}, Path=NumberTagText}"
+                TextColor="#262930"
+                VerticalTextAlignment="Center" />
+        </telerik:RadBorder>
+
+        <!--  Date Card  -->
+        <Label
+            Grid.Row="0"
+            Grid.Column="1"
+            FontFamily="RobotoMedium"
+            FontSize="12"
+            HorizontalTextAlignment="End"
+            MaxLines="1"
+            Text="{Binding Source={x:Reference this}, Path=DateTimeText}"
+            TextColor="#262930"
+            VerticalOptions="Center"
+            VerticalTextAlignment="Center" />
+
+        <!--  Card Description  -->
+        <Label
+            Grid.Row="1"
+            Grid.ColumnSpan="2"
+            FontFamily="RobotoMedium"
+            FontSize="16"
+            MaxLines="1"
+            Text="{Binding Source={x:Reference this}, Path=DescriptionText}"
+            TextColor="#262930" />
+
+        <!--  Card Status  -->
+        <telerik:RadBorder
+            Grid.Row="0"
+            Grid.Column="2"
+            Grid.ColumnSpan="2"
+            Padding="5"
+            BackgroundColor="{Binding Source={x:Reference this}, Path=StatusBackgroundColor}"
+            CornerRadius="5"
+            HorizontalOptions="Center">
+            <Label
+                FontFamily="RobotoBold"
+                FontSize="12"
+                HorizontalTextAlignment="Center"
+                MaxLines="1"
+                Text="{Binding Source={x:Reference this}, Path=StatusText}"
+                TextColor="{Binding Source={x:Reference this}, Path=StatusTextColor}"
+                VerticalOptions="Center"
+                VerticalTextAlignment="Center" />
+        </telerik:RadBorder>
+
+    </Grid>
+</telerik:RadBorder>

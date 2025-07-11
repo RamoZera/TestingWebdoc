@@ -1,4 +1,4 @@
-using System.Formats.Tar;
+﻿﻿#nullable enable
 using WebDocMobile.Handlers;
 
 namespace WebDocMobile.CustomControls;
@@ -8,7 +8,8 @@ public partial class OutlinedControlEntry : Grid
 	public OutlinedControlEntry()
 	{
 		InitializeComponent();
-    }
+        UpdateVisualState(false);
+	}
 
     public Entry entry
     {
@@ -42,34 +43,32 @@ public partial class OutlinedControlEntry : Grid
         set { SetValue(PlaceholderProperty, value); }
     }
 
-    private void txtEntry_Focused(object sender, FocusEventArgs e)
+    private void UpdateVisualState(bool isFocused)
     {
-
-        lblPlaceholder.FontSize = 14;
-        lblPlaceholder.TextColor = Color.FromRgba("#0074C8");
-        lblPlaceholder.Opacity = 1;
-        lblPlaceholder.TranslateTo(0, -25, 80, easing: Easing.Linear);
+        string state = isFocused || !string.IsNullOrEmpty(Text) ? "Focused" : "Normal";
+        VisualStateManager.GoToState(lblPlaceholder, state);
     }
 
-    private void txtEntry_Unfocused(object sender, FocusEventArgs e)
+    protected override void OnPropertyChanged(string? propertyName = null)
     {
-        if (!string.IsNullOrWhiteSpace(Text))
+        base.OnPropertyChanged(propertyName);
+        if (propertyName == TextProperty.PropertyName)
         {
-            lblPlaceholder.FontSize = 14;
-            lblPlaceholder.TextColor = Color.FromRgba("#0074C8");
-            lblPlaceholder.Opacity = 1;
-            lblPlaceholder.TranslateTo(0, -25, 80, easing: Easing.Linear);
-        }
-        else
-        {
-            lblPlaceholder.FontSize = 16;
-            lblPlaceholder.TextColor = Colors.Gray;
-            lblPlaceholder.Opacity = 0.5;
-            lblPlaceholder.TranslateTo(0, 0, 80, easing: Easing.Linear);
+            UpdateVisualState(txtEntry.IsFocused);
         }
     }
 
-    private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+    private void txtEntry_Focused(object? sender, FocusEventArgs e)
+    {
+        UpdateVisualState(true);
+    }
+
+    private void txtEntry_Unfocused(object? sender, FocusEventArgs e)
+    {
+        UpdateVisualState(false);
+    }
+
+    private void TapGestureRecognizer_Tapped(object? sender, TappedEventArgs e)
     {
         txtEntry.Focus();
     }

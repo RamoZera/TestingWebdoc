@@ -1,0 +1,789 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    x:Class="WebDocMobile.Pages.Mobile.MoreOperationsPageMobile"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:customControl="clr-namespace:WebDocMobile.CustomControls"
+    xmlns:local="clr-namespace:WebDocMobile.Pages.Mobile"
+    xmlns:telerik="http://schemas.telerik.com/2022/xaml/maui"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:WebDocMobile.PageModels.PagesViewModels"
+    Title="MoreOperationsPageMobile">
+    <ContentPage.BindingContext>
+        <vm:MoreOperationsViewModel />
+    </ContentPage.BindingContext>
+    <Grid>
+        <!--  Main Content  -->
+        <Grid
+            x:Name="MainContent"
+            BackgroundColor="{StaticResource Gray50}"
+            RowDefinitions=".1*,*">
+            <!--  Header  -->
+            <customControl:Header>
+                <Grid ColumnDefinitions="auto,*" VerticalOptions="Center">
+                    <Grid Grid.Column="0" HorizontalOptions="Start">
+                        <Button
+                            BackgroundColor="Transparent"
+                            BorderColor="#FFFFFF"
+                            BorderWidth="1"
+                            Clicked="ReturnButtonClicked"
+                            CornerRadius="4"
+                            HeightRequest="50"
+                            Opacity="0.15"
+                            WidthRequest="50" />
+                        <Image
+                            HeightRequest="44"
+                            Source="icon_close_white"
+                            WidthRequest="44" />
+                    </Grid>
+                    <Grid
+                        Grid.Column="1"
+                        Padding="15,0,0,0"
+                        HorizontalOptions="Start">
+                        <Label
+                                x:Name="NumberText"
+                                FontFamily="RobotoBold"
+                                FontSize="15"
+                                HorizontalOptions="StartAndExpand"
+                                LineBreakMode="TailTruncation"  
+                                Text=""
+                                ToolTipProperties.Text=""
+                                TextColor="White" />
+                        <Label
+                            Margin="0,15,0,0"
+                            FontFamily="RobotoBold"
+                            FontSize="23"
+                            HorizontalOptions="StartAndExpand"
+                            Text="Mais operações"
+                            TextColor="White" />
+                    </Grid>
+                </Grid>
+            </customControl:Header>
+
+            <!--  Content Page  -->
+            <Grid Grid.Row="1" RowDefinitions="*,*">
+                <Grid
+                    Grid.Row="0"
+                    Padding="20"
+                    BackgroundColor="{StaticResource Primary}">
+                    <Border
+                        Padding="10"
+                        Background="White"
+                        StrokeShape="RoundRectangle 8"
+                        StrokeThickness="1">
+                        <Grid RowDefinitions="auto,auto,*" RowSpacing="20">
+                            <Grid
+                                Grid.Row="0"
+                                ColumnDefinitions=".2*,*,.2*"
+                                ColumnSpacing="10">
+                                <Border
+                                    Grid.Column="0"
+                                    Background="#EBEBEB"
+                                    HeightRequest="40"
+                                    StrokeShape="RoundRectangle 80"
+                                    StrokeThickness="0"
+                                    WidthRequest="40">
+                                    <Image
+                                        HeightRequest="20   "
+                                        RotationY="360"
+                                        Source="icon_workflow" />
+                                </Border>
+                                <Grid Grid.Column="1" RowDefinitions="*,*">
+                                    <Label
+                                        Grid.Row="0"
+                                        FontFamily="RobotoBold"
+                                        FontSize="12"
+                                        HorizontalOptions="Start"
+                                        Text="Workflow"
+                                        TextColor="#1F2125" />
+                                    <Label
+                                        x:Name="WorkflowAtual"
+                                        Grid.Row="1"
+                                        FontFamily="RobotoBold"
+                                        FontSize="18"
+                                        HorizontalOptions="Start"
+                                        Text="Incluir em processo"
+                                        TextColor="#1F2125" />
+                                </Grid>
+                                <Button
+                                    Grid.Column="2"
+                                    BackgroundColor="Transparent"
+                                    BorderColor="#EBEBEB"
+                                    BorderWidth="1"
+                                    Clicked="MovimentoButtonClicked"
+                                    CornerRadius="4"
+                                    HeightRequest="40"
+                                    WidthRequest="40" />
+                                <Image
+                                    Grid.Column="2"
+                                    HeightRequest="20"
+                                    Source="icon_alterarworkflow"
+                                    WidthRequest="24" />
+                            </Grid>
+                            <Label
+                                Grid.Row="1"
+                                FontFamily="RobotoRegular"
+                                FontSize="16"
+                                HorizontalOptions="Start"
+                                Text="Último movimento"
+                                TextColor="Black" />
+                            <ScrollView Grid.Row="2" VerticalScrollBarVisibility="Always">
+                                <VerticalStackLayout Spacing="10">
+                                    <CollectionView
+                                        x:Name="listMovement"
+                                        HorizontalOptions="StartAndExpand"
+                                        ItemsSource="{Binding movements}"
+                                        SelectionMode="None">
+                                        <CollectionView.ItemsLayout>
+                                            <LinearItemsLayout ItemSpacing="5" Orientation="Vertical" />
+                                        </CollectionView.ItemsLayout>
+                                        <CollectionView.ItemTemplate>
+                                            <DataTemplate>
+                                                <Border
+                                                    HorizontalOptions="FillAndExpand"
+                                                    Stroke="{StaticResource Gray300}"
+                                                    StrokeShape="RoundRectangle 5"
+                                                    StrokeThickness="2"
+                                                     InputTransparent="True">
+                                                    <Grid
+                                                        Padding="10"
+                                                        ColumnDefinitions=".1*,*"
+                                                        ColumnSpacing="5">
+                                                        <toolkit:AvatarView
+                                                            Grid.Column="0"
+                                                            BackgroundColor="#0074C8"
+                                                            HeightRequest="25"
+                                                            HorizontalOptions="Start"
+                                                            Text="{Binding to[0]}"
+                                                            TextColor="White"
+                                                            VerticalOptions="Start"
+                                                            WidthRequest="25" />
+                                                        <Label Grid.Column="1">
+                                                            <Label.FormattedText>
+                                                                <FormattedString>
+                                                                    <Span
+                                                                        FontAttributes="Bold"
+                                                                        FontFamily="RobotoMedium"
+                                                                        FontSize="16"
+                                                                        Text="{Binding to}"
+                                                                        TextColor="#1F2125" />
+                                                                    <Span
+                                                                        FontAttributes="Bold"
+                                                                        FontFamily="RobotoRegular"
+                                                                        FontSize="16"
+                                                                        Text="  "
+                                                                        TextColor="#959595" />
+                                                                    <Span
+                                                                        FontFamily="RobotoRegular"
+                                                                        FontSize="16"
+                                                                        Text="alterou o estado do documento para "
+                                                                        TextColor="#959595" />
+                                                                    <Span
+                                                                        FontAttributes="Bold"
+                                                                        FontFamily="RobotoMedium"
+                                                                        FontSize="16"
+                                                                        Text="{Binding observations}"
+                                                                        TextColor="#1F2125" />
+                                                                    <Span
+                                                                        FontFamily="RobotoRegular"
+                                                                        FontSize="16"
+                                                                        Text=" a "
+                                                                        TextColor="#959595" />
+                                                                    <Span
+                                                                        FontFamily="RobotoRegular"
+                                                                        FontSize="16"
+                                                                        Text="{Binding date, StringFormat='{}{0:dd/MM/yyyy hh:mm}'}"
+                                                                        TextColor="#959595" />
+                                                                </FormattedString>
+                                                            </Label.FormattedText>
+                                                        </Label>
+                                                    </Grid>
+                                                </Border>
+                                            </DataTemplate>
+                                        </CollectionView.ItemTemplate>
+                                    </CollectionView>
+                                </VerticalStackLayout>
+                            </ScrollView>
+                        </Grid>
+                    </Border>
+
+                </Grid>
+                <Grid Grid.Row="1" Padding="20">
+                    <ScrollView Grid.Row="2" VerticalScrollBarVisibility="Always">
+                        <Grid
+                            ColumnDefinitions="*,*"
+                            ColumnSpacing="-2"
+                            RowDefinitions="*,*,*,*,*,*"
+                            RowSpacing="-2">
+                            <!--  Button Movimentos  -->
+                            <Border
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                BackgroundColor="White"
+                                HeightRequest="120"
+                                HorizontalOptions="FillAndExpand"
+                                Stroke="{StaticResource Gray300}"
+                                >
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="TappedMovimentos" />
+                                </Border.GestureRecognizers>
+                                <Grid Padding="20" RowDefinitions="*,*">
+                                    <Border
+                                        Grid.Row="0"
+                                        BackgroundColor="#0074C8"
+                                        HeightRequest="35"
+                                        HorizontalOptions="Start"
+                                        Stroke="{StaticResource Gray300}"
+                                        StrokeShape="RoundRectangle 4"
+                                        StrokeThickness="1"
+                                        WidthRequest="35">
+                                        <Image
+                                            HeightRequest="25"
+                                            Source="icon_movimentos_white"
+                                            WidthRequest="25" />
+                                    </Border>
+                                    <Label
+                                        x:Name="CountMovements"
+                                        Grid.Row="0"
+                                        Margin="40,0,0,0"
+                                        FontFamily="RobotoBlack"
+                                        FontSize="30"
+                                        HorizontalOptions="Start"
+                                        Text=""
+                                        TextColor="#1F2125"
+                                        VerticalOptions="End" />
+                                    <Label
+                                        Grid.Row="1"
+                                        FontFamily="RobotoMedium"
+                                        FontSize="16"
+                                        HorizontalOptions="Start"
+                                        Text="Movimentos"
+                                        TextColor="#1F2125"
+                                        VerticalOptions="Start" />
+                                </Grid>
+                            </Border>
+                            <!--  Button Relacionados  -->
+                            <Border
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                BackgroundColor="White"
+                                HeightRequest="120"
+                                HorizontalOptions="FillAndExpand"
+                                Stroke="{StaticResource Gray300}"
+                                StrokeThickness="1">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="TappedRelacionados" />
+                                </Border.GestureRecognizers>
+                                <Grid Padding="20" RowDefinitions="*,*">
+                                    <Border
+                                        Grid.Row="0"
+                                        BackgroundColor="#0074C8"
+                                        HeightRequest="35"
+                                        HorizontalOptions="Start"
+                                        Stroke="{StaticResource Gray300}"
+                                        StrokeShape="RoundRectangle 4"
+                                        StrokeThickness="1"
+                                        WidthRequest="35">
+                                        <Image
+                                            HeightRequest="25"
+                                            Source="icon_relacionados_white"
+                                            WidthRequest="25" />
+                                    </Border>
+                                    <Label
+                                        x:Name="CountRelated"
+                                        Grid.Row="0"
+                                        Margin="40,0,0,0"
+                                        FontFamily="RobotoBlack"
+                                        FontSize="30"
+                                        HorizontalOptions="Start"
+                                        Text=""
+                                        TextColor="#1F2125"
+                                        VerticalOptions="End" />
+                                    <Label
+                                        Grid.Row="1"
+                                        FontFamily="RobotoMedium"
+                                        FontSize="16"
+                                        HorizontalOptions="Start"
+                                        Text="Relacionados"
+                                        TextColor="#1F2125"
+                                        VerticalOptions="Start" />
+                                </Grid>
+                            </Border>
+                            <!--  Button Anexos  -->
+                            <Border
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                BackgroundColor="White"
+                                HeightRequest="120"
+                                HorizontalOptions="FillAndExpand"
+                                Stroke="{StaticResource Gray300}"
+                                StrokeThickness="1">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="TappedAnexos" />
+                                </Border.GestureRecognizers>
+                                <Grid Padding="20" RowDefinitions="*,*">
+                                    <Border
+                                        Grid.Row="0"
+                                        BackgroundColor="#0074C8"
+                                        HeightRequest="35"
+                                        HorizontalOptions="Start"
+                                        Stroke="{StaticResource Gray300}"
+                                        StrokeShape="RoundRectangle 4"
+                                        StrokeThickness="1"
+                                        WidthRequest="35">
+                                        <Image
+                                            HeightRequest="25"
+                                            Source="icon_anexos_white"
+                                            WidthRequest="25" />
+                                    </Border>
+                                    <Label
+                                        Grid.Row="0"
+                                        Margin="40,0,0,0"
+                                        FontFamily="RobotoBlack"
+                                        FontSize="30"
+                                        HorizontalOptions="Start"
+                                        Text="7"
+                                        TextColor="#1F2125"
+                                        VerticalOptions="End" />
+                                    <Label
+                                        Grid.Row="1"
+                                        FontFamily="RobotoMedium"
+                                        FontSize="16"
+                                        HorizontalOptions="Start"
+                                        Text="Anexos"
+                                        TextColor="#1F2125"
+                                        VerticalOptions="Start" />
+                                </Grid>
+                            </Border>
+                            <!--  Button Contributos  -->
+                            <Border
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                BackgroundColor="White"
+                                HeightRequest="120"
+                                HorizontalOptions="FillAndExpand"
+                                Stroke="{StaticResource Gray300}"
+                                StrokeThickness="1">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="TappedContributos" />
+                                </Border.GestureRecognizers>
+                                <Grid Padding="20" RowDefinitions="*,*">
+                                    <Border
+                                        Grid.Row="0"
+                                        BackgroundColor="#0074C8"
+                                        HeightRequest="35"
+                                        HorizontalOptions="Start"
+                                        Stroke="{StaticResource Gray300}"
+                                        StrokeShape="RoundRectangle 4"
+                                        StrokeThickness="1"
+                                        WidthRequest="35">
+                                        <Image
+                                            HeightRequest="25"
+                                            Source="icon_contributos_white"
+                                            WidthRequest="25" />
+                                    </Border>
+                                    <Label
+                                        Grid.Row="0"
+                                        Margin="40,0,0,0"
+                                        FontFamily="RobotoBlack"
+                                        FontSize="30"
+                                        HorizontalOptions="Start"
+                                        Text="0"
+                                        TextColor="#1F2125"
+                                        VerticalOptions="End" />
+                                    <Label
+                                        Grid.Row="1"
+                                        FontFamily="RobotoMedium"
+                                        FontSize="16"
+                                        HorizontalOptions="Start"
+                                        Text="Contributos"
+                                        TextColor="#1F2125"
+                                        VerticalOptions="Start" />
+                                </Grid>
+                            </Border>
+                            <!--  Button Conhecimento  -->
+                            <Border
+                                Grid.Row="2"
+                                Grid.Column="0"
+                                BackgroundColor="White"
+                                HeightRequest="120"
+                                HorizontalOptions="FillAndExpand"
+                                Stroke="{StaticResource Gray300}"
+                                StrokeThickness="1">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="TappedConhecimento" />
+                                </Border.GestureRecognizers>
+                                <Grid Padding="20" RowDefinitions="*,*">
+                                    <Border
+                                        Grid.Row="0"
+                                        BackgroundColor="#0074C8"
+                                        HeightRequest="35"
+                                        HorizontalOptions="Start"
+                                        Stroke="{StaticResource Gray300}"
+                                        StrokeShape="RoundRectangle 4"
+                                        StrokeThickness="1"
+                                        WidthRequest="35">
+                                        <Image
+                                            HeightRequest="25"
+                                            Source="icon_conhecimento_white"
+                                            WidthRequest="25" />
+                                    </Border>
+                                    <Label
+                                        x:Name="CountKnowledge"
+                                        Grid.Row="0"
+                                        Margin="40,0,0,0"
+                                        FontFamily="RobotoBlack"
+                                        FontSize="30"
+                                        HorizontalOptions="Start"
+                                        Text="42"
+                                        TextColor="#1F2125"
+                                        VerticalOptions="End" />
+                                    <Label
+                                        Grid.Row="1"
+                                        FontFamily="RobotoMedium"
+                                        FontSize="16"
+                                        HorizontalOptions="Start"
+                                        Text="Conhecimento"
+                                        TextColor="#1F2125"
+                                        VerticalOptions="Start" />
+                                </Grid>
+                            </Border>
+                            <!--  Button Localizações  -->
+                            <Border
+                                Grid.Row="2"
+                                Grid.Column="1"
+                                BackgroundColor="White"
+                                HeightRequest="120"
+                                HorizontalOptions="FillAndExpand"
+                                Stroke="{StaticResource Gray300}"
+                                StrokeThickness="1">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="TappedLocalizacoes" />
+                                </Border.GestureRecognizers>
+                                <Grid Padding="20" RowDefinitions="*,*">
+                                    <Border
+                                        Grid.Row="0"
+                                        BackgroundColor="#0074C8"
+                                        HeightRequest="35"
+                                        HorizontalOptions="Start"
+                                        Stroke="{StaticResource Gray300}"
+                                        StrokeShape="RoundRectangle 4"
+                                        StrokeThickness="1"
+                                        WidthRequest="35">
+                                        <Image
+                                            HeightRequest="25"
+                                            Source="icon_localizacoes_white"
+                                            WidthRequest="25" />
+                                    </Border>
+                                    <Label
+                                        Grid.Row="0"
+                                        Margin="40,0,0,0"
+                                        FontFamily="RobotoBlack"
+                                        FontSize="30"
+                                        HorizontalOptions="Start"
+                                        Text="3"
+                                        TextColor="#1F2125"
+                                        VerticalOptions="End" />
+                                    <Label
+                                        Grid.Row="1"
+                                        FontFamily="RobotoMedium"
+                                        FontSize="16"
+                                        HorizontalOptions="Start"
+                                        Text="Localizações"
+                                        TextColor="#1F2125"
+                                        VerticalOptions="Start" />
+                                </Grid>
+                            </Border>
+                            <!--  Button Campos dinâmicos  -->
+                            <Border
+                                Grid.Row="3"
+                                Grid.Column="0"
+                                BackgroundColor="White"
+                                HeightRequest="120"
+                                HorizontalOptions="FillAndExpand"
+                                Stroke="{StaticResource Gray300}"
+                                StrokeThickness="1">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="TappedCamposDinamicos" />
+                                </Border.GestureRecognizers>
+                                <Grid Padding="20" RowDefinitions="*,*">
+                                    <Border
+                                        Grid.Row="0"
+                                        BackgroundColor="#0074C8"
+                                        HeightRequest="35"
+                                        HorizontalOptions="Start"
+                                        Stroke="{StaticResource Gray300}"
+                                        StrokeShape="RoundRectangle 4"
+                                        StrokeThickness="1"
+                                        WidthRequest="35">
+                                        <Image
+                                            HeightRequest="25"
+                                            Source="icon_camposdinamicos_white"
+                                            WidthRequest="25" />
+                                    </Border>
+                                    <Label
+                                        Grid.Row="0"
+                                        Margin="40,0,0,0"
+                                        FontFamily="RobotoBlack"
+                                        FontSize="30"
+                                        HorizontalOptions="Start"
+                                        Text="17"
+                                        TextColor="#1F2125"
+                                        VerticalOptions="End" />
+                                    <Label
+                                        Grid.Row="1"
+                                        FontFamily="RobotoMedium"
+                                        FontSize="16"
+                                        HorizontalOptions="Start"
+                                        Text="Campos dinâmicos"
+                                        TextColor="#1F2125"
+                                        VerticalOptions="Start" />
+                                </Grid>
+                            </Border>
+                            <!--  Button Segurança  -->
+                            <Border
+                                Grid.Row="3"
+                                Grid.Column="1"
+                                BackgroundColor="White"
+                                HeightRequest="120"
+                                HorizontalOptions="FillAndExpand"
+                                Stroke="{StaticResource Gray300}"
+                                StrokeThickness="1">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="TappedSeguranca" />
+                                </Border.GestureRecognizers>
+                                <Grid Padding="20" RowDefinitions="*,*">
+                                    <Border
+                                        Grid.Row="0"
+                                        BackgroundColor="#0074C8"
+                                        HeightRequest="35"
+                                        HorizontalOptions="Start"
+                                        Stroke="{StaticResource Gray300}"
+                                        StrokeShape="RoundRectangle 4"
+                                        StrokeThickness="1"
+                                        WidthRequest="35">
+                                        <Image
+                                            HeightRequest="25"
+                                            Source="icon_seguranca_white"
+                                            WidthRequest="25" />
+                                    </Border>
+                                    <Label
+                                        Grid.Row="0"
+                                        Margin="40,0,0,0"
+                                        FontFamily="RobotoBlack"
+                                        FontSize="30"
+                                        HorizontalOptions="Start"
+                                        Text="6"
+                                        TextColor="#1F2125"
+                                        VerticalOptions="End" />
+                                    <Label
+                                        Grid.Row="1"
+                                        FontFamily="RobotoMedium"
+                                        FontSize="16"
+                                        HorizontalOptions="Start"
+                                        Text="Segurança"
+                                        TextColor="#1F2125"
+                                        VerticalOptions="Start" />
+                                </Grid>
+                            </Border>
+                            <!--  Button Versões  -->
+                            <Border
+                                Grid.Row="4"
+                                Grid.Column="0"
+                                BackgroundColor="White"
+                                HeightRequest="120"
+                                HorizontalOptions="FillAndExpand"
+                                Stroke="{StaticResource Gray300}"
+                                StrokeThickness="1">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="TappedVersoes" />
+                                </Border.GestureRecognizers>
+                                <Grid Padding="20" RowDefinitions="*,*">
+                                    <Border
+                                        Grid.Row="0"
+                                        BackgroundColor="#0074C8"
+                                        HeightRequest="35"
+                                        HorizontalOptions="Start"
+                                        Stroke="{StaticResource Gray300}"
+                                        StrokeShape="RoundRectangle 4"
+                                        StrokeThickness="1"
+                                        WidthRequest="35">
+                                        <Image
+                                            HeightRequest="25"
+                                            Source="icon_versionamento_white"
+                                            WidthRequest="25" />
+                                    </Border>
+                                    <Label
+                                        Grid.Row="0"
+                                        Margin="40,0,0,0"
+                                        FontFamily="RobotoBlack"
+                                        FontSize="30"
+                                        HorizontalOptions="Start"
+                                        Text="9"
+                                        TextColor="#1F2125"
+                                        VerticalOptions="End" />
+                                    <Label
+                                        Grid.Row="1"
+                                        FontFamily="RobotoMedium"
+                                        FontSize="16"
+                                        HorizontalOptions="Start"
+                                        Text="Versões"
+                                        TextColor="#1F2125"
+                                        VerticalOptions="Start" />
+                                </Grid>
+                            </Border>
+                            <!--  Button Entidades  -->
+                            <Border
+                                Grid.Row="4"
+                                Grid.Column="1"
+                                BackgroundColor="White"
+                                HeightRequest="120"
+                                HorizontalOptions="FillAndExpand"
+                                Stroke="{StaticResource Gray300}"
+                                StrokeThickness="1">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="TappedEntidades" />
+                                </Border.GestureRecognizers>
+                                <Grid Padding="20" RowDefinitions="*,*">
+                                    <Border
+                                        Grid.Row="0"
+                                        BackgroundColor="#0074C8"
+                                        HeightRequest="35"
+                                        HorizontalOptions="Start"
+                                        Stroke="{StaticResource Gray300}"
+                                        StrokeShape="RoundRectangle 4"
+                                        StrokeThickness="1"
+                                        WidthRequest="35">
+                                        <Image
+                                            HeightRequest="25"
+                                            Source="icon_despacchos_white"
+                                            WidthRequest="25" />
+                                    </Border>
+                                    <Label
+                                        Grid.Row="0"
+                                        Margin="40,0,0,0"
+                                        FontFamily="RobotoBlack"
+                                        FontSize="30"
+                                        HorizontalOptions="Start"
+                                        Text="2"
+                                        TextColor="#1F2125"
+                                        VerticalOptions="End" />
+                                    <Label
+                                        Grid.Row="1"
+                                        FontFamily="RobotoMedium"
+                                        FontSize="16"
+                                        HorizontalOptions="Start"
+                                        Text="Entidades"
+                                        TextColor="#1F2125"
+                                        VerticalOptions="Start" />
+                                </Grid>
+                            </Border>
+                            <!--  Button Mensagens  -->
+                            <Border
+                                Grid.Row="5"
+                                Grid.Column="0"
+                                BackgroundColor="White"
+                                HeightRequest="120"
+                                HorizontalOptions="FillAndExpand"
+                                Stroke="{StaticResource Gray300}"
+                                StrokeThickness="1">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="TappedMensagens" />
+                                </Border.GestureRecognizers>
+                                <Grid Padding="20" RowDefinitions="*,*">
+                                    <Border
+                                        Grid.Row="0"
+                                        BackgroundColor="#0074C8"
+                                        HeightRequest="35"
+                                        HorizontalOptions="Start"
+                                        Stroke="{StaticResource Gray300}"
+                                        StrokeShape="RoundRectangle 4"
+                                        StrokeThickness="1"
+                                        WidthRequest="35">
+                                        <Image
+                                            HeightRequest="25"
+                                            Source="icon_mensagens_white"
+                                            WidthRequest="25" />
+                                    </Border>
+                                    <Label
+                                        Grid.Row="0"
+                                        Margin="40,0,0,0"
+                                        FontFamily="RobotoBlack"
+                                        FontSize="30"
+                                        HorizontalOptions="Start"
+                                        Text="19"
+                                        TextColor="#1F2125"
+                                        VerticalOptions="End" />
+                                    <Label
+                                        Grid.Row="1"
+                                        FontFamily="RobotoMedium"
+                                        FontSize="16"
+                                        HorizontalOptions="Start"
+                                        Text="Mensagens"
+                                        TextColor="#1F2125"
+                                        VerticalOptions="Start" />
+                                </Grid>
+                            </Border>
+                        </Grid>
+                    </ScrollView>
+                </Grid>
+            </Grid>
+
+        </Grid>
+
+        <!--  Modal Loader  -->
+        <Grid
+            x:Name="ModalLoader"
+            IsVisible="false"
+            RowDefinitions="auto,*">
+            <Grid
+                Grid.Row="0"
+                Padding="20"
+                BackgroundColor="#BF000000"
+                Opacity="1">
+                <Border
+                    Padding="15"
+                    Background="White"
+                    StrokeShape="RoundRectangle 16"
+                    StrokeThickness="1">
+                    <Grid ColumnDefinitions="auto,*" ColumnSpacing="10">
+                        <Border
+                            Grid.Column="0"
+                            Padding="5"
+                            Background="{StaticResource Secondary}"
+                            HeightRequest="54"
+                            StrokeShape="RoundRectangle 50"
+                            StrokeThickness="1"
+                            WidthRequest="54">
+                            <ActivityIndicator
+                                BackgroundColor="Transparent"
+                                HeightRequest="30"
+                                IsRunning="True"
+                                WidthRequest="30"
+                                Color="White" />
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1">
+                            <Label
+                                FontFamily="RobotoBold"
+                                FontSize="22"
+                                HorizontalTextAlignment="Start"
+                                Text="Aguarde"
+                                TextColor="#1F2125" />
+                            <Label
+                                FontFamily="RobotoBold"
+                                FontSize="16"
+                                HorizontalTextAlignment="Start"
+                                Text="Validação em progresso"
+                                TextColor="#959595" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+            </Grid>
+            <Grid
+                Grid.Row="1"
+                BackgroundColor="#000000"
+                Opacity="0.75" />
+        </Grid>
+
+    </Grid>
+</ContentPage>

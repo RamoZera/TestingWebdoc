@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="WebDocMobile.Pages.Mobile.RegisterFilterProcesses"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="RegisterFilterProcesses">
+    <StackLayout>
+        <Label
+            Margin="10,0,0,0"
+            FontFamily="RobotoBold"
+            FontSize="20"
+            Text="Filtrar Registos" />
+        <Button
+            Margin="0,35,0,0"
+            BackgroundColor="White"
+            BorderColor="#FFB60A"
+            BorderWidth="2"
+            CornerRadius="6"
+            HeightRequest="3"
+            WidthRequest="700" />
+        <Image
+            Margin="280,0,0,580"
+            HeightRequest="16"
+            Source="btn_close" />
+        <Grid>
+            <Label
+                Margin="10,70,0,0"
+                FontFamily="RobotoBold"
+                FontSize="20"
+                Text="Estado do Fluxo"
+                TextColor="Black"/>
+
+            <!-- Comboboxs por resolver ( breakmode ) -->
+            
+
+            <Label
+                Margin="10,150,0,0"
+                FontFamily="RobotoBold"
+                FontSize="20"
+                Text="Estado"
+                TextColor="Black"/>
+
+            <Label
+                Margin="10,250,0,0"
+                FontFamily="RobotoBold"
+                FontSize="20"
+                Text="Tipo"
+                TextColor="Black"/>
+        </Grid>
+
+    </StackLayout>
+</ContentPage>

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="78" height="24" viewBox="0 0 78 24">
+  <g id="chip-required_" data-name="chip-required " transform="translate(-16 -9)">
+    <rect id="btn" width="76" height="22" rx="2" transform="translate(17 10)" fill="#fef4f5" stroke="#ff5050" stroke-width="2"/>
+    <text id="Label" transform="translate(85 25)" fill="#dc3545" font-size="12" font-family="Roboto-Medium, Roboto" font-weight="500"><tspan x="-60" y="0">Obrigatório</tspan></text>
+  </g>
+</svg>

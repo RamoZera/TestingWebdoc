@@ -1,23 +1,52 @@
-﻿﻿﻿﻿using CommunityToolkit.Maui;
-using WebDocMobile.Models;
-using WebDocMobile.Pages.Mobile;
-using WebDocMobile.Pages.Desktop;
-using WebDocMobile.PageModels;
-using WebDocMobile.Services;
+﻿﻿using WebDocMobile.Helpers;
 using WebDocMobile.Helpers.WsMethods;
-using Newtonsoft.Json;
+using WebDocMobile.Models;
+using WebDocMobile.Models.BookService;
+using WebDocMobile.Models.DashBoard;
+using WebDocMobile.Pages.Mobile;
 
 namespace WebDocMobile;
 
-public partial class App : Application
+public partial class App: Application
 {
-    // All static properties have been moved to IAppStateService and ISettingsService
-    // to promote decoupling, testability, and better state management.
-	public App(AppShell appShell)
-	{
-		InitializeComponent();
-        // The correct way to start a Shell-based MAUI app.
-        // The AppShell will now be responsible for handling the initial navigation logic.
-        MainPage = appShell;
+    internal static UserBasicInfo UserDetails { get; set; }
+    internal static string BaseAddress { get; set; }
+    internal static GetDashBoard DashBoard { get; set; }
+
+    //Global loader and global modal alert
+    public static bool SE_Loader { get; set; } = false;
+    public static bool SE_ModalError { get; set; } = false;
+    public App()
+    {
+        InitializeComponent();
+
+        Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping(nameof(CustomControls.BorderlessEntryC), (handler, view) =>
+        {
+#if ANDROID
+            handler.PlatformView.SetBackgroundColor(Android.Graphics.Color.Transparent);
+#endif
+        });
+        UserBasicInfo user;
+        try
+        {
+            user = UserBasicInfo.Load();
+        }
+        catch
+        {
+            user = UserBasicInfo.New();
+        }
+        if(user.IsCorrect(out string baseAddress) == true)
+        {
+            BaseAddress = baseAddress;
+#if ANDROID || IOS
+            MainPage = new NavigationPage(new ReLoginPageMobile());
+#endif
+        }
+        else
+        {
+#if ANDROID || IOS
+            MainPage = new NavigationPage(new LoginPageMobile(user.CodEntidade));
+#endif
+        }
     }
 }

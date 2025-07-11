@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
+  <defs>
+    <clipPath id="clip-path">
+      <circle id="user" cx="12" cy="12" r="12" transform="translate(372 856)" fill="#ebebeb"/>
+    </clipPath>
+  </defs>
+  <g id="icon-user" transform="translate(-372 -856)">
+    <circle id="user-2" data-name="user" cx="12" cy="12" r="12" transform="translate(372 856)" fill="#ebebeb"/>
+    <g id="icon-user-2" data-name="icon-user" clip-path="url(#clip-path)">
+      <path id="icon" d="M170-790a4.815,4.815,0,0,1-3.531-1.469A4.815,4.815,0,0,1,165-795a4.815,4.815,0,0,1,1.469-3.531A4.815,4.815,0,0,1,170-800a4.815,4.815,0,0,1,3.531,1.469A4.815,4.815,0,0,1,175-795a4.815,4.815,0,0,1-1.469,3.531A4.815,4.815,0,0,1,170-790Zm-10,10v-3.5a3.662,3.662,0,0,1,.547-1.953A3.646,3.646,0,0,1,162-786.812a18.561,18.561,0,0,1,3.938-1.453A17.2,17.2,0,0,1,170-788.75a17.2,17.2,0,0,1,4.063.484A18.561,18.561,0,0,1,178-786.812a3.646,3.646,0,0,1,1.453,1.359A3.662,3.662,0,0,1,180-783.5v3.5Z" transform="translate(214 1660)" fill="#0074c8"/>
+    </g>
+  </g>
+</svg>

@@ -1,116 +1,542 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
-             xmlns:converters="clr-namespace:WebDocMobile.Converters"
-             x:Class="WebDocMobile.Pages.Mobile.ReLoginPageMobile"
-             Title="ReLoginPageMobile">
+<ContentPage
+    x:Class="WebDocMobile.Pages.Mobile.ReLoginPageMobile"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
+    Title="ReLoginPageMobile">
     <Page.Behaviors>
-        <mct:StatusBarBehavior x:Name="statusbar"
-                               StatusBarColor="#262930" />
+        <mct:StatusBarBehavior x:Name="statusbar" StatusBarColor="{StaticResource Primary}" />
     </Page.Behaviors>
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <converters:BoolToColorConverter x:Key="BoolToColorConverter" />
-            <converters:BoolToOpacityConverter x:Key="BoolToOpacityConverter" />
-            <Style x:Key="PinDigitButton" TargetType="Button">
-                <Setter Property="HeightRequest" Value="64" />
-                <Setter Property="WidthRequest" Value="64" />
-                <Setter Property="CornerRadius" Value="4" />
-                <Setter Property="BorderColor" Value="#EBEBEB" />
-                <Setter Property="BorderWidth" Value="1" />
-                <Setter Property="BackgroundColor" Value="White" />
-                <Setter Property="TextColor" Value="#1F2125" />
-                <Setter Property="FontFamily" Value="RobotoMedium" />
-                <Setter Property="FontSize" Value="34" />
-            </Style>
-        </ResourceDictionary>
-    </ContentPage.Resources>
 
-    <VerticalStackLayout BackgroundColor="#262930">
-
-        <StackLayout Spacing="24">
-            <Grid Margin="30,30,0,0">
-                <Button BackgroundColor="#262930"
-                        BorderColor="#FFFFFF"
-                        BorderWidth="1"
+    <Grid>
+        <!--  Main Content  -->
+        <Grid
+            x:Name="MainContent"
+            BackgroundColor="{StaticResource Gray50}"
+            RowDefinitions=".6*,*">
+            <StackLayout
+                Grid.Row="0"
+                Padding="40"
+                BackgroundColor="{StaticResource Primary}"
+                Spacing="30">
+                <Label
+                    Grid.Column="1"
+                    FontFamily="RobotoLight"
+                    FontSize="36"
+                    Text="Segurança"
+                    TextColor="White" />
+                <Label
+                    FontFamily="RobotoRegular"
+                    FontSize="16"
+                    Text="Insere o teu PIN para desbloquear a aplicação"
+                    TextColor="#F6FCFF" />
+                <Grid
+                    Margin="0,20"
+                    ColumnDefinitions="auto,auto,auto,auto,auto,auto"
+                    ColumnSpacing="10"
+                    HorizontalOptions="Center">
+                    <!--  Circles  -->
+                    <Path
+                        x:Name="Circle1"
+                        Grid.Column="0"
+                        Fill="White"
                         Opacity="0.15"
-                        CornerRadius="4"
-                        HeightRequest="56"
-                        WidthRequest="56"
-                        HorizontalOptions="StartAndExpand"/>
-                <Image HeightRequest="18.4"
-                       WidthRequest="24"
-                       Source="icon_anterior"
-                       HorizontalOptions="StartAndExpand"
-                       Margin="15,0,0,0"
-                       RotationY="180" />
-            </Grid>
+                        Stroke="White">
+                        <Path.Data>
+                            <EllipseGeometry
+                                Center="25,25"
+                                RadiusX="16"
+                                RadiusY="16" />
+                        </Path.Data>
+                    </Path>
+                    <Path
+                        x:Name="Circle2"
+                        Grid.Column="1"
+                        Fill="White"
+                        Opacity="0.15"
+                        Stroke="White">
+                        <Path.Data>
+                            <EllipseGeometry
+                                Center="25,25"
+                                RadiusX="16"
+                                RadiusY="16" />
+                        </Path.Data>
+                    </Path>
+                    <Path
+                        x:Name="Circle3"
+                        Grid.Column="2"
+                        Fill="White"
+                        Opacity="0.15"
+                        Stroke="White">
+                        <Path.Data>
+                            <EllipseGeometry
+                                Center="25,25"
+                                RadiusX="16"
+                                RadiusY="16" />
+                        </Path.Data>
+                    </Path>
+                    <Path
+                        x:Name="Circle4"
+                        Grid.Column="3"
+                        Fill="White"
+                        Opacity="0.15"
+                        Stroke="White">
+                        <Path.Data>
+                            <EllipseGeometry
+                                Center="25,25"
+                                RadiusX="16"
+                                RadiusY="16" />
+                        </Path.Data>
+                    </Path>
+                    <Path
+                        x:Name="Circle5"
+                        Grid.Column="4"
+                        Fill="White"
+                        Opacity="0.15"
+                        Stroke="White">
+                        <Path.Data>
+                            <EllipseGeometry
+                                Center="25,25"
+                                RadiusX="16"
+                                RadiusY="16" />
+                        </Path.Data>
+                    </Path>
+                    <Path
+                        x:Name="Circle6"
+                        Grid.Column="5"
+                        Fill="White"
+                        Opacity="0.15"
+                        Stroke="White">
+                        <Path.Data>
+                            <EllipseGeometry
+                                Center="25,25"
+                                RadiusX="16"
+                                RadiusY="16" />
+                        </Path.Data>
+                    </Path>
 
-            <Label Text="Segurança"
-                   TextColor="White"
-                   FontSize="32"
-                   FontFamily="RobotoLight"
-                   Margin="30,0,0,0" />
-            <Label Text="{Binding Username, StringFormat='Bem-vindo de volta, {0}'}"
-                   TextColor="#F6FCFF"
-                   Margin="30,0,30,0"
-                   FontSize="16"
-                   FontFamily="RobotoRegular" />
-            
-            <!-- This layout will automatically create a circle for each item in the PinDigits collection -->
-            <HorizontalStackLayout BindableLayout.ItemsSource="{Binding PinDigits}"
-                                   Spacing="16"
-                                   HorizontalOptions="Center"
-                                   Margin="0,10,0,0">
-                <BindableLayout.ItemTemplate>
-                    <DataTemplate>
-                        <!-- The visual representation of a single PIN digit -->
-                        <Ellipse Fill="{Binding IsFilled, Converter={StaticResource BoolToColorConverter}}"
-                                 Stroke="{Binding IsFilled, Converter={StaticResource BoolToColorConverter}}"
-                                 HeightRequest="32"
-                                 WidthRequest="32"
-                                 Opacity="{Binding IsFilled, Converter={StaticResource BoolToOpacityConverter}}"/>
-                    </DataTemplate>
-                </BindableLayout.ItemTemplate>
-            </HorizontalStackLayout>
+                    <!--  SelectionCircles  -->
 
-            <Frame Margin="0,35,0,0"
-                   CornerRadius="32"
-                   BackgroundColor="White"
-                   VerticalOptions="FillAndExpand">
-                <Grid RowDefinitions="*, Auto" RowSpacing="20">
-                    <!-- This Grid creates a clean, maintainable layout for the number pad -->
-                    <Grid Grid.Row="0"
-                          RowDefinitions="*,*,*,*"
-                          ColumnDefinitions="*,*,*"
-                          RowSpacing="16"
-                          ColumnSpacing="16"
-                          HorizontalOptions="Center"
-                          VerticalOptions="Center">
+                    <Path
+                        x:Name="SelectionCircle1"
+                        Grid.Column="0"
+                        Fill="Transparent"
+                        IsVisible="{Binding Path=SelectionCircle1}"
+                        Stroke="White"
+                        StrokeThickness="4">
+                        <Path.Data>
+                            <EllipseGeometry
+                                Center="25,25"
+                                RadiusX="14"
+                                RadiusY="14" />
+                        </Path.Data>
+                    </Path>
+                    <Path
+                        x:Name="SelectionCircle2"
+                        Grid.Column="1"
+                        Fill="Transparent"
+                        IsVisible="{Binding Path=SelectionCircle2}"
+                        Stroke="White"
+                        StrokeThickness="4">
+                        <Path.Data>
+                            <EllipseGeometry
+                                Center="25,25"
+                                RadiusX="14"
+                                RadiusY="14" />
+                        </Path.Data>
+                    </Path>
+                    <Path
+                        x:Name="SelectionCircle3"
+                        Grid.Column="2"
+                        Fill="Transparent"
+                        IsVisible="{Binding Path=SelectionCircle3}"
+                        Stroke="White"
+                        StrokeThickness="4">
+                        <Path.Data>
+                            <EllipseGeometry
+                                Center="25,25"
+                                RadiusX="14"
+                                RadiusY="14" />
+                        </Path.Data>
+                    </Path>
+                    <Path
+                        x:Name="SelectionCircle4"
+                        Grid.Column="3"
+                        Fill="Transparent"
+                        IsVisible="{Binding Path=SelectionCircle4}"
+                        Stroke="White"
+                        StrokeThickness="4">
+                        <Path.Data>
+                            <EllipseGeometry
+                                Center="25,25"
+                                RadiusX="14"
+                                RadiusY="14" />
+                        </Path.Data>
+                    </Path>
+                    <Path
+                        x:Name="SelectionCircle5"
+                        Grid.Column="4"
+                        Fill="Transparent"
+                        IsVisible="{Binding Path=SelectionCircle5}"
+                        Stroke="White"
+                        StrokeThickness="4">
+                        <Path.Data>
+                            <EllipseGeometry
+                                Center="25,25"
+                                RadiusX="14"
+                                RadiusY="14" />
+                        </Path.Data>
+                    </Path>
+                    <Path
+                        x:Name="SelectionCircle6"
+                        Grid.Column="5"
+                        Fill="Transparent"
+                        IsVisible="{Binding Path=SelectionCircle6}"
+                        Stroke="White"
+                        StrokeThickness="4">
+                        <Path.Data>
+                            <EllipseGeometry
+                                Center="25,25"
+                                RadiusX="14"
+                                RadiusY="14" />
+                        </Path.Data>
+                    </Path>
 
-                        <!-- Row 0 -->
-                        <Button Grid.Row="0" Grid.Column="0" Text="1" Command="{Binding AddDigitCommand}" CommandParameter="1" Style="{StaticResource PinDigitButton}" />
-                        <Button Grid.Row="0" Grid.Column="1" Text="2" Command="{Binding AddDigitCommand}" CommandParameter="2" Style="{StaticResource PinDigitButton}" />
-                        <Button Grid.Row="0" Grid.Column="2" Text="3" Command="{Binding AddDigitCommand}" CommandParameter="3" Style="{StaticResource PinDigitButton}" />
+                    <!--  SelectedCircles  -->
 
-                        <!-- Row 1 -->
-                        <Button Grid.Row="1" Grid.Column="0" Text="4" Command="{Binding AddDigitCommand}" CommandParameter="4" Style="{StaticResource PinDigitButton}" />
-                        <Button Grid.Row="1" Grid.Column="1" Text="5" Command="{Binding AddDigitCommand}" CommandParameter="5" Style="{StaticResource PinDigitButton}" />
-                        <Button Grid.Row="1" Grid.Column="2" Text="6" Command="{Binding AddDigitCommand}" CommandParameter="6" Style="{StaticResource PinDigitButton}" />
-
-                        <!-- Row 2 -->
-                        <Button Grid.Row="2" Grid.Column="0" Text="7" Command="{Binding AddDigitCommand}" CommandParameter="7" Style="{StaticResource PinDigitButton}" />
-                        <Button Grid.Row="2" Grid.Column="1" Text="8" Command="{Binding AddDigitCommand}" CommandParameter="8" Style="{StaticResource PinDigitButton}" />
-                        <Button Grid.Row="2" Grid.Column="2" Text="9" Command="{Binding AddDigitCommand}" CommandParameter="9" Style="{StaticResource PinDigitButton}" />
-
-                        <!-- Row 3 -->
-                        <Button Grid.Row="3" Grid.Column="0" ImageSource="icon_biometrico" Command="{Binding BiometricButtonPressedCommand}" BackgroundColor="White" />
-                        <Button Grid.Row="3" Grid.Column="1" Text="0" Command="{Binding AddDigitCommand}" CommandParameter="0" Style="{StaticResource PinDigitButton}" />
-                        <Button Grid.Row="3" Grid.Column="2" ImageSource="icon_apagar" Command="{Binding DeleteDigitCommand}" BackgroundColor="White" />
-                    </Grid>
+                    <Path
+                        x:Name="SelectedCircle1"
+                        Grid.Column="0"
+                        Fill="{StaticResource Secondary}"
+                        IsVisible="{Binding Path=SelectedCircle1}"
+                        Stroke="{StaticResource Secondary}">
+                        <Path.Data>
+                            <EllipseGeometry
+                                Center="25,25"
+                                RadiusX="16"
+                                RadiusY="16" />
+                        </Path.Data>
+                    </Path>
+                    <Path
+                        x:Name="SelectedCircle2"
+                        Grid.Column="1"
+                        Fill="{StaticResource Secondary}"
+                        IsVisible="{Binding Path=SelectedCircle2}"
+                        Stroke="{StaticResource Secondary}">
+                        <Path.Data>
+                            <EllipseGeometry
+                                Center="25,25"
+                                RadiusX="16"
+                                RadiusY="16" />
+                        </Path.Data>
+                    </Path>
+                    <Path
+                        x:Name="SelectedCircle3"
+                        Grid.Column="2"
+                        Fill="{StaticResource Secondary}"
+                        IsVisible="{Binding Path=SelectedCircle3}"
+                        Stroke="{StaticResource Secondary}">
+                        <Path.Data>
+                            <EllipseGeometry
+                                Center="25,25"
+                                RadiusX="16"
+                                RadiusY="16" />
+                        </Path.Data>
+                    </Path>
+                    <Path
+                        x:Name="SelectedCircle4"
+                        Grid.Column="3"
+                        Fill="{StaticResource Secondary}"
+                        IsVisible="{Binding Path=SelectedCircle4}"
+                        Stroke="{StaticResource Secondary}">
+                        <Path.Data>
+                            <EllipseGeometry
+                                Center="25,25"
+                                RadiusX="16"
+                                RadiusY="16" />
+                        </Path.Data>
+                    </Path>
+                    <Path
+                        x:Name="SelectedCircle5"
+                        Grid.Column="4"
+                        Fill="{StaticResource Secondary}"
+                        IsVisible="{Binding Path=SelectedCircle5}"
+                        Stroke="{StaticResource Secondary}">
+                        <Path.Data>
+                            <EllipseGeometry
+                                Center="25,25"
+                                RadiusX="16"
+                                RadiusY="16" />
+                        </Path.Data>
+                    </Path>
+                    <Path
+                        x:Name="SelectedCircle6"
+                        Grid.Column="5"
+                        Fill="{StaticResource Secondary}"
+                        IsVisible="{Binding Path=SelectedCircle6}"
+                        Stroke="{StaticResource Secondary}">
+                        <Path.Data>
+                            <EllipseGeometry
+                                Center="25,25"
+                                RadiusX="16"
+                                RadiusY="16" />
+                        </Path.Data>
+                    </Path>
                 </Grid>
-            </Frame>
-        </StackLayout>
-    </VerticalStackLayout>
+            </StackLayout>
+            <Grid Grid.Row="1" BackgroundColor="{StaticResource Primary}">
+                <Border
+                    Padding="20"
+                    Background="White"
+                    StrokeShape="RoundRectangle 16,16,0,0"
+                    StrokeThickness="1">
+                    <VerticalStackLayout Spacing="10">
+                        <Grid
+                            ColumnDefinitions="auto, auto, auto"
+                            ColumnSpacing="20"
+                            HorizontalOptions="Center"
+                            RowDefinitions="auto, auto, auto, auto, auto"
+                            RowSpacing="20">
+                            <Button
+                                x:Name="Digit1"
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                BackgroundColor="White"
+                                BorderColor="#EBEBEB"
+                                BorderWidth="1"
+                                Clicked="AddDigit"
+                                Command="{Binding Digit1PressedCommand}"
+                                CornerRadius="4"
+                                FontFamily="RobotoMedium"
+                                FontSize="34"
+                                HeightRequest="64"
+                                Text="1"
+                                TextColor="#1F2125"
+                                WidthRequest="64" />
+                            <Button
+                                x:Name="Digit2"
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                BackgroundColor="White"
+                                BorderColor="#EBEBEB"
+                                BorderWidth="1"
+                                Clicked="AddDigit"
+                                Command="{Binding Digit2PressedCommand}"
+                                CornerRadius="4"
+                                FontFamily="RobotoMedium"
+                                FontSize="34"
+                                HeightRequest="64"
+                                Text="2"
+                                TextColor="#1F2125"
+                                WidthRequest="64" />
+                            <Button
+                                x:Name="Digit3"
+                                Grid.Row="0"
+                                Grid.Column="2"
+                                BackgroundColor="White"
+                                BorderColor="#EBEBEB"
+                                BorderWidth="1"
+                                Clicked="AddDigit"
+                                Command="{Binding Digit3PressedCommand}"
+                                CornerRadius="4"
+                                FontFamily="RobotoMedium"
+                                FontSize="34"
+                                HeightRequest="64"
+                                Text="3"
+                                TextColor="#1F2125"
+                                WidthRequest="64" />
+                            <Button
+                                x:Name="Digit4"
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                BackgroundColor="White"
+                                BorderColor="#EBEBEB"
+                                BorderWidth="1"
+                                Clicked="AddDigit"
+                                Command="{Binding Digit4PressedCommand}"
+                                CornerRadius="4"
+                                FontFamily="RobotoMedium"
+                                FontSize="34"
+                                HeightRequest="64"
+                                Text="4"
+                                TextColor="#1F2125"
+                                WidthRequest="64" />
+                            <Button
+                                x:Name="Digit5"
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                BackgroundColor="White"
+                                BorderColor="#EBEBEB"
+                                BorderWidth="1"
+                                Clicked="AddDigit"
+                                Command="{Binding Digit5PressedCommand}"
+                                CornerRadius="4"
+                                FontFamily="RobotoMedium"
+                                FontSize="34"
+                                HeightRequest="64"
+                                Text="5"
+                                TextColor="#1F2125"
+                                WidthRequest="64" />
+                            <Button
+                                x:Name="Digit6"
+                                Grid.Row="1"
+                                Grid.Column="2"
+                                BackgroundColor="White"
+                                BorderColor="#EBEBEB"
+                                BorderWidth="1"
+                                Clicked="AddDigit"
+                                Command="{Binding Digit6PressedCommand}"
+                                CornerRadius="4"
+                                FontFamily="RobotoMedium"
+                                FontSize="34"
+                                HeightRequest="64"
+                                Text="6"
+                                TextColor="#1F2125"
+                                WidthRequest="64" />
+                            <Button
+                                x:Name="Digit7"
+                                Grid.Row="2"
+                                Grid.Column="0"
+                                BackgroundColor="White"
+                                BorderColor="#EBEBEB"
+                                BorderWidth="1"
+                                Clicked="AddDigit"
+                                Command="{Binding Digit7PressedCommand}"
+                                CornerRadius="4"
+                                FontFamily="RobotoMedium"
+                                FontSize="34"
+                                HeightRequest="64"
+                                Text="7"
+                                TextColor="#1F2125"
+                                WidthRequest="64" />
+                            <Button
+                                x:Name="Digit8"
+                                Grid.Row="2"
+                                Grid.Column="1"
+                                BackgroundColor="White"
+                                BorderColor="#EBEBEB"
+                                BorderWidth="1"
+                                Clicked="AddDigit"
+                                Command="{Binding Digit8PressedCommand}"
+                                CornerRadius="4"
+                                FontFamily="RobotoMedium"
+                                FontSize="34"
+                                HeightRequest="64"
+                                Text="8"
+                                TextColor="#1F2125"
+                                WidthRequest="64" />
+                            <Button
+                                x:Name="Digit9"
+                                Grid.Row="2"
+                                Grid.Column="2"
+                                BackgroundColor="White"
+                                BorderColor="#EBEBEB"
+                                BorderWidth="1"
+                                Clicked="AddDigit"
+                                Command="{Binding Digit9PressedCommand}"
+                                CornerRadius="4"
+                                FontFamily="RobotoMedium"
+                                FontSize="34"
+                                HeightRequest="64"
+                                Text="9"
+                                TextColor="#1F2125"
+                                WidthRequest="64" />
+                            <Button
+                                x:Name="Digit0"
+                                Grid.Row="3"
+                                Grid.Column="1"
+                                BackgroundColor="White"
+                                BorderColor="#EBEBEB"
+                                BorderWidth="1"
+                                Clicked="AddDigit"
+                                Command="{Binding Digit0PressedCommand}"
+                                CornerRadius="4"
+                                FontFamily="RobotoMedium"
+                                FontSize="34"
+                                HeightRequest="64"
+                                Text="0"
+                                TextColor="#1F2125"
+                                WidthRequest="64" />
+                            <Button
+                                x:Name="DeleteDigit"
+                                Grid.Row="3"
+                                Grid.Column="2"
+                                BackgroundColor="White"
+                                Clicked="RemoveDigitPressed"
+                                Command="{Binding DeleteDigitPressedCommand}"
+                                HeightRequest="64"
+                                ImageSource="icon_apagar"
+                                WidthRequest="64" />
+                        </Grid>
+                        <Button
+                            x:Name="ReturnLoginButton"
+                            BackgroundColor="White"
+                            BorderColor="#EBEBEB"
+                            BorderWidth="1"
+                            Command="{Binding ReturnButtonLoginPressedCommand}"
+                            FontFamily="RobotoBold"
+                            FontSize="16"
+                            HeightRequest="52"
+                            Text="Esqueceu-se do seu PIN"
+                            TextColor="#1F2125" />
+                    </VerticalStackLayout>
+                </Border>
+            </Grid>
+        </Grid>
+
+        <!--  Modal Loader  -->
+        <Grid
+            x:Name="ModalLoader"
+            IsVisible="{Binding GbLoader}"
+            RowDefinitions="auto,*">
+            <Grid
+                Grid.Row="0"
+                Padding="20"
+                BackgroundColor="#BF000000"
+                Opacity="1">
+                <Border
+                    Padding="15"
+                    Background="White"
+                    StrokeShape="RoundRectangle 16"
+                    StrokeThickness="1">
+                    <Grid ColumnDefinitions="auto,*" ColumnSpacing="10">
+                        <Border
+                            Grid.Column="0"
+                            Padding="5"
+                            Background="{StaticResource Secondary}"
+                            HeightRequest="54"
+                            StrokeShape="RoundRectangle 50"
+                            StrokeThickness="1"
+                            WidthRequest="54">
+                            <ActivityIndicator
+                                BackgroundColor="Transparent"
+                                HeightRequest="30"
+                                IsRunning="True"
+                                WidthRequest="30"
+                                Color="White" />
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1">
+                            <Label
+                                FontFamily="RobotoBold"
+                                FontSize="22"
+                                HorizontalTextAlignment="Start"
+                                Text="Aguarde"
+                                TextColor="#1F2125" />
+                            <Label
+                                FontFamily="RobotoBold"
+                                FontSize="16"
+                                HorizontalTextAlignment="Start"
+                                Text="Validação em progresso"
+                                TextColor="#959595" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+            </Grid>
+            <Grid
+                Grid.Row="1"
+                BackgroundColor="#000000"
+                Opacity="0.75" />
+        </Grid>
+    </Grid>
 </ContentPage>

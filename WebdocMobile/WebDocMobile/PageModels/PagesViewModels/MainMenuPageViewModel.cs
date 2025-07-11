@@ -1,126 +1,198 @@
-﻿﻿﻿﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using WebDocMobile.Pages.Mobile;
-using CommunityToolkit.Mvvm.ComponentModel;
-using WebDocMobile.Pages.Desktop;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
-using WebDocMobile.Models;
-using WebDocMobile.Helpers.WsMethods;
-using WebDocMobile.Services;
 using System.Globalization;
-using System.Diagnostics;
-using Microsoft.Maui.Graphics;
+using Telerik.Windows.Documents.Spreadsheet.Expressions.Functions;
+using WebDocMobile.Helpers;
+using WebDocMobile.Models.DashBoard;
+using WebDocMobile.Pages.Mobile;
+using WebDocMobile.Services;
 
 namespace WebDocMobile.PageModels
 {
     public partial class MainMenuPageViewModel : ObservableObject
     {
-        private readonly IAppStateService _appStateService;
-        
-        // Define brushes once to be reused by both chart data sets.
-        private readonly Brush _comigoBrush = new SolidColorBrush(Color.FromArgb("#072B8E"));
-        private readonly Brush _departamentoBrush = new SolidColorBrush(Color.FromArgb("#1161FC"));
-        private readonly Brush _conhecimentoBrush = new SolidColorBrush(Color.FromArgb("#63B6E3"));
-        private readonly IProcessService _processService;
-        private readonly ISettingsService _settingsService;
- 
-        // These lists will hold the data for the two different chart states.
-        private List<CategoricalData> _documentsChartData;
-        private List<CategoricalData> _processesChartData;
- 
-        // This is the single collection that the UI will bind to for the chart.
-        [ObservableProperty]
-        private ObservableCollection<CategoricalData> _chartData;
 
+        private string text = " registos";
+        public string username { get; set; }
+        public string date { get; set; }
         [ObservableProperty]
-        private bool isShowingDocuments = true;
-
+        public string allDocumentsNumber;
         [ObservableProperty]
-        private string username;
-        [ObservableProperty]
-        private string date;
-        [ObservableProperty]
-        private string allDocumentsNumber;
+        public string allProcessesNumber;
         [ObservableProperty]
         private string myDocumentsNumber;
         [ObservableProperty]
         private string departmentDocumentsNumber;
         [ObservableProperty]
         private string knownDocumentsNumber;
+        [ObservableProperty]
+        private bool isNewRegisterPopupOpen = false;
+        [ObservableProperty]
+        private bool biometricsConfigured = true;
+        [ObservableProperty]
+        public Document document;
+        [ObservableProperty]
+        private Document procese;
 
-        public MainMenuPageViewModel(IAppStateService appStateService, IProcessService processService, ISettingsService settingsService)
+        [ObservableProperty]
+        public bool gbLoader;
+        [ObservableProperty]
+        public bool gbModalError;
+        [ObservableProperty]
+        public string gbIconModalError;
+        [ObservableProperty]
+        public string gbTitleModalError;
+        [ObservableProperty]
+        public string gbTextModalError;
+
+        private readonly IGetDashBoardService _dashBoardService;
+
+        [ObservableProperty]
+        public ObservableCollection<GetCategoricalData> data;
+        [ObservableProperty]
+        public ObservableCollection<GetCategoricalData> dataProceses;
+        public ObservableCollection<Brush> colorGraph { get; set; }
+        private INavigation _navigationService;
+        public bool _navigationToLogin;
+        private readonly IAlertService _alertService;
+        internal Color[] Palette { get; }
+        public List<Document> Documents { get; private set; }
+        public List<Processes> Proceses { get; private set; }
+
+        public MainMenuPageViewModel(INavigation navigation, bool biometricsConfigured = false) : this()
         {
-            _appStateService = appStateService;
-            _processService = processService;
-            _settingsService = settingsService;
-
-            Username = _appStateService.UserDetails?.strName ?? "Unknown User";
-            Date = DateTime.Now.ToString("dd MMMM yyyy", new CultureInfo("PT-pt"));
-
-            LoadDocumentData();
-            // Asynchronously load process data without blocking the constructor.
-            _ = LoadProcessDataAsync();
+            _navigationService = navigation;
+            this.biometricsConfigured = biometricsConfigured;
         }
 
-        /// <summary>
-        /// Populates the document count labels and the chart data from the AppStateService.
-        /// </summary>
-        private void LoadDocumentData()
+        public MainMenuPageViewModel()
         {
-            var myDocsCount = _appStateService.MyDocuments?.Count ?? 0;
-            var deptDocsCount = _appStateService.DepartmentDocuments?.Count ?? 0;
-            var knownDocsCount = _appStateService.KnownDocuments?.Count ?? 0;
-
-            // Set the properties for the text labels
-            MyDocumentsNumber = myDocsCount.ToString();
-            DepartmentDocumentsNumber = deptDocsCount.ToString();
-            KnownDocumentsNumber = knownDocsCount.ToString();
-            AllDocumentsNumber = (_appStateService.AllDocuments?.Count ?? 0).ToString();
-
-            // Prepare the data for the documents chart.
-            _documentsChartData = new List<CategoricalData>
+            _alertService = new AlertService();
+            _dashBoardService = new DashBoardService();
+            gbLoader = false;
+            gbModalError = false;
+            gbIconModalError = "icon_erroconta";
+            gbTitleModalError = "";
+            gbTextModalError = "";
+            username = App.UserDetails.StrName;
+            date = DateTime.Now.ToString("dd MMMM yyyy", new CultureInfo("PT-pt"));
+            Palette = PaletteLoader.LoadPalette("#072B8E", "#1161FC", "#63B6E3");
+            try
             {
-                new CategoricalData { Category = "Comigo", Value = myDocsCount, Color = _comigoBrush },
-                new CategoricalData { Category = "Departamento", Value = deptDocsCount, Color = _departamentoBrush },
-                new CategoricalData { Category = "Conhecimento", Value = knownDocsCount, Color = _conhecimentoBrush }
-            };
-            // Initialize the chart with the document data.
-            ChartData = new ObservableCollection<CategoricalData>(_documentsChartData);
-        }
-
-        private async Task LoadProcessDataAsync()
-        {
-            // TODO: Replace this with real data fetching from the process service.
-            // This would involve calling a method like `_processService.GetProcessSummary()`.
-            // For now, we use placeholder data to keep the UI functional.
-            await Task.Delay(10); // Simulate async work
-            _processesChartData = new List<CategoricalData>
+                SetPDNumbers(true, true);
+                AddDocsPreview();
+                AddPrcsPreview();
+            }
+            catch (Exception ex)
             {
-                new CategoricalData { Category = "Comigo", Value = 22, Color = _comigoBrush },
-                new CategoricalData { Category = "Departamento", Value = 268, Color = _departamentoBrush },
-                new CategoricalData { Category = "Conhecimento", Value = 43, Color = _conhecimentoBrush }
-            };
+                GbTitleModalError = "Erro";
+                GbTextModalError = ex._GetExceptionMessage();
+                GbModalError = true;
+                //_alertService.ShowAlert("Erro", ex._GetExceptionMessage());
+                _navigationService._PushAsyncWithCleanup(new LoginPageMobile(App.UserDetails?.CodEntidade));
+            }
         }
 
-        [RelayCommand]
-        private void ToggleChart(string chartType)
+        private void AddDocsPreview()
         {
-            IsShowingDocuments = chartType == "documents";
-        }
-
-        /// <summary>
-        /// This partial method is automatically called by the MVVM Toolkit's source generator
-        /// whenever the IsShowingDocuments property changes.
-        /// </summary>
-        partial void OnIsShowingDocumentsChanged(bool value)
-        {
-            var sourceData = value ? _documentsChartData : _processesChartData;
-            if (sourceData != null)
+            var dr = _dashBoardService.GetDocuments(5, out _navigationToLogin);
+            if (dr.Status == Models.ReturnStatus.Success)
             {
-                // Re-create the collection to trigger the UI update.
-                ChartData = new ObservableCollection<CategoricalData>(sourceData);
+                Documents = dr.Result.Select(d =>
+                {
+                    d.dateString = d.sentData.HasValue ? d.sentData.Value.ToString(APIHelper.dateCustom) : null;
+                    return d;
+                }).ToList();
+            }
+            else
+            {
+                //_alertService.ShowAlert("Erro", dr.Error);
+                GbTitleModalError = "Erro";
+                GbTextModalError = dr.Error;
+                GbModalError = true;
+                if (_navigationToLogin)
+                    _navigationService._PushAsyncWithCleanup(new LoginPageMobile(App.UserDetails?.CodEntidade));
+            }
+        }
+
+        private void AddPrcsPreview()
+        {
+            var pr = _dashBoardService.GetProcesses(5, out _navigationToLogin);
+            if (pr.Status == Models.ReturnStatus.Success)
+            {
+                Proceses = pr.Result.Select(p =>
+                {
+                    p.dateString = p.sentData.ToString(APIHelper.dateCustom);
+                    return p;
+                }).ToList();
+            }
+            else
+            {
+                //_alertService.ShowAlert("Erro", pr.Error);
+                GbTitleModalError = "Erro";
+                GbTextModalError = pr.Error;
+                GbModalError = true;
+                if (_navigationToLogin)
+                    _navigationService._PushAsyncWithCleanup(new LoginPageMobile(App.UserDetails?.CodEntidade));
+            }
+        }
+
+
+        private ObservableCollection<GetCategoricalData> GetElementData(int myElementsNumber, int departmentElementsNumber, int knownElementsNumber) => new ObservableCollection<GetCategoricalData>
+        {
+            new GetCategoricalData { Category = "Conhecimento", Value = myElementsNumber },
+            new GetCategoricalData { Category = "Comigo", Value = knownElementsNumber },
+            new GetCategoricalData { Category = "Departamento", Value = departmentElementsNumber }
+        };
+
+        private void SetPDNumbers(bool reload, bool loadDocuments)
+        {
+            if (reload)
+            {
+                Models.GenericResponse<GetDashBoard> result = _dashBoardService.GetDashBoardData(out _navigationToLogin);
+                if (result.Status == Models.ReturnStatus.Success)
+                    App.DashBoard = result.Result;
+                else
+                {
+                    App.DashBoard = null;
+                    //_alertService.ShowAlert("Erro", result.Error);
+                    GbTitleModalError = "Erro";
+                    GbTextModalError = result.Error;
+                    GbModalError = true;
+                    if (_navigationToLogin)
+                        _navigationService._PushAsyncWithCleanup(new LoginPageMobile(App.UserDetails?.CodEntidade));
+                }
+            }
+            if (App.DashBoard != null)
+            {
+                if (loadDocuments)
+                {
+                    MyDocumentsNumber = App.DashBoard.DocumentsCount.ToString();
+                    DepartmentDocumentsNumber = App.DashBoard.DocumentsDepartamento.ToString();
+                    KnownDocumentsNumber = App.DashBoard.DocumentsConhecimento.ToString();
+                    AllDocumentsNumber = $"{App.DashBoard.DocumentsCount + App.DashBoard.DocumentsDepartamento + App.DashBoard.DocumentsConhecimento} {text}";
+                    Data = GetElementData(App.DashBoard.DocumentsCount, App.DashBoard.DocumentsDepartamento, App.DashBoard.DocumentsConhecimento);
+                }
+                else
+                {
+                    MyDocumentsNumber = App.DashBoard.ProcessesCount.ToString();
+                    DepartmentDocumentsNumber = App.DashBoard.ProcessesDepartamento.ToString();
+                    KnownDocumentsNumber = App.DashBoard.ProcessesConhecimento.ToString();
+                    AllProcessesNumber = $"{App.DashBoard.ProcessesCount + App.DashBoard.ProcessesDepartamento + App.DashBoard.ProcessesConhecimento} {text}";
+                    DataProceses = GetElementData(App.DashBoard.ProcessesCount, App.DashBoard.ProcessesDepartamento, App.DashBoard.ProcessesConhecimento);
+                }
+            }
+        }
+
+        static class PaletteLoader
+        {
+            public static Color[] LoadPalette(params string[] values)
+            {
+                Color[] colors = new Color[values.Length];
+                for (int i = 0; i < values.Length; i++)
+                    colors[i] = Color.FromArgb(values[i]);
+                return colors;
             }
         }
 
@@ -128,35 +200,38 @@ namespace WebDocMobile.PageModels
         [RelayCommand]
         public async Task HandleSeeDocumentsButton()
         {
-#if ANDROID || IOS
-            await Shell.Current.GoToAsync(nameof(DocumentsPageMobile));
-#else
-            await Shell.Current.GoToAsync(nameof(DocumentsPageDesktop));
-#endif
+            GbLoader = true;
+            await Task.Delay(1000);
+            await _navigationService.PushAsync(new DocumentsPageMobile());
+            GbLoader = false;
         }
         [RelayCommand]
         public async Task HandleSeeProcessesButton()
         {
-#if ANDROID || IOS
-            await Shell.Current.GoToAsync(nameof(ProcessesPageMobile));
-#else
-            await Shell.Current.GoToAsync(nameof(ProcessesPageDesktop));
-#endif
+            GbLoader = true;
+            await Task.Delay(1000);
+            await _navigationService.PushAsync(new ListProceses());
+            GbLoader = false;
         }
         [RelayCommand]
-        public async Task HandleSignOutButton()
+        public void ShowDocumentDetails()
         {
-            // Clear all persisted settings using the service
-            _settingsService.ClearAllData();
-            // Clear the application state service
-            _appStateService.ClearState();
-
-            // Navigate back to the beginning of the app flow
-#if ANDROID || IOS
-            await Shell.Current.GoToAsync($"//{nameof(SelectEntityCodePageMobile)}");
-#else
-            await Shell.Current.GoToAsync($"//{nameof(SelectEntityCodePageDesktop)}");
-#endif
+            SetPDNumbers(false, true);
+        }
+        [RelayCommand]
+        public void ShowProccessDetails()
+        {
+            SetPDNumbers(false, false);
+        }
+        [RelayCommand]
+        public async Task NavToSearchPage()
+        {
+            await _navigationService.PushAsync(new SearchPage());
+        }
+        [RelayCommand]
+        public void FecharModalClicked()
+        {
+            GbModalError = false;
         }
     }
 }

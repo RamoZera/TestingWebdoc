@@ -12,8 +12,8 @@
            CornerRadius="4">
         <handlers:BorderlessEntry x:Name="txtEntry"
                                   Focused="txtEntry_Focused"
-                                  Unfocused="txtEntry_Unfocused"
-                                  Text="{Binding Source={x:Reference this},Path=Text}"
+                                  Unfocused="txtEntry_Unfocused" 
+                                  Text="{Binding Source={x:Reference this}, Path=Text, Mode=TwoWay}"
                                   Margin="0,5,0,0"
                                   FontFamily="RobotoFamily"/>
     </Frame>
@@ -27,7 +27,28 @@
            BackgroundColor="White"
            HorizontalOptions="StartAndExpand"
            VerticalOptions="CenterAndExpand"
-           Padding="5"/>
+           Padding="5">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="CommonStates">
+                <VisualState x:Name="Normal">
+                    <VisualState.Setters>
+                        <Setter Property="FontSize" Value="16" />
+                        <Setter Property="TextColor" Value="Gray" />
+                        <Setter Property="Opacity" Value="0.5" />
+                        <Setter Property="TranslationY" Value="0" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Focused">
+                    <VisualState.Setters>
+                        <Setter Property="FontSize" Value="14" />
+                        <Setter Property="TextColor" Value="#0074C8" />
+                        <Setter Property="Opacity" Value="1" />
+                        <Setter Property="TranslationY" Value="-25" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+    </Label>
     <Grid.GestureRecognizers>
         <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
     </Grid.GestureRecognizers>

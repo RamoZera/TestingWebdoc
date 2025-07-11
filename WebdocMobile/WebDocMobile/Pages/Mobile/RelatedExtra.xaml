@@ -1,0 +1,711 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="WebDocMobile.Pages.Mobile.RelatedExtra"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:customControl="clr-namespace:WebDocMobile.CustomControls"
+    xmlns:telerik="http://schemas.telerik.com/2022/xaml/maui"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:WebDocMobile.PageModels.PagesViewModels"
+    Title="RelatedExtra">
+    <ContentPage.BindingContext>
+        <vm:RelatedExtraViewModel />
+    </ContentPage.BindingContext>
+    <Grid>
+        <!--  Main Content  -->
+        <Grid
+            x:Name="MainContent"
+            BackgroundColor="{StaticResource Gray50}"
+            RowDefinitions=".1*,*">
+            <!--  Header  -->
+            <customControl:Header>
+                <Grid ColumnDefinitions="auto,*, auto" VerticalOptions="Center">
+                    <Grid Grid.Column="0" HorizontalOptions="Start">
+                        <Button
+                            BackgroundColor="Transparent"
+                            BorderColor="#FFFFFF"
+                            BorderWidth="1"
+                            Clicked="HandleClickBackPage"
+                            CornerRadius="4"
+                            HeightRequest="50"
+                            Opacity="0.15"
+                            WidthRequest="50" />
+                        <Image
+                            HeightRequest="20"
+                            RotationY="180"
+                            Source="icon_anterior" />
+                    </Grid>
+                    <Grid
+                        Grid.Column="1"
+                        Padding="15,0,0,0"
+                        HorizontalOptions="Start">
+                        <Label
+                            Margin="0,0,0,0"
+                            FontFamily="RobotoMedium"
+                            FontSize="12"
+                            HorizontalOptions="Start"
+                            Text="E/7203"
+                            TextColor="#F1F1F1" />
+                        <Label
+                            Margin="0,15,0,0"
+                            FontFamily="RobotoBold"
+                            FontSize="23"
+                            HorizontalOptions="StartAndExpand"
+                            Text="Relacionados"
+                            TextColor="White" />
+                    </Grid>
+                    <Grid Grid.Column="2" HorizontalOptions="End">
+                        <Button
+                            BackgroundColor="Transparent"
+                            BorderColor="#FFFFFF"
+                            BorderWidth="1"
+                            CornerRadius="4"
+                            HeightRequest="50"
+                            IsVisible="False"
+                            Opacity="0.15"
+                            WidthRequest="50" />
+                        <Image
+                            HeightRequest="20"
+                            IsVisible="False"
+                            RotationY="180"
+                            Source="icon_filtrar" />
+                    </Grid>
+
+                </Grid>
+            </customControl:Header>
+            <ScrollView Grid.Row="1" Padding="0,0,0,10">
+                <ScrollView.Content>
+                    <VerticalStackLayout>
+                        <Frame
+                            Grid.Row="1"
+                            BackgroundColor="{StaticResource Primary}"
+                            CornerRadius="0"
+                            Scale="1.1">
+                            <Grid
+                                Padding="20,10"
+                                ColumnDefinitions="*,*"
+                                ColumnSpacing="10">
+                                <Grid Grid.Column="0" VerticalOptions="Center">
+                                    <Button
+                                        x:Name="documentsButton"
+                                        BackgroundColor="Transparent"
+                                        BorderColor="#0074C8"
+                                        BorderWidth="2"
+                                        Clicked="HandleClickShowDocumentRelated"
+                                        HeightRequest="80" />
+                                    <Grid
+                                        Padding="15,10"
+                                        RowDefinitions="*,*"
+                                        RowSpacing="10"
+                                        VerticalOptions="Center">
+                                        <Image
+                                            Grid.Row="0"
+                                            HeightRequest="16"
+                                            HorizontalOptions="Start"
+                                            Source="icon_documentos" />
+                                        <Label
+                                            Grid.Row="1"
+                                            FontFamily="RobotoBold"
+                                            FontSize="12"
+                                            Text="Documentos"
+                                            TextColor="White" />
+                                    </Grid>
+                                </Grid>
+                                <Grid Grid.Column="1" VerticalOptions="Center">
+                                    <Button
+                                        x:Name="processesButton"
+                                        BackgroundColor="Transparent"
+                                        BorderColor="#40FFFFFF"
+                                        BorderWidth="2"
+                                        Clicked="HandleClickShowProcessRelated"
+                                        HeightRequest="80" />
+                                    <Grid
+                                        Padding="15,10"
+                                        RowDefinitions="*,*"
+                                        RowSpacing="10"
+                                        VerticalOptions="Center">
+                                        <Image
+                                            Grid.Row="0"
+                                            HeightRequest="16"
+                                            HorizontalOptions="Start"
+                                            Source="icon_processos" />
+                                        <Label
+                                            Grid.Row="1"
+                                            FontFamily="RobotoBold"
+                                            FontSize="12"
+                                            Text="Procesos"
+                                            TextColor="White" />
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                        </Frame>
+                        <ScrollView
+                            x:Name="Document"
+                            Grid.Row="2"
+                            Padding="20"
+                            IsVisible="True">
+                            <VerticalStackLayout Spacing="10">
+                                <CollectionView
+                                    x:Name="list"
+                                    HorizontalOptions="StartAndExpand"
+                                    ItemsSource="{Binding relatedDocuments}">
+                                    <CollectionView.ItemsLayout>
+                                        <LinearItemsLayout ItemSpacing="5" Orientation="Vertical" />
+                                    </CollectionView.ItemsLayout>
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate>
+                                            <customControl:RelatedExtraCard
+                                                AvatarTagByText="{Binding by[0]}"
+                                                AvatarTagText="{Binding by[0]}"
+                                                ByText="{Binding by}"
+                                                DateTimeText="{Binding date}"
+                                                NumberTagText="{Binding number}"
+                                                StateText="{Binding workflowState}"
+                                                TopicText="{Binding subject}">
+                                                <VerticalStackLayout IsVisible="False" Spacing="10">
+                                                    <Button
+                                                        Padding="10"
+                                                        BackgroundColor="#003962"
+                                                        CornerRadius="4"
+                                                        FontFamily="RobotoBold"
+                                                        FontSize="16"
+                                                        IsVisible="False"
+                                                        Text="Consultar ficheiro anexado"
+                                                        TextColor="White" />
+                                                    <Button
+                                                        Padding="10"
+                                                        BackgroundColor="Transparent"
+                                                        BorderColor="#FF5050"
+                                                        BorderWidth="2"
+                                                        Clicked="HandleClickRemoverRelation"
+                                                        CornerRadius="4"
+                                                        FontFamily="RobotoBold"
+                                                        FontSize="16"
+                                                        IsVisible="False"
+                                                        Text="Remover relação"
+                                                        TextColor="#FF5050" />
+                                                </VerticalStackLayout>
+                                            </customControl:RelatedExtraCard>
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                </CollectionView>
+                            </VerticalStackLayout>
+                        </ScrollView>
+                        <!--  related document process  -->
+                        <ScrollView
+                            x:Name="Process"
+                            Grid.Row="2"
+                            Padding="20"
+                            IsVisible="False">
+                            <VerticalStackLayout Spacing="10">
+                                <CollectionView
+                                    x:Name="listP"
+                                    HorizontalOptions="StartAndExpand"
+                                    ItemsSource="{Binding Source={vm:RelatedExtraViewModel}, Path=relatedDocumentsWithProcess}">
+                                    <CollectionView.ItemsLayout>
+                                        <LinearItemsLayout ItemSpacing="5" Orientation="Vertical" />
+                                    </CollectionView.ItemsLayout>
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate>
+                                            <customControl:RelatedExtraCard
+                                                AvatarTagByText="{Binding by[0]}"
+                                                AvatarTagText="{Binding by[0]}"
+                                                ByText="{Binding by}"
+                                                DateTimeText="{Binding date}"
+                                                NumberTagText="{Binding number}"
+                                                StateText="{Binding workflowState}"
+                                                TopicText="{Binding subject}">
+                                                <VerticalStackLayout Spacing="10">
+                                                    <Button
+                                                        Padding="10"
+                                                        BackgroundColor="#003962"
+                                                        CornerRadius="4"
+                                                        FontFamily="RobotoBold"
+                                                        FontSize="16"
+                                                        IsVisible="False"
+                                                        Text="Consultar ficheiro anexado"
+                                                        TextColor="White" />
+                                                    <Button
+                                                        Padding="10"
+                                                        BackgroundColor="Transparent"
+                                                        BorderColor="#FF5050"
+                                                        BorderWidth="2"
+                                                        Clicked="HandleClickRemoverRelation"
+                                                        CornerRadius="4"
+                                                        FontFamily="RobotoBold"
+                                                        FontSize="16"
+                                                        IsVisible="False"
+                                                        Text="Remover relação"
+                                                        TextColor="#FF5050" />
+                                                </VerticalStackLayout>
+                                            </customControl:RelatedExtraCard>
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                </CollectionView>
+                            </VerticalStackLayout>
+                        </ScrollView>
+                    </VerticalStackLayout>
+                </ScrollView.Content>
+            </ScrollView>
+            <Button
+                Grid.Row="1"
+                Margin="0,0,0,20"
+                Padding="10"
+                BackgroundColor="White"
+                BorderColor="#959595"
+                BorderWidth="1"
+                Clicked="HandleClickShowRelatedDocument"
+                CornerRadius="50"
+                FontFamily="RobotoBold"
+                FontSize="16"
+                HorizontalOptions="Center"
+                Text="Relacionar documentos"
+                TextColor="#003962"
+                VerticalOptions="End">
+                <Button.Shadow>
+                    <Shadow
+                        Brush="Black"
+                        Opacity="1"
+                        Radius="100"
+                        Offset="0,0" />
+                </Button.Shadow>
+            </Button>
+        </Grid>
+
+        <!--  Modal Alert  -->
+        <Grid
+            x:Name="ModalAtentionAlert"
+            IsVisible="false"
+            RowDefinitions="*,.6*">
+            <Grid
+                Grid.Row="0"
+                BackgroundColor="#000000"
+                Opacity="0.75" />
+            <Grid
+                Grid.Row="1"
+                BackgroundColor="#000000"
+                Opacity="0.75">
+                <Border
+                    Padding="15"
+                    Background="White"
+                    StrokeShape="RoundRectangle 16,16,0,0"
+                    StrokeThickness="1">
+                    <StackLayout Spacing="10">
+                        <Image HeightRequest="55" Source="icon_alerta" />
+                        <Label
+                            FontFamily="RobotoBold"
+                            FontSize="22"
+                            HorizontalTextAlignment="Center"
+                            Text="Atenção"
+                            TextColor="Black" />
+                        <Label
+                            FontFamily="RobotoRegular"
+                            FontSize="16"
+                            HorizontalTextAlignment="Center"
+                            Text="Tem a certeza que pretende remover esta relação?"
+                            TextColor="#959595" />
+                        <Button
+                            Padding="10"
+                            BackgroundColor="Transparent"
+                            BorderColor="#EBEBEB"
+                            BorderWidth="2"
+                            Clicked="HandleClickVoltaRegisto"
+                            CornerRadius="4"
+                            FontFamily="RobotoBold"
+                            FontSize="16"
+                            Text="Voltar ao registo"
+                            TextColor="{StaticResource Primary}" />
+                        <Button
+                            Padding="10"
+                            BackgroundColor="Transparent"
+                            BorderColor="#EBEBEB"
+                            BorderWidth="2"
+                            CornerRadius="4"
+                            FontFamily="RobotoBold"
+                            FontSize="16"
+                            Text="Confirmar"
+                            TextColor="{StaticResource Primary}" />
+                    </StackLayout>
+                </Border>
+            </Grid>
+        </Grid>
+
+        <!--  Modal Related Document  -->
+        <Grid
+            x:Name="ModalRelatedDocument"
+            IsVisible="false"
+            RowDefinitions="*,auto">
+            <Grid
+                Grid.Row="0"
+                BackgroundColor="#000000"
+                Opacity="0.75" />
+            <Grid Grid.Row="1" BackgroundColor="#BF000000">
+                <Border
+                    Padding="15"
+                    Background="White"
+                    StrokeShape="RoundRectangle 16,16,0,0"
+                    StrokeThickness="1">
+                    <Grid RowDefinitions=".2*,*" RowSpacing="20">
+                        <Grid Grid.Row="0" ColumnDefinitions="*, .1*">
+                            <VerticalStackLayout Grid.Column="0">
+                                <Label
+                                    FontFamily="RobotoBold"
+                                    FontSize="22"
+                                    Text="Relacionar"
+                                    TextColor="Black" />
+                                <Label
+                                    FontFamily="RobotoBold"
+                                    FontSize="16"
+                                    Text="Documentos"
+                                    TextColor="#959595" />
+                            </VerticalStackLayout>
+                            <Button
+                                Grid.Column="1"
+                                BackgroundColor="Transparent"
+                                Clicked="HandleClickHideRelatedDocument"
+                                HeightRequest="25"
+                                VerticalOptions="Start" />
+                            <Image
+                                Grid.Column="1"
+                                HeightRequest="25"
+                                Source="btn_close"
+                                VerticalOptions="Start" />
+                        </Grid>
+                        <Grid
+                            Grid.Row="1"
+                            RowDefinitions="*,*,*"
+                            RowSpacing="10">
+                            <Frame
+                                Grid.Row="0"
+                                BackgroundColor="#FFFFFF"
+                                BorderColor="#EBEBEB"
+                                CornerRadius="4"
+                                HeightRequest="80">
+                                <Grid>
+                                    <Button BackgroundColor="Transparent" Clicked="HandleClickShowComNovoRelated" />
+                                    <Grid ColumnDefinitions="auto,*" ColumnSpacing="10">
+                                        <Frame
+                                            Padding="10"
+                                            BackgroundColor="#EBEBEB"
+                                            BorderColor="Transparent"
+                                            CornerRadius="20"
+                                            HeightRequest="40"
+                                            WidthRequest="40">
+                                            <Grid>
+                                                <Image Aspect="AspectFit" Source="icon_documentos_blue" />
+                                            </Grid>
+                                        </Frame>
+                                        <Label
+                                            Grid.Column="1"
+                                            FontFamily="RobotoBold"
+                                            FontSize="18"
+                                            HorizontalTextAlignment="Start"
+                                            Text="Com Novo"
+                                            TextColor="Black"
+                                            VerticalTextAlignment="Center" />
+                                    </Grid>
+                                </Grid>
+                            </Frame>
+                            <Frame
+                                Grid.Row="1"
+                                BackgroundColor="#FFFFFF"
+                                BorderColor="#EBEBEB"
+                                CornerRadius="4"
+                                HeightRequest="80">
+                                <Grid>
+                                    <Button BackgroundColor="Transparent" Clicked="HandleClickShowRelatedDocumentList" />
+                                    <Grid ColumnDefinitions="auto,*" ColumnSpacing="10">
+                                        <Frame
+                                            Padding="10"
+                                            BackgroundColor="#EBEBEB"
+                                            BorderColor="Transparent"
+                                            CornerRadius="20"
+                                            HeightRequest="40"
+                                            WidthRequest="40">
+                                            <Grid>
+                                                <Image Aspect="AspectFit" Source="icon_documentos_blue" />
+                                            </Grid>
+                                        </Frame>
+                                        <Label
+                                            Grid.Column="1"
+                                            FontFamily="RobotoBold"
+                                            FontSize="18"
+                                            HorizontalTextAlignment="Start"
+                                            Text="Com Documento Existente"
+                                            TextColor="Black"
+                                            VerticalTextAlignment="Center" />
+                                    </Grid>
+                                </Grid>
+                            </Frame>
+                            <Frame
+                                Grid.Row="2"
+                                BackgroundColor="#FFFFFF"
+                                BorderColor="#EBEBEB"
+                                CornerRadius="4"
+                                HeightRequest="80">
+                                <Grid>
+                                    <Button BackgroundColor="Transparent" Clicked="HandleClickShowRelatedDocumentWithProcessList" />
+                                    <Grid ColumnDefinitions="auto,*" ColumnSpacing="10">
+                                        <Frame
+                                            Padding="10"
+                                            BackgroundColor="#EBEBEB"
+                                            BorderColor="Transparent"
+                                            CornerRadius="20"
+                                            HeightRequest="40"
+                                            WidthRequest="40">
+                                            <Grid>
+                                                <Image Aspect="AspectFit" Source="icon_documentos_blue" />
+                                            </Grid>
+                                        </Frame>
+                                        <Label
+                                            Grid.Column="1"
+                                            FontFamily="RobotoBold"
+                                            FontSize="18"
+                                            HorizontalTextAlignment="Start"
+                                            Text="Com Proceso Existente"
+                                            TextColor="Black"
+                                            VerticalTextAlignment="Center" />
+                                    </Grid>
+                                </Grid>
+                            </Frame>
+                        </Grid>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Grid>
+
+        <!--  Modal List of document to Related Document  -->
+        <Grid
+            x:Name="ModalRelatedDocumentList"
+            IsVisible="false"
+            RowDefinitions="*,auto">
+            <Grid
+                Grid.Row="0"
+                BackgroundColor="#000000"
+                Opacity="0.75" />
+            <Grid Grid.Row="1" BackgroundColor="#BF000000">
+                <Border
+                    Padding="15"
+                    Background="White"
+                    StrokeShape="RoundRectangle 16,16,0,0"
+                    StrokeThickness="1">
+                    <Grid RowDefinitions=".1*,*" RowSpacing="30">
+                        <Grid Grid.Row="0" ColumnDefinitions="*, .1*">
+                            <Label
+                                Grid.Column="0"
+                                FontFamily="RobotoBold"
+                                FontSize="23"
+                                HorizontalOptions="StartAndExpand"
+                                Text="Relacionar"
+                                TextColor="Black" />
+                            <Button
+                                Grid.Column="1"
+                                BackgroundColor="Transparent"
+                                Clicked="HandleClickHideRelatedDocumentList"
+                                HeightRequest="25"
+                                VerticalOptions="Start" />
+                            <Image
+                                Grid.Column="1"
+                                HeightRequest="25"
+                                Source="btn_close"
+                                VerticalOptions="Start" />
+                        </Grid>
+                        <Grid
+                            Grid.Row="1"
+                            RowDefinitions="*,*"
+                            RowSpacing="20">
+                            <Border
+                                Grid.Row="0"
+                                HorizontalOptions="FillAndExpand"
+                                Stroke="#ADB3BC"
+                                StrokeShape="RoundRectangle 5"
+                                StrokeThickness="2">
+                                <VerticalStackLayout Padding="10">
+                                    <Grid>
+                                        <Label
+                                            Margin="7,0,0,0"
+                                            FontFamily="RobotoMedium"
+                                            FontSize="16"
+                                            HorizontalOptions="Start"
+                                            Text="Documento"
+                                            TextColor="#959595" />
+                                        <Image
+                                            HeightRequest="24"
+                                            HorizontalOptions="End"
+                                            Source="chip_required" />
+                                    </Grid>
+                                    <telerik:RadComboBox
+                                        x:Name="ListDoc"
+                                        AutomationId="radEntry"
+                                        BackgroundColor="Transparent"
+                                        BorderBrush="Transparent"
+                                        BorderThickness="0,0,0,0"
+                                        DisplayMemberPath="number"
+                                        FocusedBorderBrush="Transparent"
+                                        FontSize="16"
+                                        HorizontalOptions="Fill"
+                                        IsEditable="True"
+                                        ItemsSource="{Binding Source={vm:RelatedExtraViewModel}, Path=documentSelected}"
+                                        Placeholder="Selecione uma opção"
+                                        PlaceholderColor="#343A40"
+                                        SelectionMode="Multiple" />
+                                </VerticalStackLayout>
+                            </Border>
+                            <Button
+                                x:Name="Related"
+                                Grid.Row="1"
+                                BackgroundColor="#003962"
+                                Clicked="RelatedWithDocument_Clicked"
+                                Text="Relacionar"
+                                TextColor="White" />
+                        </Grid>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Grid>
+
+        <!--  Modal List of process to Related Document  -->
+        <Grid
+            x:Name="ModalRelatedProcessList"
+            IsVisible="false"
+            RowDefinitions="*,auto">
+            <Grid
+                Grid.Row="0"
+                BackgroundColor="#000000"
+                Opacity="0.75" />
+            <Grid Grid.Row="1" BackgroundColor="#BF000000">
+                <Border
+                    Padding="15"
+                    Background="White"
+                    StrokeShape="RoundRectangle 16,16,0,0"
+                    StrokeThickness="1">
+                    <Grid RowDefinitions=".1*,*" RowSpacing="30">
+                        <Grid Grid.Row="0" ColumnDefinitions="*, .1*">
+                            <Label
+                                Grid.Column="0"
+                                FontFamily="RobotoBold"
+                                FontSize="23"
+                                HorizontalOptions="StartAndExpand"
+                                Text="Relacionar"
+                                TextColor="Black" />
+                            <Button
+                                Grid.Column="1"
+                                BackgroundColor="Transparent"
+                                Clicked="HandleClickHideRelatedDocumentWithProcessList"
+                                HeightRequest="25"
+                                VerticalOptions="Start" />
+                            <Image
+                                Grid.Column="1"
+                                HeightRequest="25"
+                                Source="btn_close"
+                                VerticalOptions="Start" />
+                        </Grid>
+                        <Grid
+                            Grid.Row="1"
+                            RowDefinitions="*,*"
+                            RowSpacing="20">
+                            <Border
+                                Grid.Row="0"
+                                HorizontalOptions="FillAndExpand"
+                                Stroke="#ADB3BC"
+                                StrokeShape="RoundRectangle 5"
+                                StrokeThickness="2">
+                                <VerticalStackLayout Padding="10">
+                                    <Grid>
+                                        <Label
+                                            Margin="7,0,0,0"
+                                            FontFamily="RobotoMedium"
+                                            FontSize="16"
+                                            HorizontalOptions="Start"
+                                            Text="Proceso"
+                                            TextColor="#959595" />
+                                        <Image
+                                            HeightRequest="24"
+                                            HorizontalOptions="End"
+                                            Source="chip_required" />
+                                    </Grid>
+                                    <telerik:RadComboBox
+                                        x:Name="ListProcess"
+                                        AutomationId="radEntry"
+                                        BackgroundColor="Transparent"
+                                        BorderBrush="Transparent"
+                                        BorderThickness="0,0,0,0"
+                                        DisplayMemberPath="number"
+                                        FocusedBorderBrush="Transparent"
+                                        FontSize="16"
+                                        HorizontalOptions="Fill"
+                                        IsEditable="True"
+                                        ItemsSource="{Binding Source={vm:RelatedExtraViewModel}, Path=processSelected}"
+                                        Placeholder="Selecione uma opção"
+                                        PlaceholderColor="#343A40"
+                                        SelectionMode="Multiple" />
+                                </VerticalStackLayout>
+                            </Border>
+                            <Button
+                                x:Name="RelatedWithProcess"
+                                Grid.Row="1"
+                                BackgroundColor="#003962"
+                                Clicked="RelatedWithProcess_Clicked"
+                                Text="Relacionar"
+                                TextColor="White" />
+                        </Grid>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Grid>
+
+        <!--  Modal Loader  -->
+        <Grid
+            x:Name="ModalLoader"
+            IsVisible="False"
+            RowDefinitions="auto,*">
+            <Grid
+                Grid.Row="0"
+                Padding="20"
+                BackgroundColor="#BF000000"
+                Opacity="1">
+                <Border
+                    Padding="15"
+                    Background="White"
+                    StrokeShape="RoundRectangle 16"
+                    StrokeThickness="1">
+                    <Grid ColumnDefinitions="auto,*" ColumnSpacing="10">
+                        <Border
+                            Grid.Column="0"
+                            Padding="5"
+                            Background="{StaticResource Secondary}"
+                            HeightRequest="54"
+                            StrokeShape="RoundRectangle 50"
+                            StrokeThickness="1"
+                            WidthRequest="54">
+                            <ActivityIndicator
+                                BackgroundColor="Transparent"
+                                HeightRequest="30"
+                                IsRunning="True"
+                                WidthRequest="30"
+                                Color="White" />
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1">
+                            <Label
+                                FontFamily="RobotoBold"
+                                FontSize="22"
+                                HorizontalTextAlignment="Start"
+                                Text="Aguarde"
+                                TextColor="#1F2125" />
+                            <Label
+                                FontFamily="RobotoBold"
+                                FontSize="16"
+                                HorizontalTextAlignment="Start"
+                                Text="Validação em progresso"
+                                TextColor="#959595" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+            </Grid>
+            <Grid
+                Grid.Row="1"
+                BackgroundColor="#000000"
+                Opacity="0.75" />
+        </Grid>
+    </Grid>
+</ContentPage>

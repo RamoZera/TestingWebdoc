@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="WebDocMobile.Pages.Mobile.EntitiesExtra"
+    xmlns:customControl="clr-namespace:WebDocMobile.CustomControls"
+    xmlns:vm="clr-namespace:WebDocMobile.PageModels.PagesViewModels"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    Title="EntitiesExtra">
+
+    <Grid>
+        <!--  Main Content  -->
+        <Grid x:Name="MainContent" BackgroundColor="{StaticResource Gray50}" RowDefinitions=".1*,*">
+            <!--  Header  -->
+            <customControl:Header>
+                <Grid ColumnDefinitions="auto,*" VerticalOptions="Center">
+                    <Grid Grid.Column="0" HorizontalOptions="Start">
+                        <Button
+                            BackgroundColor="Transparent"
+                            BorderColor="#FFFFFF"
+                            BorderWidth="1"
+                            CornerRadius="4"
+                            HeightRequest="50"
+                            Opacity="0.15"
+                            WidthRequest="50"
+                            Clicked="HandleClickBackPage"/>
+                        <Image HeightRequest="24" Source="icon_anterior" RotationY="180"/>
+                    </Grid>
+                    <Grid Grid.Column="1" HorizontalOptions="Start" Padding="15,0,0,0">
+                        <Label
+                            Margin="0,0,0,0"
+                            FontFamily="RobotoMedium"
+                            FontSize="12"
+                            HorizontalOptions="Start"
+                            Text="E/7203"
+                            TextColor="#F1F1F1" />
+                        <Label
+                            Margin="0,15,0,0"
+                            FontFamily="RobotoBold"
+                            FontSize="28"
+                            HorizontalOptions="StartAndExpand"
+                            Text="Entidades"
+                            TextColor="White" />
+                    </Grid>
+
+                </Grid>
+            </customControl:Header>
+
+            <!--  Content Page  -->
+            <Grid Grid.Row="1">
+                <VerticalStackLayout VerticalOptions="Center" Spacing="10">
+                    <Label
+                        FontFamily="RobotoBold"
+                        FontSize="22"
+                        VerticalTextAlignment="Center"
+                        HorizontalTextAlignment="Center"
+                        Text="Sem registos"
+                        TextColor="Black" />
+                    <Label
+                        FontFamily="RobotoBold"
+                        FontSize="12"
+                        VerticalTextAlignment="Center"
+                        HorizontalTextAlignment="Center"
+                        Text="Ainda não existem registos associados, clique no botão para inserir novo"
+                        TextColor="#1F2125" />
+                </VerticalStackLayout>
+            </Grid >
+            
+            <!--  Float button  -->
+            <Button
+                IsVisible="False"
+                Grid.Row="1"
+                Margin="0,0,0,20"
+                Padding="10"
+                BackgroundColor="White"
+                BorderColor="#959595"
+                BorderWidth="1"
+                CornerRadius="50"
+                FontFamily="RobotoBold"
+                FontSize="16"
+                HorizontalOptions="Center"
+                Text="Adicionar responsável"
+                TextColor="#003962"
+                VerticalOptions="End">
+                <Button.Shadow>
+                    <Shadow
+                        Brush="Black"
+                        Opacity="1"
+                        Radius="100"
+                        Offset="0,0" />
+                </Button.Shadow>
+            </Button>
+        </Grid>
+        
+    </Grid>
+</ContentPage>

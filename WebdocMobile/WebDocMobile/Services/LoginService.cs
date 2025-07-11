@@ -1,38 +1,77 @@
-﻿﻿using Newtonsoft.Json;
-using System.Net.Http;
+﻿using System.Net.Security;
 using System.Text;
-using System.Threading.Tasks;
-using WebDocMobile.Models.LoginService;
+using System.Text.Json;
+using WebDocMobile.Helpers;
+using WebDocMobile.Models;
 
 namespace WebDocMobile.Services
 {
-    public class LoginService : ILoginService
+    public interface ILoginService
+    {
+        bool LoginUserBasic(string username, string password, out GenericResponse<LoginResponse> result, out bool navigateToLogin);
+
+        bool SetPublicToken();
+    }
+
+    public class LoginService: ILoginService
     {
         private readonly HttpClient _httpClient;
-        private readonly ISettingsService _settingsService;
+        private string _token;
 
-        public LoginService(ISettingsService settingsService)
+        public LoginService()
         {
             _httpClient = new HttpClient();
-            _settingsService = settingsService;
+            APIHelper.CheckForInternetConnection();
         }
 
-        public async Task<bool> LoginUserBasic(string strHashCode, string strUserName, string strPassword, string strDomainName)
+        public HttpClientHandler GetInsecureHandler()
         {
-            var url = $"{_settingsService.BaseAddress}/Login/LoginUserBasic";
-            var payload = new LoginUserBasicDto
+            HttpClientHandler handler = new HttpClientHandler();
+            handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) =>
             {
-                strHashCode = strHashCode,
-                strUserName = strUserName,
-                strPassword = strPassword,
-                strDomainName = strDomainName
+                if(cert.Issuer.Equals("CN=localhost"))
+                    return true;
+                return errors == SslPolicyErrors.None;
             };
-            var jsonPayload = JsonConvert.SerializeObject(payload);
-            var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
+            return handler;
+        }
 
-            var response = await _httpClient.PostAsync(url, content);
-            
-            return response.IsSuccessStatusCode;
+        private GenericResponse<string> GetPublicToken()
+        {
+            APIHelper.CheckForInternetConnection();
+            _httpClient._SetJSONMediaType();
+            return _httpClient._CallAPI<string>($"{App.BaseAddress}api/get_publictoken", null, out _);
+        }
+
+        public bool SetPublicToken()
+        {
+            var result = GetPublicToken();
+            if(result.Status == ReturnStatus.Success)
+            {
+                _token = result.Result;
+                return true;
+            }
+            _token = null;
+            return false;
+        }
+
+        private GenericResponse<LoginResponse> Authenticate(string pUser, string pPassword, out bool navigateToLogin)
+        {
+            APIHelper.CheckForInternetConnection();
+            _httpClient._StandarSetup(_token);
+            return _httpClient._CallAPI<LoginResponse>($"{App.BaseAddress}user/authenticate", new StringContent(JsonSerializer.Serialize(new LoginInfo()
+            {
+                username = pUser,
+                password = pPassword
+            }), Encoding.UTF8, APIHelper.jsonMime), out navigateToLogin);
+        }
+
+        public bool LoginUserBasic(string username, string password, out GenericResponse<LoginResponse> result, out bool navigateToLogin)
+        {
+            APIHelper.CheckForInternetConnection();
+            _httpClient._StandarSetup(_token);
+            result = Authenticate(username, password, out navigateToLogin);
+            return result.Status == ReturnStatus.Success;
         }
     }
 }

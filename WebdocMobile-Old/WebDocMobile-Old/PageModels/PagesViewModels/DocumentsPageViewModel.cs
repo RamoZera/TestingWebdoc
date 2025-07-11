@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿﻿using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace WebDocMobile.PageModels
 {
-    public class DocumentsPageViewModel
+    public partial class DocumentsPageViewModel : ObservableObject
     {
-        private INavigation _navigationService;
-        public DocumentsPageViewModel(INavigation navigation)
+        public DocumentsPageViewModel()
         {
-            this._navigationService = navigation;
+            // Logic for this page will be added here.
         }
     }
 }

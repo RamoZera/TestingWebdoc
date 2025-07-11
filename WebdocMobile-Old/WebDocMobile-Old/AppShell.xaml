@@ -46,4 +46,40 @@
                   ContentTemplate="{DataTemplate desktopPages:SelectEntityCodePageDesktop}"
                   Route="SelectEntityCodePageDesktop"/>
 
+    <!-- Pages that can be navigation roots -->
+    <ShellContent Title="LoginPageMobile"
+                  FlyoutItemIsVisible="False"
+                  Shell.FlyoutBehavior="Disabled"
+                  ContentTemplate="{DataTemplate mobilePages:LoginPageMobile}"
+                  Route="LoginPageMobile"/>
+
+    <ShellContent Title="LoginPageDesktop"
+                  FlyoutItemIsVisible="False"
+                  Shell.FlyoutBehavior="Disabled"
+                  ContentTemplate="{DataTemplate desktopPages:LoginPageDesktop}"
+                  Route="LoginPageDesktop"/>
+
+    <ShellContent Title="PINPageMobile"
+                  FlyoutItemIsVisible="False"
+                  Shell.FlyoutBehavior="Disabled"
+                  ContentTemplate="{DataTemplate mobilePages:PINPageMobile}"
+                  Route="PINPageMobile"/>
+
+    <ShellContent Title="PINPageDesktop"
+                  FlyoutItemIsVisible="False"
+                  Shell.FlyoutBehavior="Disabled"
+                  ContentTemplate="{DataTemplate desktopPages:PINPageDesktop}"
+                  Route="PINPageDesktop"/>
+
+    <ShellContent Title="MainMenuPageMobile"
+                  FlyoutItemIsVisible="False"
+                  Shell.FlyoutBehavior="Disabled"
+                  ContentTemplate="{DataTemplate mobilePages:MainMenuPageMobile}"
+                  Route="MainMenuPageMobile"/>
+
+    <ShellContent Title="MainMenuPageDesktop"
+                  FlyoutItemIsVisible="False"
+                  Shell.FlyoutBehavior="Disabled"
+                  ContentTemplate="{DataTemplate desktopPages:MainMenuPageDesktop}"
+                  Route="MainMenuPageDesktop"/>
 </Shell>

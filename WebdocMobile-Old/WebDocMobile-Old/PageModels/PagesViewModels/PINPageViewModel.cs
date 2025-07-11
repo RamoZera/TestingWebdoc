@@ -1,264 +1,120 @@
-﻿using CommunityToolkit.Mvvm.Input;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using System.Collections.ObjectModel;
 using WebDocMobile.Models;
+using WebDocMobile.PageModels.PagesViewModels;
 using WebDocMobile.Pages.Desktop;
 using WebDocMobile.Pages.Mobile;
 using WebDocMobile.Services;
 
 namespace WebDocMobile.PageModels
 {
-    public partial class PINPageViewModel
+    public partial class PINPageViewModel : ObservableObject
     {
-        private readonly INavigation _navigationService;
-        private string currentPIN;
-        private int currentDigit;
         private readonly IAlertService _alertService;
+        private readonly ISettingsService _settingsService;
 
-        public PINPageViewModel(INavigation navigation)
+        [ObservableProperty]
+        private string pin = string.Empty;
+
+        [ObservableProperty]
+        private bool isBiometricsPageVisible;
+
+        public ObservableCollection<PinDigitViewModel> PinDigits { get; } = new();
+
+        public PINPageViewModel(IAlertService alertService, ISettingsService settingsService)
         {
-            this._navigationService = navigation;
+            _alertService = alertService;
+            _settingsService = settingsService;
 
-            _alertService = new AlertService();
+            for (int i = 0; i < 6; i++)
+            {
+                PinDigits.Add(new PinDigitViewModel());
+            }
+            UpdatePinCircles();
+        }
 
-            InitialPINSet();
+        private void UpdatePinCircles()
+        {
+            for (int i = 0; i < PinDigits.Count; i++)
+            {
+                PinDigits[i].IsFilled = i < Pin.Length;
+            }
+        }
+
+        partial void OnPinChanged(string value)
+        {
+            UpdatePinCircles();
+            if (Pin.Length == 6)
+            {
+                PINComplete();
+            }
+        }
+
+        [RelayCommand]
+        private void AddDigit(string digit)
+        {
+            if (Pin.Length < 6)
+            {
+                Pin += digit;
+            }
+        }
+
+        [RelayCommand]
+        private void DeleteDigit()
+        {
+            if (Pin.Length > 0)
+            {
+                Pin = Pin.Substring(0, Pin.Length - 1);
+            }
         }
 
         private void PINComplete()
         {
-            var userInfo = JsonConvert.DeserializeObject<UserBasicInfo>(Preferences.Get(nameof(App.UserDetails), ""));
-            App.UserDetails = userInfo;
-            if (currentDigit == 6 && currentPIN.Length == 6)
-            {
-                if(App.UserDetails.PIN == "")
-                {
-                    var newUserInfo = new UserBasicInfo
-                    {
-                        strHashCode = userInfo.strHashCode,
-                        strName = userInfo.strName,
-                        strDomain = userInfo.strDomain,
-                        codEntidade = userInfo.codEntidade,
-                        PIN = currentPIN,
-                        hasBiometricsActive = false
-                    };
-                    if (Preferences.ContainsKey(nameof(App.UserDetails)))
-                    {
-                        Preferences.Remove(nameof(App.UserDetails));
-                    }
-                    string userDetailsStr = JsonConvert.SerializeObject(newUserInfo);
-                    Preferences.Set(nameof(App.UserDetails), userDetailsStr);
-                    App.UserDetails = newUserInfo;
-                }
-                else
-                {
-                    if(App.UserDetails.PIN != currentPIN)
-                    {
-                        _alertService.ShowAlert("Error", "Incorrect Pin");
-                        InitialPINSet();
-                        return;
-                    }
-                }
-            }
-            else
-            {
-                InitialPINSet();
-            }
+            var userInfo = _settingsService.UserInfo;
+            if (userInfo == null) return;
+
+            userInfo.PIN = Pin;
+            _settingsService.UserInfo = userInfo; // Save the updated user info with the PIN
+
+            IsBiometricsPageVisible = true;
         }
 
         [RelayCommand]
-        private void Digit1Pressed()
+        private async Task ConfigureLaterButtonPressed()
         {
-            currentPIN = currentPIN + "1";
-            currentDigit++;
-            if(currentDigit == 6) { PINComplete(); }
-        }
-        [RelayCommand]
-        private void Digit2Pressed()
-        {
-            currentPIN = currentPIN + "2";
-            currentDigit++;
-            if (currentDigit == 6) { PINComplete(); }
-        }
-        [RelayCommand]
-        private void Digit3Pressed()
-        {
-            currentPIN = currentPIN + "3";
-            currentDigit++;
-            if (currentDigit == 6) { PINComplete(); }
-        }
-        [RelayCommand]
-        private void Digit4Pressed()
-        {
-            currentPIN = currentPIN + "4";
-            currentDigit++;
-            if (currentDigit == 6) { PINComplete(); }
-        }
-        [RelayCommand]
-        private void Digit5Pressed()
-        {
-            currentPIN = currentPIN + "5";
-            currentDigit++;
-            if (currentDigit == 6) { PINComplete(); }
-        }
-        [RelayCommand]
-        private void Digit6Pressed()
-        {
-            currentPIN = currentPIN + "6";
-            currentDigit++;
-            if (currentDigit == 6) { PINComplete(); }
-        }
-        [RelayCommand]
-        private void Digit7Pressed()
-        {
-            currentPIN = currentPIN + "7";
-            currentDigit++;
-            if (currentDigit == 6) { PINComplete(); }
-        }
-        [RelayCommand]
-        private void Digit8Pressed()
-        {
-            currentPIN = currentPIN + "8";
-            currentDigit++;
-            if (currentDigit == 6) { PINComplete(); }
-        }
-        [RelayCommand]
-        private void Digit9Pressed()
-        {
-            currentPIN = currentPIN + "9";
-            currentDigit++;
-            if (currentDigit == 6) { PINComplete(); }
-        }
-        [RelayCommand]
-        private void Digit0Pressed()
-        {
-            currentPIN = currentPIN + "0";
-            currentDigit++;
-            if (currentDigit == 6) { PINComplete(); }
-        }
-        [RelayCommand]
-        private void DeleteDigitPressed()
-        {
-            if (currentDigit > 0)
-            {
-                string newPIN = currentPIN.Substring(0, currentPIN.Length - 1);
-                currentPIN = newPIN;
-                currentDigit--;
-            }
-        }
-        [RelayCommand]
-        private void ConfigureLaterButtonPressed()
-        {
+            await _alertService.ShowAlertAsync("Aviso", "Recomendamos que defina um PIN para a proteção dos seus dados.");
 #if ANDROID || IOS
-            var list = _navigationService.NavigationStack;
-            int x = 0;
-            while (x < list.Count)
-            {
-                Page p = list[x];
-                if (!(list[x] is MainMenuPageMobile))
-                {
-                    if (list[x] is PINPageMobile)
-                    {
-                        _navigationService.InsertPageBefore(new MainMenuPageMobile(), list[x]);
-                    }
-                    _navigationService.RemovePage(p);
-                }
-                else
-                {
-                    x++;
-                }
-            }
+            await Shell.Current.GoToAsync($"//{nameof(MainMenuPageMobile)}");
 #else
-                var list = _navigationService.NavigationStack;
-                int x = 0;
-                while (x < list.Count)
-                {
-                    Page p = list[x];
-                    if (!(list[x] is MainMenuPageDesktop))
-                    {
-                        if (list[x] is PINPageDesktop)
-                        {
-                            _navigationService.InsertPageBefore(new MainMenuPageDesktop(), list[x]);
-                        }
-                        _navigationService.RemovePage(p);
-                    }
-                    else
-                    {
-                        x++;
-                    }
-                }
+            await Shell.Current.GoToAsync($"//{nameof(MainMenuPageDesktop)}");
 #endif
-            _alertService.ShowAlert("Warning", "We advice you to have a PIN for the protection of your data and information");
         }
+
         [RelayCommand]
-        private void ReturnButtonPressed()
+        private async Task ReturnButtonPressed()
         {
-            if (_navigationService.NavigationStack.Count > 1)
+            if (Shell.Current.Navigation.NavigationStack.Count > 1)
             {
-                _navigationService.RemovePage(_navigationService.NavigationStack[_navigationService.NavigationStack.Count - 1]);
+                await Shell.Current.Navigation.PopAsync();
             }
         }
 
         [RelayCommand]
-        private void ConfigureBiometricsLaterButtonPressed()
+        private async Task ConfigureBiometricsLaterButtonPressed()
         {
+            await _alertService.ShowAlertAsync("Aviso", "Pode ativar a biometria mais tarde nas definições.");
 #if ANDROID || IOS
-            var list = _navigationService.NavigationStack;
-            int x = 0;
-            while (x < list.Count)
-            {
-                Page p = list[x];
-                if (!(list[x] is MainMenuPageMobile))
-                {
-                    if (list[x] is PINPageMobile)
-                    {
-                        _navigationService.InsertPageBefore(new MainMenuPageMobile(), list[x]);
-                    }
-                    _navigationService.RemovePage(p);
-                }
-                else
-                {
-                    x++;
-                }
-            }
+            await Shell.Current.GoToAsync($"//{nameof(MainMenuPageMobile)}");
 #else
-                var list = _navigationService.NavigationStack;
-                int x = 0;
-                while (x < list.Count)
-                {
-                    Page p = list[x];
-                    if (!(list[x] is MainMenuPageDesktop))
-                    {
-                        if (list[x] is PINPageDesktop)
-                        {
-                            _navigationService.InsertPageBefore(new MainMenuPageDesktop(), list[x]);
-                        }
-                        _navigationService.RemovePage(p);
-                    }
-                    else
-                    {
-                        x++;
-                    }
-                }
+            await Shell.Current.GoToAsync($"//{nameof(MainMenuPageDesktop)}");
 #endif
-            _alertService.ShowAlert("Warning", "You should have the biometrics for more security unless it's not implemented :)");
         }
+
         [RelayCommand]
-        private void ActivateBiometricsButtonPressed()
+        private async Task ActivateBiometricsButtonPressed()
         {
-            _alertService.ShowAlert("Error", "Functionality not implemented");
+            await _alertService.ShowAlertAsync("Erro", "Funcionalidade não implementada.");
         }
-
-        private void InitialPINSet()
-        {
-            currentDigit = 0;
-            currentPIN = string.Empty;
-        }
-
-
     }
 }

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="16.997" height="17.014" viewBox="0 0 16.997 17.014">
+  <g id="icon-darparecer" transform="translate(-45.5 -259.503)">
+    <rect id="box" width="16" height="16" transform="translate(46 260)" fill="rgba(255,255,255,0)"/>
+    <path id="icon" d="M16.784,2.12H3.453A1.33,1.33,0,0,0,2.12,3.446V17.37a.748.748,0,0,0,1.293.512l2.942-3.07H16.784a1.336,1.336,0,0,0,1.333-1.333V3.446A1.33,1.33,0,0,0,16.784,2.12ZM6.167,7.917l3.185-3.7A1.145,1.145,0,1,1,11.088,5.7L8,9.318l-2.222.727Zm8.282,4.444H5.789V10.994h8.659Z" transform="translate(43.88 257.883)" fill="#4ad58b" stroke="rgba(0,0,0,0)" stroke-miterlimit="10" stroke-width="1"/>
+  </g>
+</svg>

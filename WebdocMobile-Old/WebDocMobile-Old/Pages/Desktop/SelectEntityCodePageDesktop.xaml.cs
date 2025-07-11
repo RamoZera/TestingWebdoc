@@ -4,11 +4,11 @@ namespace WebDocMobile.Pages.Desktop;
 
 public partial class SelectEntityCodePageDesktop : ContentPage
 {
-	public SelectEntityCodePageDesktop()
+	public SelectEntityCodePageDesktop(SelectEntityCodePageViewModel viewModel)
 	{
 		InitializeComponent();
 
-        this.BindingContext = new SelectEntityCodePageViewModel(this.Navigation);
+        this.BindingContext = viewModel;
 
         NavigationPage.SetHasNavigationBar(this, false);
     }

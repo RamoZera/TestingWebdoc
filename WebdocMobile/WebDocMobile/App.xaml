@@ -1,14 +1,19 @@
-﻿<?xml version = "1.0" encoding = "UTF-8" ?>
-<Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:WebDocMobile"
-             x:Class="WebDocMobile.App">
+﻿<Application
+    x:Class="WebDocMobile.App" 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:telerik="http://schemas.telerik.com/2022/xaml/maui"
+    xmlns:local="clr-namespace:WebDocMobile">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
+                <ResourceDictionary Source="Resources/Styles/Converters.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <Style TargetType="telerik:RadEntry">
+                <Setter Property="ClearButtonVisibility" Value="Never" />
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

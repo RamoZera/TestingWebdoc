@@ -1,149 +1,112 @@
-﻿﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WebDocMobile.Pages.Mobile;
-using WebDocMobile.Pages.Desktop;
+﻿﻿﻿﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using WebDocMobile.Models;
-using WebDocMobile.Helpers.WsMethods;
-using WebDocMobile.Services;
 using System.Globalization;
-using System.Diagnostics;
-using Newtonsoft.Json;
+using WebDocMobile.Models;
+using WebDocMobile.Pages.Desktop;
+using WebDocMobile.Pages.Mobile;
+using WebDocMobile.Services;
 
-namespace WebDocMobile.PageModels
+namespace WebDocMobile.PageModels.PagesViewModels
 {
-    public partial class MainMenuPageViewModel
+    public partial class MainMenuPageViewModel : ObservableObject
     {
-        public ObservableCollection<CategoricalData> Documents { get; set; } 
-        public ObservableCollection<CategoricalData> Processes { get; set; }
+        private readonly IAppStateService _appStateService;
+        private readonly ISettingsService _settingsService;
+        private readonly IAlertService _alertService;
 
-        public string username { get; set; }
-        public string date { get; set; }
-        public string AllDocumentsNumber { get; set; }
-        public string MyDocumentsNumber { get; set; }
-        public string DepartmentDocumentsNumber { get; set; }
-        public string KnownDocumentsNumber { get; set; }
+        [ObservableProperty]
+        private ObservableCollection<CategoricalData> chartData = new();
 
-        private DocumentService _documentService;
+        [ObservableProperty]
+        private string username = string.Empty;
+        [ObservableProperty]
+        private string date = string.Empty;
+        [ObservableProperty]
+        private string allDocumentsNumber = "0";
+        [ObservableProperty]
+        private string myDocumentsNumber = "0";
+        [ObservableProperty]
+        private string departmentDocumentsNumber = "0";
+        [ObservableProperty]
+        private string knownDocumentsNumber = "0";
 
+        [ObservableProperty]
+        private bool isDocumentsChartSelected = true;
 
-        private INavigation _navigationService;
-        public MainMenuPageViewModel(INavigation navigation)
+        [ObservableProperty]
+        private bool isProcessesChartSelected = false;
+        public MainMenuPageViewModel(IAppStateService appStateService, ISettingsService settingsService, IAlertService alertService)
         {
-            this._navigationService = navigation;
+            _appStateService = appStateService;
+            _settingsService = settingsService;
+            _alertService = alertService;
 
-            Documents = GetDocumentsData();
-            Processes = GetProcessesData();
-            username = App.UserDetails.strName;
-            date = DateTime.Now.ToString("dd MMMM yyyy", new CultureInfo("PT-pt"));
-            _documentService = new DocumentService();
-
-            SetDocumentsNumbers();
+            LoadDashboardData();
         }
 
-        
-
-        private void SetDocumentsNumbers()
+        private void LoadDashboardData()
         {
-            AllDocumentsNumber = App.allDocuments.Count.ToString();
-            MyDocumentsNumber = App.myDocuments.Count.ToString();
-            DepartmentDocumentsNumber = App.departmentDocuments.Count.ToString();
-            KnownDocumentsNumber = App.knownDocuments.Count.ToString();
+            Username = _appStateService.UserDetails?.strName ?? "Utilizador";
+            Date = DateTime.Now.ToString("dd MMMM yyyy", new CultureInfo("PT-pt"));
+
+            AllDocumentsNumber = _appStateService.AllDocuments?.Count.ToString() ?? "0";
+            MyDocumentsNumber = _appStateService.MyDocuments?.Count.ToString() ?? "0";
+            DepartmentDocumentsNumber = _appStateService.DepartmentDocuments?.Count.ToString() ?? "0";
+            KnownDocumentsNumber = _appStateService.KnownDocuments?.Count.ToString() ?? "0";
+
+            ToggleChart("documents");
         }
 
-        private static ObservableCollection<CategoricalData> GetDocumentsData()
+        [RelayCommand]
+        private void ToggleChart(string chartType)
         {
-            var data = new ObservableCollection<CategoricalData>
+            IsDocumentsChartSelected = chartType == "documents";
+            IsProcessesChartSelected = chartType == "processes";
+
+            // In the future, you would load the correct data here.
+            // For now, we just update the UI state.
+            ChartData = new ObservableCollection<CategoricalData>
             {
-                new CategoricalData { Category = "Comigo", Value = 22 },
-                new CategoricalData { Category = "Departamento", Value = 268 },
-                new CategoricalData { Category = "Conhecimento", Value = 43}
+                new CategoricalData { Category = "Comigo", Value = _appStateService.MyDocuments?.Count ?? 0 },
+                new CategoricalData { Category = "Departamento", Value = _appStateService.DepartmentDocuments?.Count ?? 0 },
+                new CategoricalData { Category = "Conhecimento", Value = _appStateService.KnownDocuments?.Count ?? 0 }
             };
-            return data;
         }
 
-        private static ObservableCollection<CategoricalData> GetProcessesData()
-        {
-            var data = new ObservableCollection<CategoricalData>
-            {
-                new CategoricalData { Category = "Comigo", Value = 22 },
-                new CategoricalData { Category = "Departamento", Value = 268 },
-                new CategoricalData { Category = "Conhecimento", Value = 43}
-            };
-            return data;
-        }
 
 
         [RelayCommand]
         public async Task HandleSeeDocumentsButton()
         {
 #if ANDROID || IOS
-            await _navigationService.PushAsync(new DocumentsPageMobile());
+            await Shell.Current.GoToAsync(nameof(DocumentsPageMobile));
 #else
-            await _navigationService.PushAsync(new DocumentsPageDesktop());
+            await Shell.Current.GoToAsync(nameof(DocumentsPageDesktop));
 #endif
         }
+
         [RelayCommand]
         public async Task HandleSeeProcessesButton()
         {
 #if ANDROID || IOS
-            await _navigationService.PushAsync(new ProcessesPageMobile());
+            await Shell.Current.GoToAsync(nameof(ProcessesPageMobile));
 #else
-            await _navigationService.PushAsync(new ProcessesPageDesktop());
+            await Shell.Current.GoToAsync(nameof(ProcessesPageDesktop));
 #endif
         }
-        [RelayCommand]
-        public void HandleSignOutButton()
-        {
-            if (Preferences.ContainsKey(nameof(App.UserDetails)))
-            {
-                Preferences.Remove(nameof(App.UserDetails));
-            }
-#if ANDROID || IOS
-            var list = _navigationService.NavigationStack;
-            int x = 0;
-            while (x < list.Count)
-            {
-                Page p = list[x];
-                if (!(list[x] is FirstPageMobile))
-                {
-                    if (list[x] is MainMenuPageMobile)
-                    {
-                        _navigationService.InsertPageBefore(new FirstPageMobile(), list[x]);
-                    }
-                    _navigationService.RemovePage(p);
-                }
-                else
-                {
-                    x++;
-                }
-            }
-#else
-            var list = _navigationService.NavigationStack;
-            int x = 0;
-            while(x < list.Count)
-            {
-                Page p = list[x];
-                if (!(list[x] is FirstPageDesktop))
-                {
-                    if (list[x] is MainMenuPageDesktop)
-                    {
-                        _navigationService.InsertPageBefore(new FirstPageDesktop(), list[x]);
-                    }
-                    _navigationService.RemovePage(p);
-                }
-                else
-                {
-                    x++;
-                }
-            }
-#endif
 
+        [RelayCommand]
+        public async Task HandleSignOutButton()
+        {
+            _settingsService.UserInfo = null;
+            _appStateService.ClearAllState();
+
+#if ANDROID || IOS
+            await Shell.Current.GoToAsync($"//{nameof(SelectEntityCodePageMobile)}");
+#else
+            await Shell.Current.GoToAsync($"//{nameof(SelectEntityCodePageDesktop)}");
+#endif
         }
     }
 }

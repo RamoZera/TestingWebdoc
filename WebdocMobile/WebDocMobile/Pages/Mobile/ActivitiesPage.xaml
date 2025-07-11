@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WebDocMobile.Pages.Mobile.ActivitiesPage"
+             xmlns:customControl="clr-namespace:WebDocMobile.CustomControls"
+             xmlns:telerik="http://schemas.telerik.com/2022/xaml/maui"
+             xmlns:vm="clr-namespace:WebDocMobile.PageModels"
+             Title="ActivitiesPage">
+    <Grid BackgroundColor="{StaticResource Gray50}" RowDefinitions=".1*,.8*,.1*,.1*">
+        <!--  Header  -->
+        <customControl:Header>
+            <Grid ColumnDefinitions="auto,*" VerticalOptions="Center">
+                <!--  User Info  -->
+                <Grid HorizontalOptions="Start" MaximumWidthRequest="300">
+                    <Label
+                    Margin="0,0,0,0"
+                    FontFamily="RobotoMedium"
+                    FontSize="12"
+                    HorizontalOptions="Start"
+                    Text="01 AGOSTO 2024"
+                    TextColor="#F1F1F1" />
+                    <Label
+                    Margin="0,15,0,0"
+                    FontFamily="RobotoBold"
+                    FontSize="23"
+                    HorizontalOptions="StartAndExpand"
+                    Text="Atividades"
+                    TextColor="White" />
+                </Grid>
+
+                <!--  Search Button  -->
+                <Grid Grid.Column="1" HorizontalOptions="End">
+                    <Button
+                    BackgroundColor="Transparent"
+                    BorderColor="#FFFFFF"
+                    BorderWidth="1"
+                    Command="{Binding OpenFiltersCommand}"
+                    CornerRadius="4"
+                    HeightRequest="37"
+                    Opacity="0.15"
+                    WidthRequest="37" />
+                    <Image HeightRequest="16" Source="icon_opcoes" />
+                </Grid>
+            </Grid>
+        </customControl:Header>
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout>
+                <!--  Add details section  -->
+                <Grid Padding="10" BackgroundColor="{StaticResource Primary}">
+                    <Grid ColumnDefinitions="*,*,*" RowDefinitions="*,*" HorizontalOptions="Center" ColumnSpacing="30">
+                        <Grid Grid.Column="0" RowSpacing="10">
+                            <Button
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            BackgroundColor="Transparent"
+                            BorderColor="#FFFFFF"
+                            BorderWidth="1"
+                            CornerRadius="4"
+                            HeightRequest="65"
+                            HorizontalOptions="Start"
+                            Opacity="0.15"
+                            VerticalOptions="End"
+                            WidthRequest="95" />
+                            <Image
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Margin="10,0,0,0"
+                            HeightRequest="12"
+                            HorizontalOptions="Start"
+                            Source="icon_atualizacoes"
+                            VerticalOptions="Center" />
+                            <Label
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Padding="5"
+                            FontFamily="RobotoBold"
+                            FontSize="12"
+                            HorizontalOptions="StartAndExpand"
+                            Text="Comigo"
+                            TextColor="White"
+                            VerticalOptions="End" />
+                            <Label
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Margin="10,0,0,0"
+                            Padding="22"
+                            FontFamily="RobotoBold"
+                            FontSize="16"
+                            HorizontalOptions="StartAndExpand"
+                            Text="93"
+                            TextColor="White"
+                            VerticalOptions="Center" />
+                            <Button
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            BackgroundColor="#0074C8"
+                            CornerRadius="1"
+                            HeightRequest="4"
+                            HorizontalOptions="Start"
+                            VerticalOptions="End"
+                            WidthRequest="94" />
+                        </Grid>
+
+                        <Grid Grid.Column="1" RowSpacing="10">
+                            <Button
+                            Grid.Column="1"
+                            BackgroundColor="Transparent"
+                            BorderColor="#FFFFFF"
+                            BorderWidth="1"
+                            CornerRadius="4"
+                            HeightRequest="65"
+                            HorizontalOptions="Start"
+                            Opacity="0.15"
+                            VerticalOptions="End"
+                            WidthRequest="95" />
+                            <Image
+                            Grid.Column="1"
+                            Margin="10,0,0,0"
+                            HeightRequest="16"
+                            HorizontalOptions="Start"
+                            Source="icon_mensagens"
+                            VerticalOptions="Center" />
+                            <Label
+                            Grid.Column="1"
+                            Padding="5"
+                            FontFamily="RobotoBold"
+                            FontSize="12"
+                            HorizontalOptions="StartAndExpand"
+                            Text="Departamento"
+                            TextColor="White"
+                            VerticalOptions="End" />
+                            <Label
+                            Grid.Column="1"
+                            Margin="10,0,0,0"
+                            Padding="22"
+                            FontFamily="RobotoBold"
+                            FontSize="16"
+                            HorizontalOptions="Start"
+                            Text="17"
+                            TextColor="White"
+                            VerticalOptions="Center" />
+                        </Grid>
+
+                        <Grid Grid.Column="2" RowSpacing="10">
+                            <Button
+                            Grid.Column="2"
+                            BackgroundColor="Transparent"
+                            BorderColor="#FFFFFF"
+                            BorderWidth="1"
+                            CornerRadius="4"
+                            HeightRequest="65"
+                            HorizontalOptions="Start"
+                            Opacity="0.15"
+                            VerticalOptions="End"
+                            WidthRequest="95" />
+                            <Image
+                            Grid.Column="2"
+                            Margin="10,0,0,0"
+                            HeightRequest="16"
+                            HorizontalOptions="Start"
+                            Source="icon_historico"
+                            VerticalOptions="Center" />
+                            <Label
+                            Grid.Column="2"
+                            Padding="5"
+                            FontFamily="RobotoBold"
+                            FontSize="12"
+                            HorizontalOptions="StartAndExpand"
+                            Text="Conhecimento"
+                            TextColor="White"
+                            VerticalOptions="End" />
+                            <Label
+                            Grid.Column="2"
+                            Margin="10,0,0,0"
+                            Padding="22"
+                            FontFamily="RobotoBold"
+                            FontSize="16"
+                            HorizontalOptions="Start"
+                            Text="4"
+                            TextColor="White"
+                            VerticalOptions="Center" />
+                        </Grid>
+                    </Grid>
+                </Grid>
+                <Grid Padding="20">
+                    <Label
+                         FontFamily="RobotoBold"
+                         TextColor="{StaticResource Gray300}"
+                         FontSize="15"
+                         Text="HOJE" />
+                </Grid>
+                <customControl:ActivitieCard />
+                <customControl:ActivitieCard />
+                <customControl:ActivitieCard />
+                <customControl:ActivitieCard />
+                <customControl:ActivitieCard />
+                <customControl:ActivitieCard />
+            </VerticalStackLayout>
+        </ScrollView>
+        <StackLayout />
+
+        <!--  NAVBAR  -->
+        <customControl:Navbar Grid.Row="3" />
+
+    </Grid>
+</ContentPage>

@@ -1,13 +1,12 @@
-using WebDocMobile.PageModels;
+using WebDocMobile.PageModels.PagesViewModels;
 
 namespace WebDocMobile.Pages.Desktop;
 
 public partial class MainMenuPageDesktop : ContentPage
 {
-	public MainMenuPageDesktop()
+	public MainMenuPageDesktop(MainMenuPageViewModel viewModel)
 	{
 		InitializeComponent();
-
-        this.BindingContext = new MainMenuPageViewModel(this.Navigation);
+        this.BindingContext = viewModel;
     }
 }

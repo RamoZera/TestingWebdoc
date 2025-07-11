@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<telerik:RadBorder
+    x:Class="WebDocMobile.CustomControls.FrameCard"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:telerik="http://schemas.telerik.com/2022/xaml/maui"
+    x:Name="this"
+    Padding="5"
+    BackgroundColor="{Binding Source={x:Reference this}, Path=BackgroundColor}"
+    BorderThickness="1"
+    CornerRadius="8">
+
+    <telerik:RadBorder.Shadow>
+        <Shadow
+            Brush="{StaticResource Gray300}"
+            Opacity="0.5"
+            Radius="30"
+            Offset="0,0" />
+
+    </telerik:RadBorder.Shadow>
+
+
+    <Grid
+        ColumnDefinitions=".7*,.3*"
+        RowDefinitions="*,*"
+        RowSpacing="10">
+        <!--  Frame Title  -->
+        <telerik:RadBorder
+            Grid.Row="0"
+            Padding="8,3"
+            BackgroundColor="{Binding Source={x:Reference this}}"
+            CornerRadius="15"
+            VerticalOptions="Start">
+            <Label
+                FontFamily="RobotoBold"
+                FontSize="16"
+                HorizontalTextAlignment="Start"
+                MaxLines="1"
+                Text="{Binding Source={x:Reference this}, Path=TitleTagText}"
+                VerticalTextAlignment="Start" />
+        </telerik:RadBorder>
+        <!--  Card Info  -->
+        <HorizontalStackLayout Grid.Row="1" Spacing="10">
+            <!--  Number Tag  -->
+            <telerik:RadBorder
+                Padding="8,3"
+                BackgroundColor="{Binding Source={x:Reference this}}"
+                CornerRadius="15"
+                VerticalOptions="Start">
+                <Label
+                    FontFamily="RobotoBold"
+                    FontSize="15"
+                    HorizontalTextAlignment="Start"
+                    MaxLines="1"
+                    Text="{Binding Source={x:Reference this}, Path=NumberTagText}"
+                    TextColor="{StaticResource Gray350}"
+                    VerticalTextAlignment="Start" />
+            </telerik:RadBorder>
+
+
+        </HorizontalStackLayout>
+
+        <!--  Card Status  -->
+        <telerik:RadBorder
+            Grid.Row="1"
+            Grid.Column="1"
+            Padding="5"
+            BackgroundColor="{Binding Source={x:Reference this}, Path=StatusBackgroundColor}"
+            BorderColor="{Binding Source={x:Reference this}, Path=StatusBorderColor}"
+            BorderThickness="1"
+            CornerRadius="5"
+            HorizontalOptions="Center">
+            <Label
+                FontFamily="RobotoMedium"
+                FontSize="12"
+                HorizontalTextAlignment="Center"
+                MaxLines="1"
+                Text="{Binding Source={x:Reference this}, Path=StatusText}"
+                TextColor="{Binding Source={x:Reference this}, Path=StatusTextColor}"
+                VerticalOptions="Center"
+                VerticalTextAlignment="Center" />
+        </telerik:RadBorder>
+
+        <!--  Card Inputs  -->
+    </Grid>
+</telerik:RadBorder>

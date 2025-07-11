@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="WebDocMobile.Pages.Mobile.AnnexesExtra"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:customControl="clr-namespace:WebDocMobile.CustomControls"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:WebDocMobile.PageModels"
+    Title="AnnexesExtra">
+    <Grid>
+        <!--  Main Content  -->
+        <Grid
+            x:Name="MainContent"
+            BackgroundColor="{StaticResource Gray50}"
+            RowDefinitions=".1*,*">
+            <!--  Header  -->
+            <customControl:Header>
+                <Grid ColumnDefinitions="auto,*, auto" VerticalOptions="Center">
+                    <Grid Grid.Column="0" HorizontalOptions="Start">
+                        <Button
+                            BackgroundColor="Transparent"
+                            BorderColor="#FFFFFF"
+                            BorderWidth="1"
+                            Clicked="HandleClickBackPage"
+                            CornerRadius="4"
+                            HeightRequest="50"
+                            Opacity="0.15"
+                            WidthRequest="50" />
+                        <Image
+                            HeightRequest="20"
+                            RotationY="180"
+                            Source="icon_anterior" />
+                    </Grid>
+                    <Grid
+                        Grid.Column="1"
+                        Padding="15,0,0,0"
+                        HorizontalOptions="Start">
+                        <Label
+                            Margin="0,0,0,0"
+                            FontFamily="RobotoMedium"
+                            FontSize="12"
+                            HorizontalOptions="Start"
+                            Text="E/7203"
+                            TextColor="#F1F1F1" />
+                        <Label
+                            Margin="0,15,0,0"
+                            FontFamily="RobotoBold"
+                            FontSize="23"
+                            HorizontalOptions="StartAndExpand"
+                            Text="Anexos"
+                            TextColor="White" />
+                    </Grid>
+                    <Grid Grid.Column="2" HorizontalOptions="End">
+                        <Button
+                            BackgroundColor="Transparent"
+                            BorderColor="#FFFFFF"
+                            BorderWidth="1"
+                            CornerRadius="4"
+                            HeightRequest="50"
+                            IsVisible="False"
+                            Opacity="0.15"
+                            WidthRequest="50" />
+                        <Image
+                            HeightRequest="20"
+                            IsVisible="False"
+                            RotationY="180"
+                            Source="icon_filtrar" />
+                    </Grid>
+                </Grid>
+            </customControl:Header>
+            <ScrollView Grid.Row="1" Padding="20">
+                <VerticalStackLayout Spacing="10">
+                    <customControl:AnnexesExtraCard>
+                        <VerticalStackLayout Spacing="10">
+                            <Button
+                                Padding="10"
+                                BackgroundColor="#003962"
+                                CornerRadius="4"
+                                FontFamily="RobotoBold"
+                                FontSize="16"
+                                IsVisible="False"
+                                Text="Consultar ficheiro anexado"
+                                TextColor="White" />
+                            <Button
+                                Padding="10"
+                                BackgroundColor="Transparent"
+                                BorderColor="#FF5050"
+                                BorderWidth="2"
+                                Clicked="HandleClickRemoverAnexo"
+                                CornerRadius="4"
+                                FontFamily="RobotoBold"
+                                FontSize="16"
+                                IsVisible="False"
+                                Text="Remover anexo"
+                                TextColor="#FF5050" />
+                        </VerticalStackLayout>
+                    </customControl:AnnexesExtraCard>
+
+                    <customControl:AnnexesExtraCard>
+                        <VerticalStackLayout IsVisible="False" Spacing="10">
+                            <Button
+                                Padding="10"
+                                BackgroundColor="#003962"
+                                CornerRadius="4"
+                                FontFamily="RobotoBold"
+                                FontSize="16"
+                                IsVisible="False"
+                                Text="Consultar ficheiro anexado"
+                                TextColor="White" />
+                            <Button
+                                Padding="10"
+                                BackgroundColor="Transparent"
+                                BorderColor="#FF5050"
+                                BorderWidth="2"
+                                Clicked="HandleClickRemoverAnexo"
+                                CornerRadius="4"
+                                FontFamily="RobotoBold"
+                                FontSize="16"
+                                IsVisible="False"
+                                Text="Remover anexo"
+                                TextColor="#FF5050" />
+                        </VerticalStackLayout>
+                    </customControl:AnnexesExtraCard>
+
+                    <customControl:AnnexesExtraCard>
+                        <VerticalStackLayout IsVisible="False" Spacing="10">
+                            <Button
+                                Padding="10"
+                                BackgroundColor="#003962"
+                                CornerRadius="4"
+                                FontFamily="RobotoBold"
+                                FontSize="16"
+                                IsVisible="False"
+                                Text="Consultar ficheiro anexado"
+                                TextColor="White" />
+                            <Button
+                                Padding="10"
+                                BackgroundColor="Transparent"
+                                BorderColor="#FF5050"
+                                BorderWidth="2"
+                                Clicked="HandleClickRemoverAnexo"
+                                CornerRadius="4"
+                                FontFamily="RobotoBold"
+                                FontSize="16"
+                                IsVisible="False"
+                                Text="Remover anexo"
+                                TextColor="#FF5050" />
+                        </VerticalStackLayout>
+                    </customControl:AnnexesExtraCard>
+                </VerticalStackLayout>
+            </ScrollView>
+            <!--  Float button  -->
+            <Button
+                Grid.Row="1"
+                Margin="0,0,0,20"
+                Padding="10"
+                BackgroundColor="White"
+                BorderColor="#959595"
+                BorderWidth="1"
+                Clicked="HandleClickAnexesFile"
+                CornerRadius="50"
+                FontFamily="RobotoBold"
+                FontSize="16"
+                HorizontalOptions="Center"
+                IsVisible="False"
+                Text="Anexar ficheiro"
+                TextColor="#003962"
+                VerticalOptions="End">
+                <Button.Shadow>
+                    <Shadow
+                        Brush="Black"
+                        Opacity="1"
+                        Radius="100"
+                        Offset="0,0" />
+                </Button.Shadow>
+            </Button>
+        </Grid>
+
+        <!--  Modal Alert  -->
+        <Grid
+            x:Name="ModalAtentionAlert"
+            IsVisible="false"
+            RowDefinitions="*,.6*">
+            <Grid
+                Grid.Row="0"
+                BackgroundColor="#000000"
+                Opacity="0.75" />
+            <Grid
+                Grid.Row="1"
+                BackgroundColor="#000000"
+                Opacity="0.75">
+                <Border
+                    Padding="15"
+                    Background="White"
+                    StrokeShape="RoundRectangle 16,16,0,0"
+                    StrokeThickness="1">
+                    <StackLayout Spacing="10">
+                        <Image HeightRequest="55" Source="icon_alerta" />
+                        <Label
+                            FontFamily="RobotoBold"
+                            FontSize="22"
+                            HorizontalTextAlignment="Center"
+                            Text="Atenção"
+                            TextColor="Black" />
+                        <Label
+                            FontFamily="RobotoRegular"
+                            FontSize="16"
+                            HorizontalTextAlignment="Center"
+                            Text="Tem a certeza que pretende remover esta anexo?"
+                            TextColor="#959595" />
+                        <Button
+                            Padding="10"
+                            BackgroundColor="Transparent"
+                            BorderColor="#EBEBEB"
+                            BorderWidth="2"
+                            Clicked="HandleClickVoltaRegisto"
+                            CornerRadius="4"
+                            FontFamily="RobotoBold"
+                            FontSize="16"
+                            Text="Voltar ao registo"
+                            TextColor="{StaticResource Primary}" />
+                        <Button
+                            Padding="10"
+                            BackgroundColor="Transparent"
+                            BorderColor="#EBEBEB"
+                            BorderWidth="2"
+                            CornerRadius="4"
+                            FontFamily="RobotoBold"
+                            FontSize="16"
+                            Text="Confirmar"
+                            TextColor="{StaticResource Primary}" />
+                    </StackLayout>
+                </Border>
+            </Grid>
+        </Grid>
+
+        <!--  Modal Anexar Ficheiro  -->
+        <Grid
+            x:Name="ModalAnexarFicheiro"
+            IsVisible="false"
+            RowDefinitions=".1*,*">
+            <Grid
+                Grid.Row="0"
+                BackgroundColor="#000000"
+                Opacity="0.75" />
+            <Grid
+                Grid.Row="1"
+                BackgroundColor="#000000"
+                Opacity="0.75">
+                <Border
+                    Padding="15"
+                    Background="White"
+                    StrokeShape="RoundRectangle 16,16,0,0"
+                    StrokeThickness="1">
+                    <Grid RowDefinitions=".2*,.1*,*,.3*" RowSpacing="30">
+                        <Grid Grid.Row="0" ColumnDefinitions="*, .1*">
+                            <Grid Grid.Column="0" RowDefinitions="*,*">
+                                <Label
+                                    Grid.Row="0"
+                                    FontFamily="RobotoBold"
+                                    FontSize="23"
+                                    HorizontalOptions="StartAndExpand"
+                                    Text="Inserir anexos"
+                                    TextColor="Black" />
+                                <Label
+                                    Grid.Row="1"
+                                    FontFamily="RobotoMedium"
+                                    FontSize="12"
+                                    HorizontalOptions="StartAndExpand"
+                                    Text="E/7203"
+                                    TextColor="#959595" />
+                            </Grid>
+                            <Button
+                                Grid.Column="1"
+                                BackgroundColor="Transparent"
+                                Clicked="HandleClickVoltaRegisto"
+                                HeightRequest="25"
+                                VerticalOptions="Start" />
+                            <Image
+                                Grid.Column="1"
+                                HeightRequest="25"
+                                Source="btn_close"
+                                VerticalOptions="Start" />
+                        </Grid>
+                        <Border
+                            Grid.Row="1"
+                            Padding="5"
+                            HeightRequest="70"
+                            StrokeShape="RoundRectangle 4">
+                            <Grid ColumnDefinitions=".2*,*" VerticalOptions="Center">
+                                <Button
+                                    Grid.Column="0"
+                                    BackgroundColor="Transparent"
+                                    HeightRequest="25" />
+                                <Image
+                                    Grid.Column="0"
+                                    HeightRequest="25"
+                                    Source="icon_carregar" />
+                                <Label
+                                    Grid.Column="1"
+                                    FontFamily="RobotoBold"
+                                    FontSize="23"
+                                    HorizontalOptions="StartAndExpand"
+                                    Text="Selecionar"
+                                    TextColor="Black" />
+                            </Grid>
+                        </Border>
+                        <Grid Grid.Row="2" RowDefinitions=".1*,*">
+                            <Label
+                                Grid.Row="0"
+                                FontFamily="RobotoMedium"
+                                FontSize="23"
+                                HorizontalOptions="StartAndExpand"
+                                Text="Ficheiros"
+                                TextColor="Black" />
+                            <ScrollView Grid.Row="1">
+                                <VerticalStackLayout Spacing="10">
+                                    <customControl:AnnexesExtraCardAddFile />
+                                    <customControl:AnnexesExtraCardAddFile />
+                                    <customControl:AnnexesExtraCardAddFile />
+                                </VerticalStackLayout>
+                            </ScrollView>
+                        </Grid>
+                        <Grid
+                            Grid.Row="3"
+                            RowDefinitions="*,*"
+                            RowSpacing="5">
+                            <Button
+                                Grid.Row="0"
+                                BackgroundColor="#003962"
+                                CornerRadius="4"
+                                FontFamily="RobotoBold"
+                                FontSize="16"
+                                Text="Consultar ficheiro anexado" />
+                            <Button
+                                Grid.Row="1"
+                                BackgroundColor="Transparent"
+                                BorderColor="#FF5050"
+                                BorderWidth="2"
+                                CornerRadius="4"
+                                FontFamily="RobotoBold"
+                                FontSize="16"
+                                Text="Remover anexo"
+                                TextColor="#FF5050" />
+                        </Grid>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Grid>
+    </Grid>
+</ContentPage>

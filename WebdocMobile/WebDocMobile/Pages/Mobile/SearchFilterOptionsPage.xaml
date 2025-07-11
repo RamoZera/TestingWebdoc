@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mct:Popup
+    x:Class="WebDocMobile.Pages.Mobile.SearchFilterOptionsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+    xmlns:telerik="http://schemas.telerik.com/2022/xaml/maui"
+    VerticalOptions="End">
+    <telerik:RadBorder
+        Margin="0,0,0,-10"
+        Padding="20"
+        BackgroundColor="{StaticResource White}"
+        BorderColor="Transparent"
+        CornerRadius="16">
+        <ScrollView MaximumHeightRequest="400">
+            <VerticalStackLayout>
+                <Grid RowDefinitions="*,*" RowSpacing="20">
+                    <!--  Title  -->
+                    <Label
+                        FontFamily="RobotoBold"
+                        FontSize="20"
+                        HorizontalTextAlignment="Start"
+                        Text="Consultar registos"
+                        TextColor="Black" />
+
+                    <!--  Close Button  -->
+                    <Frame
+                        Margin="0,0,15,0"
+                        Padding="0"
+                        BackgroundColor="#EBEBEB"
+                        BorderColor="Transparent"
+                        CornerRadius="30"
+                        HeightRequest="30"
+                        HorizontalOptions="End"
+                        WidthRequest="30">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                        </Frame.GestureRecognizers>
+                        <Frame.Content>
+                            <Grid>
+                                <Image Aspect="AspectFit" Source="icon_close" />
+                            </Grid>
+                        </Frame.Content>
+                    </Frame>
+
+                    <!--  Description  -->
+                    <Label
+                        Grid.Row="1"
+                        FontFamily="RobotoRegular"
+                        FontSize="16"
+                        LineHeight="1.2"
+                        Text="Pesquisa ou seleciona uma das opções para consultar registos"
+                        TextColor="#959595" />
+                </Grid>
+            </VerticalStackLayout>
+        </ScrollView>
+    </telerik:RadBorder>
+</mct:Popup>

@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    x:Class="WebDocMobile.Pages.Mobile.WorkflowPageMobile"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:customControl="clr-namespace:WebDocMobile.CustomControls"
+    xmlns:d="http://schemas.microsoft.com/dotnet/2021/maui/design"
+    xmlns:local="clr-namespace:WebDocMobile.Pages.Mobile"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:telerik="http://schemas.telerik.com/2022/xaml/maui"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:WebDocMobile.PageModels.PagesViewModels">
+    <ContentPage.Resources>
+        <Style TargetType="Grid">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal" />
+                        <VisualState x:Name="Selected">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="Transparent" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
+    <ContentPage.BindingContext>
+        <vm:WorkflowPageViewModel />
+    </ContentPage.BindingContext>
+    <Grid>
+        <!--  Main Content  -->
+        <Grid BackgroundColor="{StaticResource Gray50}" RowDefinitions=".1*,*">
+            <!--  Header  -->
+            <customControl:Header>
+                <Grid
+                    Grid.Row="0"
+                    ColumnDefinitions="auto,*"
+                    VerticalOptions="Center">
+
+                    <Grid
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        HorizontalOptions="Start">
+                        <Button
+                            x:Name="ReturnButton"
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            BackgroundColor="{StaticResource Primary}"
+                            BorderColor="#FFFFFF"
+                            BorderWidth="1"
+                            Clicked="ReturnButton_Clicked"
+                            CornerRadius="4"
+                            HeightRequest="50"
+                            HorizontalOptions="StartAndExpand"
+                            Opacity="0.15"
+                            WidthRequest="50" />
+                        <Image
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            HeightRequest="25"
+                            RotationY="180"
+                            Source="icon_anterior" />
+                    </Grid>
+                    <!--  User Info  -->
+
+                    <Grid
+                        Grid.Row="0"
+                        Padding="45,0,0,0"
+                        HorizontalOptions="Start">
+                        <Label
+                            x:Name="NumberText"
+                            Padding="15,0,0,0"
+                            FontFamily="RobotoMedium"
+                            FontSize="12"
+                            HorizontalOptions="Start"
+                            Text=""
+                            TextColor="#F1F1F1"
+                            VerticalOptions="Start" />
+                        <Label
+                            Padding="15,15,0,0"
+                            FontFamily="RobotoBold"
+                            FontSize="28"
+                            HorizontalOptions="StartAndExpand"
+                            Text="Workflow"
+                            TextColor="White" />
+                    </Grid>
+
+                </Grid>
+
+            </customControl:Header>
+            <Grid
+                Grid.Row="1"
+                Padding="20"
+                BackgroundColor="#F6F6F6"
+                RowDefinitions="auto,.4*"
+                RowSpacing="20">
+                <Grid Grid.Row="0">
+                    <Border
+                        Grid.Row="1"
+                        Padding="20,10"
+                        BackgroundColor="{StaticResource White}"
+                        Stroke="#00000014"
+                        StrokeLineCap="Round"
+                        StrokeShape="RoundRectangle 8"
+                        StrokeThickness="1">
+                        <Grid RowDefinitions="auto,auto,auto,auto, auto" RowSpacing="10">
+                            <Grid
+                                Grid.Row="0"
+                                ColumnDefinitions="auto,*"
+                                ColumnSpacing="10">
+                                <Border
+                                    Padding="10"
+                                    BackgroundColor="#EBEBEB"
+                                    Stroke="#EBEBEB"
+                                    StrokeShape="RoundRectangle 25"
+                                    StrokeThickness="1">
+                                    <Image
+                                        Grid.Column="0"
+                                        HeightRequest="25"
+                                        RotationY="360"
+                                        Source="icon_workflow" />
+                                </Border>
+                                <VerticalStackLayout Grid.Column="1">
+                                    <Label
+                                        FontFamily="RobotoRegular"
+                                        FontSize="12"
+                                        Text="Atual"
+                                        TextColor="#1F2125" />
+                                    <Label
+                                        x:Name="WorkflowAtual"
+                                        FontFamily="RobotoBold"
+                                        FontSize="18"
+                                        Text=""
+                                        TextColor="#1F2125" />
+                                </VerticalStackLayout>
+                            </Grid>
+                            <Label
+                                Grid.Row="1"
+                                FontFamily="RobotoRegular"
+                                FontSize="14"
+                                Text="Decisão"
+                                TextColor="#868E96" />
+                            <ScrollView
+                                Grid.Row="2">
+                                <VerticalStackLayout Spacing="20">
+                                    <CollectionView
+                                        x:Name="GroupRadioCollection"
+                                        HorizontalOptions="StartAndExpand"
+                                        SelectionChanged="GroupRadioCollection_SelectionChanged"
+                                        SelectionMode="Single">
+                                        <CollectionView.ItemsLayout>
+                                            <LinearItemsLayout ItemSpacing="5" Orientation="Vertical" />
+                                        </CollectionView.ItemsLayout>
+                                        <CollectionView.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid ColumnDefinitions=".1*,*" ColumnSpacing="10">
+                                                    <RadioButton
+                                                        x:Name="Select"
+                                                        Grid.Column="0"
+                                                        GroupName="selectedRadio"
+                                                        
+                                                        IsChecked="{Binding Selected, Mode=TwoWay}"
+                                                        VerticalOptions="Center" />
+                                                    <Label
+                                                        Grid.Column="1"
+                                                        FontFamily="RobotoMedium"
+                                                        FontSize="16"
+                                                        HorizontalOptions="Start"
+                                                        Text="{Binding Name}"
+                                                        TextColor="#212529"
+                                                        VerticalOptions="Center" />
+                                                </Grid>
+                                            </DataTemplate>
+                                        </CollectionView.ItemTemplate>
+                                    </CollectionView>
+                                </VerticalStackLayout>
+                            </ScrollView>
+                            <Border
+                                Grid.Row="3"
+                                HorizontalOptions="FillAndExpand"
+                                Stroke="#ADB3BC"
+                                StrokeShape="RoundRectangle 5"
+                                StrokeThickness="2">
+                                <VerticalStackLayout Padding="10">
+                                    <Label
+                                        Margin="7,0,0,0"
+                                        FontFamily="RobotoMedium"
+                                        FontSize="16"
+                                        HorizontalOptions="Start"
+                                        Text="Comentários"
+                                        TextColor="#959595" />
+                                    <telerik:RadEntry
+                                        x:Name="Comments"
+                                        AutomationId="radEntry"
+                                        BackgroundColor="Transparent"
+                                        BorderBrush="Transparent"
+                                        BorderThickness="0,0,0,0"
+                                        FocusedBorderBrush="Transparent"
+                                        FocusedBorderThickness="0,0,0,0"
+                                        FontSize="16"
+                                        Placeholder="Escreva os detalhes necessários"
+                                        PlaceholderColor="#343A40" />
+                                </VerticalStackLayout>
+                            </Border>
+                            <Button
+                                x:Name="WorkflowConfirm"
+                                Grid.Row="4"
+                                Padding="10"
+                                BackgroundColor="#003962"
+                                Clicked="WorkflowConfirm_Clicked"
+                                CornerRadius="4"
+                                FontFamily="RobotoBold"
+                                FontSize="16"
+                                Text="Confirmar"
+                                TextColor="White" />
+                        </Grid>
+                    </Border>
+                </Grid>
+                <ScrollView Grid.Row="1" Orientation="Vertical">
+                    <VerticalStackLayout Spacing="10">
+                        <CollectionView
+                            x:Name="workflowsList"
+                            HorizontalOptions="FillAndExpand"
+                            ItemsSource="{Binding worksflows}">
+                            <CollectionView.ItemsLayout>
+                                <LinearItemsLayout ItemSpacing="5" Orientation="Vertical" />
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Border
+                                        Grid.Row="1"
+                                        BackgroundColor="{StaticResource White}"
+                                        Stroke="#00000014"
+                                        StrokeLineCap="Round"
+                                        StrokeShape="RoundRectangle 8"
+                                        StrokeThickness="1">
+                                        <Grid
+                                            Padding="10"
+                                            ColumnDefinitions=".1*,*"
+                                            ColumnSpacing="5"
+                                            HorizontalOptions="FillAndExpand">
+                                            <toolkit:AvatarView
+                                                Grid.Column="0"
+                                                BackgroundColor="#0074C8"
+                                                HeightRequest="25"
+                                                HorizontalOptions="Start"
+                                                Text="{Binding By[0]}"
+                                                TextColor="White"
+                                                VerticalOptions="Start"
+                                                WidthRequest="25" />
+                                            <VerticalStackLayout Grid.Column="1" Spacing="10">
+                                                <Label>
+                                                    <Label.FormattedText>
+                                                        <FormattedString>
+                                                            <Span
+                                                                FontAttributes="Bold"
+                                                                FontFamily="RobotoMedium"
+                                                                FontSize="16"
+                                                                Text="{Binding By}"
+                                                                TextColor="#1F2125" />
+                                                            <Span
+                                                                FontAttributes="Bold"
+                                                                FontFamily="RobotoRegular"
+                                                                FontSize="16"
+                                                                Text="  "
+                                                                TextColor="#959595" />
+                                                            <Span
+                                                                FontFamily="RobotoRegular"
+                                                                FontSize="16"
+                                                                Text="alterou o estado do documento para "
+                                                                TextColor="#959595" />
+                                                            <Span
+                                                                FontAttributes="Bold"
+                                                                FontFamily="RobotoMedium"
+                                                                FontSize="16"
+                                                                Text="{Binding To}"
+                                                                TextColor="#1F2125" />
+                                                        </FormattedString>
+                                                    </Label.FormattedText>
+                                                </Label>
+                                                <Label
+                                                    FontFamily="RobotoMedium"
+                                                    FontSize="12"
+                                                    Text="{Binding Date}"
+                                                    TextColor="#262930" />
+                                            </VerticalStackLayout>
+
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </VerticalStackLayout>
+                </ScrollView>
+            </Grid>
+        </Grid>
+        
+                <!--  Modal Alert  -->
+        <Grid
+            x:Name="ModalAtentionAlert"
+            IsVisible="False"
+            RowDefinitions="*,auto">
+            <Grid
+                Grid.Row="0"
+                BackgroundColor="#000000"
+                Opacity="0.75" />
+            <Grid
+                Grid.Row="1"
+                BackgroundColor="#BF000000"
+                Opacity="1">
+                <Border
+                    Padding="15"
+                    Background="White"
+                    StrokeShape="RoundRectangle 16,16,0,0"
+                    StrokeThickness="1">
+                    <StackLayout Spacing="20">
+                        <Image x:Name="ModalAtentionIcon" HeightRequest="55" />
+                        <Label
+                            x:Name="ModalAtentionTitle"
+                            FontFamily="RobotoBold"
+                            FontSize="22"
+                            HorizontalTextAlignment="Center"
+                            Text=""
+                            TextColor="Black" />
+                        <Label
+                            x:Name="ModalAtentionText"
+                            FontFamily="RobotoRegular"
+                            FontSize="16"
+                            HorizontalTextAlignment="Center"
+                            Text=""
+                            TextColor="#959595" />
+                        <Button
+                            Padding="10"
+                            BackgroundColor="#003962"
+                            BorderWidth="2"
+                            Clicked="FecharModal_Clicked"
+                            CornerRadius="4"
+                            FontFamily="RobotoBold"
+                            FontSize="16"
+                            Text="Fechar"
+                            TextColor="White" />
+                    </StackLayout>
+                </Border>
+            </Grid>
+        </Grid>
+
+        <!--  Modal Loader  -->
+        <Grid
+            x:Name="ModalLoader"
+            IsVisible="False"
+            RowDefinitions="auto,*">
+            <Grid
+                Grid.Row="0"
+                Padding="20"
+                BackgroundColor="#BF000000"
+                Opacity="1">
+                <Border
+                    Padding="15"
+                    Background="White"
+                    StrokeShape="RoundRectangle 16"
+                    StrokeThickness="1">
+                    <Grid ColumnDefinitions="auto,*" ColumnSpacing="10">
+                        <Border
+                            Grid.Column="0"
+                            Padding="5"
+                            Background="{StaticResource Secondary}"
+                            HeightRequest="54"
+                            StrokeShape="RoundRectangle 50"
+                            StrokeThickness="1"
+                            WidthRequest="54">
+                            <ActivityIndicator
+                                BackgroundColor="Transparent"
+                                HeightRequest="30"
+                                IsRunning="True"
+                                WidthRequest="30"
+                                Color="White" />
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1">
+                            <Label
+                                FontFamily="RobotoBold"
+                                FontSize="22"
+                                HorizontalTextAlignment="Start"
+                                Text="Aguarde"
+                                TextColor="#1F2125" />
+                            <Label
+                                FontFamily="RobotoBold"
+                                FontSize="16"
+                                HorizontalTextAlignment="Start"
+                                Text="Validação em progresso"
+                                TextColor="#959595" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+            </Grid>
+            <Grid
+                Grid.Row="1"
+                BackgroundColor="#000000"
+                Opacity="0.75" />
+        </Grid>
+    </Grid>
+</ContentPage>

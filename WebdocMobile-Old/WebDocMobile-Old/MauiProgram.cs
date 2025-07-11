@@ -1,10 +1,11 @@
-﻿using Microsoft.Extensions.Logging;
+﻿﻿﻿﻿using Microsoft.Extensions.Logging;
 using WebDocMobile.Pages.Desktop;
 using WebDocMobile.Pages.Mobile;
 using WebDocMobile.Services;
 using WebDocMobile.PageModels;
 using WebDocMobile.PageModels.StandardViewModels;
 using CommunityToolkit.Maui;
+using WebDocMobile.PageModels.PagesViewModels;
 using Telerik.Maui.Controls.Compatibility;
 
 namespace WebDocMobile;
@@ -39,37 +40,45 @@ public static class MauiProgram
 #endif
 
 		//Services Singletons
+		builder.Services.AddSingleton<IAppStateService, AppStateService>();
+		builder.Services.AddSingleton<ISettingsService, SettingsService>();
 		builder.Services.AddSingleton<IDocumentService, DocumentService>();
         builder.Services.AddSingleton<IInitService, InitService>();
         builder.Services.AddSingleton<ILoginService, LoginService>();
         builder.Services.AddSingleton<IProcessService, ProcessService>();
         builder.Services.AddSingleton<IWorkflowService, WorkflowService>();
         builder.Services.AddSingleton<IAlertService, AlertService>();
+        builder.Services.AddSingleton<AppShell>();
 
 #if ANDROID || IOS
-        builder.Services.AddSingleton<FirstPageMobile>();
-        builder.Services.AddSingleton<LoginPageMobile>();
-        builder.Services.AddSingleton<ReLoginPageMobile>();
-        builder.Services.AddSingleton<MainMenuPageMobile>();
-		builder.Services.AddSingleton<DocumentsPageMobile>();
-		builder.Services.AddSingleton<ProcessesPageMobile>();
-		builder.Services.AddSingleton<SelectEntityCodePageMobile>();
+        builder.Services.AddTransient<FirstPageMobile>();
+        builder.Services.AddTransient<LoginPageMobile>();
+        builder.Services.AddTransient<ReLoginPageMobile>();
+        builder.Services.AddTransient<MainMenuPageMobile>();
+		builder.Services.AddTransient<DocumentsPageMobile>();
+		builder.Services.AddTransient<ProcessesPageMobile>();
+		builder.Services.AddTransient<SelectEntityCodePageMobile>();
+        builder.Services.AddTransient<PINPageMobile>();
 #else
-        builder.Services.AddSingleton<FirstPageDesktop>();
-        builder.Services.AddSingleton<LoginPageDesktop>();
-        builder.Services.AddSingleton<ReLoginPageDesktop>();
-        builder.Services.AddSingleton<MainMenuPageDesktop>();
-        builder.Services.AddSingleton<DocumentsPageDesktop>();
-        builder.Services.AddSingleton<ProcessesPageDesktop>();
-        builder.Services.AddSingleton<SelectEntityCodePageDesktop>();
+        builder.Services.AddTransient<FirstPageDesktop>();
+        builder.Services.AddTransient<LoginPageDesktop>();
+        builder.Services.AddTransient<ReLoginPageDesktop>();
+        builder.Services.AddTransient<MainMenuPageDesktop>();
+        builder.Services.AddTransient<DocumentsPageDesktop>();
+        builder.Services.AddTransient<ProcessesPageDesktop>();
+        builder.Services.AddTransient<SelectEntityCodePageDesktop>();
+        builder.Services.AddTransient<PINPageDesktop>();
 #endif
 
-        builder.Services.AddSingleton<FirstPageViewModel>();
-        builder.Services.AddSingleton<LoginPageViewModel>();
-        builder.Services.AddSingleton<ReLoginPageViewModel>();
-        builder.Services.AddSingleton<MainMenuPageViewModel>();
-        builder.Services.AddSingleton<DocumentsPageViewModel>();
-        builder.Services.AddSingleton<ProcessesPageViewModel>();
+        builder.Services.AddTransient<FirstPageViewModel>();
+        builder.Services.AddTransient<LoginPageViewModel>();
+        builder.Services.AddTransient<ReLoginPageViewModel>();
+        builder.Services.AddTransient<MainMenuPageViewModel>();
+        builder.Services.AddTransient<DocumentsPageViewModel>();
+        builder.Services.AddTransient<ProcessesPageViewModel>();
+        builder.Services.AddTransient<SelectEntityCodePageViewModel>();
+        builder.Services.AddTransient<PINPageViewModel>();
+        builder.Services.AddTransient<AppShellViewModel>();
 
 
         return builder.Build();

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+  <g id="icon-despacchos" transform="translate(9202 6454)">
+    <rect id="box" width="16" height="16" transform="translate(-9202 -6454)" fill="rgba(255,255,255,0)"/>
+    <g id="icon" transform="translate(-9200 -6454)">
+      <path id="Path_3263" data-name="Path 3263" d="M168.357,70h-.571v1.143a.571.571,0,1,1-1.143,0V70h-2.286v1.143a.571.571,0,1,1-1.143,0V70h-2.286v1.143a.571.571,0,1,1-1.143,0V70h-.571a1.719,1.719,0,0,0-1.714,1.714V83.143a1.719,1.719,0,0,0,1.714,1.714h9.143a1.719,1.719,0,0,0,1.714-1.714V71.714A1.719,1.719,0,0,0,168.357,70Zm-4,11.429h-3.429a.571.571,0,1,1,0-1.143h3.429a.571.571,0,1,1,0,1.143Zm2.286-2.857h-5.714a.571.571,0,1,1,0-1.143h5.714a.571.571,0,1,1,0,1.143Zm0-2.857h-5.714a.571.571,0,1,1,0-1.143h5.714a.571.571,0,1,1,0,1.143Z" transform="translate(-157.5 -68.857)" fill="#fff"/>
+      <path id="Path_3264" data-name="Path 3264" d="M228.643,35.572a.571.571,0,1,0-1.143,0v.571h1.143Z" transform="translate(-225.214 -35)" fill="#fff"/>
+      <path id="Path_3265" data-name="Path 3265" d="M438.643,35.572a.571.571,0,1,0-1.143,0v.571h1.143Z" transform="translate(-428.357 -35)" fill="#fff"/>
+      <path id="Path_3266" data-name="Path 3266" d="M333.643,35.572a.571.571,0,1,0-1.143,0v.571h1.143Z" transform="translate(-326.786 -35)" fill="#fff"/>
+    </g>
+  </g>
+</svg>

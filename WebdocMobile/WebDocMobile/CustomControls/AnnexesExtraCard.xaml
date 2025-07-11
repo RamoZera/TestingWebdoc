@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="WebDocMobile.CustomControls.AnnexesExtraCard"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:customControl="clr-namespace:WebDocMobile.CustomControls"
+    xmlns:telerik="http://schemas.telerik.com/2022/xaml/maui"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:WebDocMobile.PageModels">
+    <ContentView.ControlTemplate>
+        <ControlTemplate>
+            <Border
+                HorizontalOptions="FillAndExpand"
+                Stroke="{StaticResource Gray300}"
+                StrokeShape="RoundRectangle 5"
+                StrokeThickness="2">
+                <toolkit:Expander Padding="0,10">
+                    <toolkit:Expander.Header>
+                        <Grid
+                            Padding="10"
+                            ColumnDefinitions=".2*,*,.2*"
+                            ColumnSpacing="1">
+                            <Image
+                                Grid.Column="0"
+                                HeightRequest="40"
+                                HorizontalOptions="Start"
+                                Source="icon_documentos_blue"
+                                VerticalOptions="Center" />
+                            <Grid Grid.Column="1" RowDefinitions="*,*">
+                                <Label
+                                    Grid.Row="0"
+                                    FontFamily="RobotoRegular"
+                                    FontSize="14"
+                                    MaxLines="1"
+                                    Text="anual de...normas internas 2022.doc"
+                                    TextColor="#1F2125" />
+                                <Label
+                                    Grid.Row="1"
+                                    FontFamily="RobotoMedium"
+                                    FontSize="12"
+                                    MaxLines="1"
+                                    Text="01/01/2023 09:52"
+                                    TextColor="#1F2125" />
+                            </Grid>
+                            <Image
+                                Grid.Row="2"
+                                Grid.Column="2"
+                                HeightRequest="25"
+                                HorizontalOptions="End"
+                                Source="icon_accordion"
+                                VerticalOptions="Start" />
+                        </Grid>
+                    </toolkit:Expander.Header>
+                    <VerticalStackLayout Padding="25" Spacing="25">
+                        <Grid RowDefinitions="Auto,Auto" RowSpacing="10">
+                            <Label
+                                Grid.Row="0"
+                                FontFamily="RobotoMedium"
+                                FontSize="15"
+                                Text="Assunto"
+                                TextColor="{StaticResource Gray300}" />
+                            <Label
+                                Grid.Row="1"
+                                FontFamily="RobotoRegular"
+                                FontSize="15"
+                                Text="Manual de normas internas 2022"
+                                TextColor="#343A40" />
+                        </Grid>
+
+                        <Grid RowDefinitions="Auto,Auto" RowSpacing="10">
+                            <Label
+                                Grid.Row="0"
+                                FontFamily="RobotoMedium"
+                                FontSize="15"
+                                Text="Data do documento"
+                                TextColor="{StaticResource Gray300}" />
+                            <Label
+                                Grid.Row="1"
+                                FontFamily="RobotoRegular"
+                                FontSize="15"
+                                Text="01/01/2023"
+                                TextColor="#343A40" />
+                        </Grid>
+
+                        <Grid RowDefinitions="Auto,Auto" RowSpacing="10">
+                            <Label
+                                Grid.Row="0"
+                                FontFamily="RobotoMedium"
+                                FontSize="15"
+                                Text="Tipo"
+                                TextColor="{StaticResource Gray300}" />
+                            <Label
+                                Grid.Row="1"
+                                FontFamily="RobotoRegular"
+                                FontSize="15"
+                                Text="Outros"
+                                TextColor="#343A40" />
+                        </Grid>
+
+                        <Grid RowDefinitions="Auto,Auto" RowSpacing="10">
+                            <Label
+                                Grid.Row="0"
+                                FontFamily="RobotoMedium"
+                                FontSize="15"
+                                Text="Versão"
+                                TextColor="{StaticResource Gray300}" />
+                            <Label
+                                Grid.Row="1"
+                                FontFamily="RobotoRegular"
+                                FontSize="15"
+                                Text="1"
+                                TextColor="#343A40" />
+                        </Grid>
+
+                        <Grid RowDefinitions="Auto,Auto" RowSpacing="10">
+                            <Label
+                                Grid.Row="0"
+                                FontFamily="RobotoMedium"
+                                FontSize="15"
+                                Text="Adicionado por"
+                                TextColor="{StaticResource Gray300}" />
+                            <Label
+                                Grid.Row="1"
+                                FontFamily="RobotoRegular"
+                                FontSize="15"
+                                Text="Helena Castro"
+                                TextColor="#343A40" />
+                        </Grid>
+
+                        <Grid RowDefinitions="Auto,Auto" RowSpacing="10">
+                            <Label
+                                Grid.Row="0"
+                                FontFamily="RobotoMedium"
+                                FontSize="15"
+                                Text="Adicionado em"
+                                TextColor="{StaticResource Gray300}" />
+                            <Label
+                                Grid.Row="1"
+                                FontFamily="RobotoRegular"
+                                FontSize="15"
+                                Text="01/01/2023"
+                                TextColor="#343A40" />
+                        </Grid>
+
+                        <Grid ColumnDefinitions=".1*,*">
+                            <CheckBox
+                                Grid.Column="0"
+                                HorizontalOptions="Start"
+                                IsChecked="true"
+                                VerticalOptions="Center"
+                                Color="#0074C8" />
+                            <Label
+                                Grid.Column="1"
+                                FontFamily="RobotoMedium"
+                                FontSize="16"
+                                HorizontalOptions="Start"
+                                Text="Validado"
+                                TextColor="{StaticResource Primary}"
+                                VerticalOptions="Center" />
+                        </Grid>
+
+                        <ContentPresenter />
+                    </VerticalStackLayout>
+                </toolkit:Expander>
+
+            </Border>
+        </ControlTemplate>
+    </ContentView.ControlTemplate>
+
+</ContentView>

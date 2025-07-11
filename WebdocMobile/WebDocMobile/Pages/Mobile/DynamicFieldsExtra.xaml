@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    x:Class="WebDocMobile.Pages.Mobile.DynamicFieldsExtra"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:customControl="clr-namespace:WebDocMobile.CustomControls"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:WebDocMobile.PageModels.PagesViewModels"
+    Title="DynamicFieldsExtra">
+
+    <Grid>
+        <!--  Main Content  -->
+        <Grid
+            x:Name="MainContent"
+            BackgroundColor="{StaticResource Gray50}"
+            RowDefinitions=".1*,*">
+            <!--  Header  -->
+            <customControl:Header>
+                <Grid ColumnDefinitions="auto,*" VerticalOptions="Center">
+                    <Grid Grid.Column="0" HorizontalOptions="Start">
+                        <Button
+                            BackgroundColor="Transparent"
+                            BorderColor="#FFFFFF"
+                            BorderWidth="1"
+                            Clicked="HandleClickBackPage"
+                            CornerRadius="4"
+                            HeightRequest="50"
+                            Opacity="0.15"
+                            WidthRequest="50" />
+                        <Image
+                            HeightRequest="24"
+                            RotationY="180"
+                            Source="icon_anterior" />
+                    </Grid>
+                    <Grid
+                        Grid.Column="1"
+                        Padding="15,0,0,0"
+                        HorizontalOptions="Start">
+                        <Label
+                            Margin="0,0,0,0"
+                            FontFamily="RobotoMedium"
+                            FontSize="12"
+                            HorizontalOptions="Start"
+                            Text="E/7203"
+                            TextColor="#F1F1F1" />
+                        <Label
+                            Margin="0,15,0,0"
+                            FontFamily="RobotoBold"
+                            FontSize="28"
+                            HorizontalOptions="StartAndExpand"
+                            Text="Campos dinâmicos"
+                            TextColor="White" />
+                    </Grid>
+
+                </Grid>
+            </customControl:Header>
+
+            <!--  Content Page  -->
+            <Grid Grid.Row="1">
+                <VerticalStackLayout Spacing="10" VerticalOptions="Center">
+                    <Label
+                        FontFamily="RobotoBold"
+                        FontSize="22"
+                        HorizontalTextAlignment="Center"
+                        Text="Sem registos"
+                        TextColor="Black"
+                        VerticalTextAlignment="Center" />
+                    <Label
+                        FontFamily="RobotoBold"
+                        FontSize="12"
+                        HorizontalTextAlignment="Center"
+                        Text="Ainda não existem registos associados"
+                        TextColor="#1F2125"
+                        VerticalTextAlignment="Center" />
+                </VerticalStackLayout>
+            </Grid>
+
+        </Grid>
+
+    </Grid>
+</ContentPage>

@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="WebDocMobile.CustomControls.VersioningExtraCard"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:customControl="clr-namespace:WebDocMobile.CustomControls"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:WebDocMobile.PageModels"
+    x:Name="this">
+    <ContentView.ControlTemplate>
+        <ControlTemplate>
+            <Border
+                HorizontalOptions="FillAndExpand"
+                Stroke="{StaticResource Gray300}"
+                StrokeShape="RoundRectangle 5"
+                StrokeThickness="2">
+                <toolkit:Expander Padding="0,10">
+                    <toolkit:Expander.Header>
+                        <Grid
+                            ColumnDefinitions=".2*,*,.2*"
+                            ColumnSpacing="1"
+                            RowDefinitions="Auto,Auto">
+                            <toolkit:AvatarView
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                BackgroundColor="Blue"
+                                HeightRequest="35"
+                                Text="W"
+                                TextColor="White"
+                                WidthRequest="35" />
+                            <Label
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                FontFamily="RobotoBold"
+                                FontSize="15"
+                                Text="Webdoc.al movimento para Juridico"
+                                TextColor="#1F2125" />
+                            <Label
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                FontFamily="RobotoMedium"
+                                FontSize="12"
+                                Text="01/01/2023 09:52"
+                                TextColor="#262930" />
+                            <Image
+                                Grid.Row="0"
+                                Grid.Column="2"
+                                HeightRequest="25"
+                                Source="icon_accordion"
+                                VerticalOptions="Start" />
+                            <Label
+                                Grid.Row="1"
+                                Grid.Column="2"
+                                FontFamily="RobotoMedium"
+                                FontSize="12"
+                                HorizontalTextAlignment="Center"
+                                Text="{Binding Source={x:Reference this}, Path=NumberCardText}"
+                                TextColor="{StaticResource Gray300}" />
+                        </Grid>
+                    </toolkit:Expander.Header>
+                    <VerticalStackLayout Padding="10" Spacing="10">
+                        <Border
+                            Padding="10"
+                            HorizontalOptions="FillAndExpand"
+                            Stroke="{StaticResource Gray300}"
+                            StrokeShape="RoundRectangle 5"
+                            StrokeThickness="1">
+                            <Grid RowDefinitions="Auto,Auto" RowSpacing="10">
+                                <Label
+                                    Grid.Row="0"
+                                    FontFamily="RobotoMedium"
+                                    FontSize="15"
+                                    TextColor="#959595"
+                                    Text="De" />
+                                <toolkit:AvatarView
+                                    Grid.Row="1"
+                                    BackgroundColor="Blue"
+                                    HeightRequest="25"
+                                    HorizontalOptions="Start"
+                                    Text="J"
+                                    TextColor="White"
+                                    VerticalOptions="Center"
+                                    WidthRequest="25" />
+                                <Label
+                                    Grid.Row="1"
+                                    Margin="30,0,0,0"
+                                    FontFamily="RobotRegular"
+                                    FontSize="15"
+                                    TextColor="#343A40"
+                                    Text="Juridico" />
+                            </Grid>
+                        </Border>
+
+                        <Border
+                            Padding="10"
+                            HorizontalOptions="FillAndExpand"
+                            Stroke="{StaticResource Gray300}"
+                            StrokeShape="RoundRectangle 5"
+                            StrokeThickness="1">
+                            <Grid RowDefinitions="Auto,Auto" RowSpacing="10">
+                                <Label
+                                    Grid.Row="0"
+                                    FontFamily="RobotoMedium"
+                                    FontSize="15"
+                                    TextColor="#959595"
+                                    Text="Informacion" />
+                                <Label
+                                    Grid.Row="1"
+                                    FontFamily="RobotRegular"
+                                    FontSize="15"
+                                    TextColor="#343A40"
+                                    Text="Movimento automatico" />
+                            </Grid>
+                        </Border>
+
+                        <Border
+                            Padding="10"
+                            HorizontalOptions="FillAndExpand"
+                            Stroke="{StaticResource Gray300}"
+                            StrokeShape="RoundRectangle 5"
+                            StrokeThickness="1">
+                            <Grid RowDefinitions="Auto,Auto" RowSpacing="10">
+                                <Label
+                                    Grid.Row="0"
+                                    FontFamily="RobotoMedium"
+                                    FontSize="15"
+                                    TextColor="#959595"
+                                    Text="Conhecimiento" />
+                                <Label
+                                    Grid.Row="1"
+                                    FontFamily="RobotRegular"
+                                    FontSize="15"
+                                    TextColor="#343A40"
+                                    Text="N/A" />
+                            </Grid>
+                        </Border>
+
+                        <Border
+                            Padding="10"
+                            HorizontalOptions="FillAndExpand"
+                            Stroke="{StaticResource Gray300}"
+                            StrokeShape="RoundRectangle 5"
+                            StrokeThickness="1">
+                            <Grid RowDefinitions="Auto,Auto" RowSpacing="10">
+                                <Label
+                                    Grid.Row="0"
+                                    FontFamily="RobotoMedium"
+                                    FontSize="15"
+                                    TextColor="#959595"
+                                    Text="Parecer" />
+                                <Label
+                                    Grid.Row="1"
+                                    FontFamily="RobotRegular"
+                                    FontSize="15"
+                                    TextColor="#343A40"
+                                    Text="N/A" />
+                            </Grid>
+                        </Border>
+
+                        <Border
+                            Padding="10"
+                            HorizontalOptions="FillAndExpand"
+                            Stroke="{StaticResource Gray300}"
+                            StrokeShape="RoundRectangle 5"
+                            StrokeThickness="1">
+                            <Grid RowDefinitions="Auto,Auto" RowSpacing="10">
+                                <Label
+                                    Grid.Row="0"
+                                    FontFamily="RobotoMedium"
+                                    FontSize="15"
+                                    TextColor="#959595"
+                                    Text="Por delegacao" />
+                                <Label
+                                    Grid.Row="1"
+                                    FontFamily="RobotRegular"
+                                    FontSize="15"
+                                    TextColor="#343A40"
+                                    Text="N/A" />
+                            </Grid>
+                        </Border>
+
+                        <ContentPresenter />
+                    </VerticalStackLayout>
+                </toolkit:Expander>
+            </Border>
+        </ControlTemplate>
+    </ContentView.ControlTemplate>
+</ContentView>

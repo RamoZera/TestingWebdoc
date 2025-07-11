@@ -1,4 +1,5 @@
 ﻿using Android.App;
+using Android.Content;
 using Android.Content.PM;
 using Android.OS;
 using Android.Views;
@@ -63,5 +64,13 @@ public class MainActivity : MauiAppCompatActivity, IOnTouchListener
             KeepFocus = true;
 
         return v.OnTouchEvent(e);
+    }
+
+    public void ShowKeyboard(Android.Views.View view)
+    {
+        view.RequestFocus();
+        InputMethodManager inputMethodManager = (InputMethodManager)GetSystemService(Context.InputMethodService);
+        inputMethodManager.ShowSoftInput(view, ShowFlags.Forced);
+        inputMethodManager.ToggleSoftInput(ShowFlags.Forced, HideSoftInputFlags.ImplicitOnly);
     }
 }

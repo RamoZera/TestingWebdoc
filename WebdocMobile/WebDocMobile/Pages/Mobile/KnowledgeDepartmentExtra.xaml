@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="WebDocMobile.Pages.Mobile.KnowledgeDepartmentExtra"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:customControl="clr-namespace:WebDocMobile.CustomControls"
+    xmlns:telerik="http://schemas.telerik.com/2022/xaml/maui"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:WebDocMobile.PageModels.PagesViewModels"
+    Title="KnowledgeDepartmentExtra">
+    <ContentPage.BindingContext>
+        <vm:KnowledgeExtraViewModel />
+    </ContentPage.BindingContext>
+    <Grid>
+        <!--  Main Content  -->
+        <Grid
+            x:Name="MainContent"
+            BackgroundColor="{StaticResource Gray50}"
+            RowDefinitions=".1*,*">
+            <!--  Header  -->
+            <customControl:Header>
+                <Grid ColumnDefinitions="auto,*" VerticalOptions="Center">
+                    <Grid Grid.Column="0" HorizontalOptions="Start">
+                        <Button
+                            BackgroundColor="Transparent"
+                            BorderColor="#FFFFFF"
+                            BorderWidth="1"
+                            Clicked="HandleClickBackPage"
+                            CornerRadius="4"
+                            HeightRequest="50"
+                            Opacity="0.15"
+                            WidthRequest="50" />
+                        <Image
+                            HeightRequest="40"
+                            RotationY="180"
+                            Source="icon_close_white" />
+                    </Grid>
+                    <Grid
+                        Grid.Column="1"
+                        Padding="15,0,0,0"
+                        HorizontalOptions="Start">
+                        <Label
+                            Margin="0,0,0,0"
+                            FontFamily="RobotoMedium"
+                            FontSize="12"
+                            HorizontalOptions="Start"
+                            Text="E/7203"
+                            TextColor="#F1F1F1" />
+                        <Label
+                            Margin="0,15,0,0"
+                            FontFamily="RobotoBold"
+                            FontSize="28"
+                            HorizontalOptions="StartAndExpand"
+                            Text="Departamentos"
+                            TextColor="White" />
+                    </Grid>
+
+                </Grid>
+            </customControl:Header>
+
+            <!--  Content Page  -->
+            <Grid Grid.Row="1" RowDefinitions="*,auto">
+                <ScrollView Grid.Row="0">
+                    <VerticalStackLayout Padding="20" Spacing="10">
+                        <CollectionView
+                            x:Name="GroupUsersCollection"
+                            ItemsSource="{Binding Group}"
+                            SelectionChanged="GroupUsersCollection_SelectionChanged"
+                            SelectionMode="Single">
+                            <CollectionView.ItemsLayout>
+                                <LinearItemsLayout ItemSpacing="5" Orientation="Vertical" />
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Border
+                                        BackgroundColor="White"
+                                        Stroke="{StaticResource Gray300}"
+                                        StrokeShape="RoundRectangle 5"
+                                        StrokeThickness="1">
+                                        <toolkit:Expander Padding="10">
+                                            <toolkit:Expander.Header>
+                                                <Grid
+                                                    Padding="0,10"
+                                                    ColumnDefinitions="*,.2*"
+                                                    ColumnSpacing="1">
+                                                    <Label
+                                                        Grid.Column="0"
+                                                        FontFamily="RobotoBold"
+                                                        FontSize="16"
+                                                        Text="{Binding Name}"
+                                                        TextColor="#262930" />
+                                                    <Image
+                                                        Grid.Column="1"
+                                                        HeightRequest="25"
+                                                        HorizontalOptions="End"
+                                                        Source="icon_accordion"
+                                                        VerticalOptions="Center" />
+                                                </Grid>
+                                            </toolkit:Expander.Header>
+                                            <VerticalStackLayout Padding="5,10" Spacing="10">
+                                                <CollectionView x:Name="UsersCollectionG" ItemsSource="{Binding Users}">
+                                                    <CollectionView.ItemsLayout>
+                                                        <LinearItemsLayout ItemSpacing="5" Orientation="Vertical" />
+                                                    </CollectionView.ItemsLayout>
+                                                    <CollectionView.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <Border
+                                                                Padding="10"
+                                                                BackgroundColor="White"
+                                                                Stroke="#DCDCDC"
+                                                                StrokeShape="RoundRectangle 5"
+                                                                StrokeThickness="1">
+                                                                <Grid ColumnDefinitions="auto,auto,*" ColumnSpacing="5">
+                                                                    <telerik:RadCheckBox
+                                                                        x:Name="UserSelectG"
+                                                                        Grid.Column="0"
+                                                                        CheckedChanged="UserSelectG_CheckedChanged"
+                                                                        CheckedColor="#0074C8"
+                                                                        IsChecked="{Binding Selected, Mode=TwoWay}"
+                                                                        UncheckedColor="#959595"
+                                                                        VerticalOptions="Center" />
+                                                                    <toolkit:AvatarView
+                                                                        Grid.Column="1"
+                                                                        HeightRequest="25"
+                                                                        HorizontalOptions="Center"
+                                                                        ImageSource="icon_user"
+                                                                        VerticalOptions="Center"
+                                                                        WidthRequest="25" />
+                                                                    <Label
+                                                                        Grid.Column="2"
+                                                                        FontFamily="RobotoBold"
+                                                                        FontSize="14"
+                                                                        HorizontalOptions="Start"
+                                                                        Text="{Binding Name}"
+                                                                        TextColor="#1F2125"
+                                                                        VerticalOptions="Center" />
+                                                                </Grid>
+                                                            </Border>
+                                                        </DataTemplate>
+                                                    </CollectionView.ItemTemplate>
+                                                </CollectionView>
+                                            </VerticalStackLayout>
+                                        </toolkit:Expander>
+                                    </Border>
+
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </VerticalStackLayout>
+                </ScrollView>
+                <Button
+                    x:Name="SaveKnowledgeG"
+                    Grid.Row="1"
+                    Margin="20,10"
+                    BackgroundColor="#003962"
+                    Clicked="HandleClickOpenModalAddKnowledge"
+                    CornerRadius="4"
+                    FontFamily="RobotoBold"
+                    FontSize="16"
+                    Text="Confirmar seleção"
+                    TextColor="White" />
+            </Grid>
+        </Grid>
+
+        <!--  Modal Add Knowledge  -->
+        <Grid
+            x:Name="ModalAddKnowledgeG"
+            IsVisible="false"
+            RowDefinitions="*,auto">
+            <Grid
+                Grid.Row="0"
+                BackgroundColor="#000000"
+                Opacity="0.75" />
+            <Grid Grid.Row="1" BackgroundColor="#BF000000">
+                <Border
+                    Padding="15"
+                    Background="White"
+                    StrokeShape="RoundRectangle 16,16,0,0"
+                    StrokeThickness="1">
+                    <Grid RowDefinitions=".2*,*" RowSpacing="20">
+                        <Grid Grid.Row="0" ColumnDefinitions="*,.1*">
+                            <Label
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                FontFamily="RobotoBold"
+                                FontSize="20"
+                                HorizontalOptions="StartAndExpand"
+                                Text="Adicionar conhecimento"
+                                TextColor="Black" />
+                            <Button
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                BackgroundColor="Transparent"
+                                Clicked="HandleClickCloseModalAddKnowledge"
+                                HeightRequest="25"
+                                VerticalOptions="Start" />
+                            <Image
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                HeightRequest="25"
+                                Source="btn_close"
+                                VerticalOptions="Start" />
+                        </Grid>
+                        <Grid
+                            Grid.Row="1"
+                            RowDefinitions="*,*,*"
+                            RowSpacing="10">
+                            <Border
+                                Grid.Row="0"
+                                HorizontalOptions="FillAndExpand"
+                                Stroke="#ADB3BC"
+                                StrokeShape="RoundRectangle 5"
+                                StrokeThickness="2">
+                                <VerticalStackLayout Padding="10">
+                                    <Label
+                                        Margin="7,0,0,0"
+                                        FontFamily="RobotoMedium"
+                                        FontSize="16"
+                                        HorizontalOptions="Start"
+                                        Text="Observações"
+                                        TextColor="#959595" />
+                                    <telerik:RadEntry
+                                        x:Name="Observations"
+                                        AutomationId="radEntry"
+                                        BackgroundColor="Transparent"
+                                        BorderBrush="Transparent"
+                                        BorderThickness="0,0,0,0"
+                                        FocusedBorderBrush="Transparent"
+                                        FocusedBorderThickness="0,0,0,0"
+                                        FontSize="16"
+                                        Placeholder="Escreva a referência"
+                                        PlaceholderColor="#343A40" />
+                                </VerticalStackLayout>
+                            </Border>
+                            <Border
+                                Grid.Row="1"
+                                HorizontalOptions="FillAndExpand"
+                                Stroke="#ADB3BC"
+                                StrokeShape="RoundRectangle 5"
+                                StrokeThickness="2">
+                                <VerticalStackLayout Padding="10">
+                                    <Label
+                                        Margin="7,0,0,0"
+                                        FontFamily="RobotoMedium"
+                                        FontSize="16"
+                                        HorizontalOptions="Start"
+                                        Text="Comentários"
+                                        TextColor="#959595" />
+                                    <telerik:RadEntry
+                                        x:Name="Comments"
+                                        AutomationId="radEntry"
+                                        BackgroundColor="Transparent"
+                                        BorderBrush="Transparent"
+                                        BorderThickness="0,0,0,0"
+                                        FocusedBorderBrush="Transparent"
+                                        FocusedBorderThickness="0,0,0,0"
+                                        FontSize="16"
+                                        Placeholder="Escreva a referência"
+                                        PlaceholderColor="#343A40" />
+                                </VerticalStackLayout>
+                            </Border>
+                            <Button
+                                x:Name="GravarKnowledgeG"
+                                Grid.Row="2"
+                                BackgroundColor="#003962"
+                                Clicked="SaveKnowledgeG_Clicked"
+                                FontFamily="RobotoBold"
+                                FontSize="16"
+                                Text="Gravar"
+                                TextColor="White"
+                                VerticalOptions="End" />
+                        </Grid>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Grid>
+
+        <!--  Modal Loader  -->
+        <Grid
+            x:Name="ModalLoader"
+            IsVisible="False"
+            RowDefinitions="auto,*">
+            <Grid
+                Grid.Row="0"
+                Padding="20"
+                BackgroundColor="#BF000000"
+                Opacity="1">
+                <Border
+                    Padding="15"
+                    Background="White"
+                    StrokeShape="RoundRectangle 16"
+                    StrokeThickness="1">
+                    <Grid ColumnDefinitions="auto,*" ColumnSpacing="10">
+                        <Border
+                            Grid.Column="0"
+                            Padding="5"
+                            Background="{StaticResource Secondary}"
+                            HeightRequest="54"
+                            StrokeShape="RoundRectangle 50"
+                            StrokeThickness="1"
+                            WidthRequest="54">
+                            <ActivityIndicator
+                                BackgroundColor="Transparent"
+                                HeightRequest="30"
+                                IsRunning="True"
+                                WidthRequest="30"
+                                Color="White" />
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1">
+                            <Label
+                                FontFamily="RobotoBold"
+                                FontSize="22"
+                                HorizontalTextAlignment="Start"
+                                Text="Aguarde"
+                                TextColor="#1F2125" />
+                            <Label
+                                FontFamily="RobotoBold"
+                                FontSize="16"
+                                HorizontalTextAlignment="Start"
+                                Text="Validação em progresso"
+                                TextColor="#959595" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+            </Grid>
+            <Grid
+                Grid.Row="1"
+                BackgroundColor="#000000"
+                Opacity="0.75" />
+        </Grid>
+    </Grid>
+</ContentPage>

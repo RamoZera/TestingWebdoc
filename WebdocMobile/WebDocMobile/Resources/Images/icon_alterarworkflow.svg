@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <g id="icon-alterarworkflow" transform="translate(-305 -190)">
+    <rect id="box" width="24" height="24" transform="translate(305 190)" fill="none"/>
+    <path id="swap_horiz_FILL0_wght400_GRAD0_opsz24" d="M86-780.8l-6-6,6-6,1.68,1.71L84.59-788H93.2v2.4H84.59l3.09,3.09ZM98-788l-1.68-1.71,3.09-3.09H90.8v-2.4h8.61l-3.09-3.09L98-800l6,6Z" transform="translate(225 992)" fill="#1f2125"/>
+  </g>
+</svg>

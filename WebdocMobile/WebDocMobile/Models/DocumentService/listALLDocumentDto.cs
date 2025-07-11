@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WebDocMobile.Models.DocumentService
 {
-    public class ListALLDocumentDto
+    public class listALLDocumentDto
     {
         public string strHashCode { get; set; }
         public int intPageRowSize { get; set; }

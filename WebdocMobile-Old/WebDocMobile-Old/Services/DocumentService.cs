@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.Diagnostics;
 using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
-using Telerik.Windows.Documents.Flow.Model;
 using WebDocMobile.Helpers.WsMethods;
 using WebDocMobile.Models.DocumentService;
 
@@ -13,433 +8,59 @@ namespace WebDocMobile.Services
 {
     public interface IDocumentService
     {
-        Task InsertGDDocument(string hashCode, GDDocument document, string fileBuf, string ext);
-        Task AddDocumentAttachment(string hashCode, string docProcNumber, string docRef, string file, string fileName, string extension);
-        Task<List<GDDocument>> listALLDocument(string hashCode, int pageRowSize, int currentPage, string assunto, int documentType, int gdBook, string dataRegistoInicio, string dataRegistoFim);
-        Task InsertDocumentInProcess(string hashCode, string documentIDEncrypted, string processIDEncrypted, int idProcessTab);
-        Task InsertGDDocumentGetGUID(string hashCode, GDDocument document, string fileBuf, string ext);
-        Task InsertGDDocumentGetID(string hashCode, GDDocument document, string fileBuf, string ext);
-        Task InsertGDDocumentGetIDAndNumber(string hashCode, GDDocument document, string fileBuf, string ext);
-        Task InsertGDDocumentNoFile(string hashCode, GDDocument document);
-        Task AddDocumentoRelationship(string hashCode, string documentIDEncryted, string documentOtherIDEncrypted);
-        Task<GDDocument> GetDocumentDataResumedByNumber(string hashCode, string documentNumber);
-        Task<GDDocument> GetDocumentDataResumed(string hashCode, string documentoIDEncrypted);
         Task<List<GDDocument>> ListMyDocuments(string hashCode, int pageRowSize, int currentPage);
-        Task<int> TotalMyDocuments(string hashCode);
         Task<List<GDDocument>> ListDocuments(string hashCode, int pageRowSize, int currentPage);
         Task<List<GDDocument>> ListAllMyDocuments(string hashCode, int pageRowSize, int currentPage, string search);
+        Task<List<GDDocument>> ListAllDocuments(string hashCode, int pageRowSize, int currentPage, string assunto, int documentType, int gdBook, string dataRegistoInicio, string dataRegistoFim);
     }
 
     public class DocumentService : IDocumentService
     {
+        private readonly ISettingsService _settingsService;
         private readonly HttpClient _httpClient;
-        private readonly string _url;
         private readonly JsonSerializerOptions _jsonSerializerOptions;
 
-        public DocumentService()
+        public DocumentService(ISettingsService settingsService)
         {
+            _settingsService = settingsService;
 #if DEBUG
-            HttpClientHandler insecureHandler = GetInsecureHandler();
-            _httpClient = new HttpClient(insecureHandler);
+            var handler = new HttpClientHandler
+            {
+                ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => true
+            };
+            _httpClient = new HttpClient(handler);
 #else
             _httpClient = new HttpClient();
 #endif
-            if (Preferences.ContainsKey(nameof(App.codigoEntidade)) && Preferences.ContainsKey(nameof(App.baseAddress)))
-            {
-                string codigoEntidade = Preferences.Get(nameof(App.codigoEntidade), "");
-                string baseAddress = Preferences.Get(nameof(App.baseAddress), "");
-                if (codigoEntidade == "\"1994\"")
-                {
-                    _url = $"{baseAddress.Substring(1, baseAddress.Length - 2)}/api/v1";
-                }
-                else if (codigoEntidade == "\"1995\"")
-                {
-                    _url = $"{baseAddress.Substring(1, baseAddress.Length - 2)}/wsservices/wsgetinfo.asmx";
-                }
-            }
-
             _jsonSerializerOptions = new JsonSerializerOptions
             {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                WriteIndented = true
             };
         }
-        public HttpClientHandler GetInsecureHandler()
+
+        private string GetApiUrl()
         {
-            HttpClientHandler handler = new HttpClientHandler();
-            handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) =>
+            var baseAddress = _settingsService.BaseAddress;
+            if (string.IsNullOrEmpty(baseAddress))
             {
-                if (cert.Issuer.Equals("CN=localhost"))
-                    return true;
-                return errors == System.Net.Security.SslPolicyErrors.None;
-            };
-            return handler;
+                Debug.WriteLine("Error: BaseAddress is not set in SettingsService.");
+                return string.Empty;
+            }
+            return baseAddress;
         }
 
-        public async Task AddDocumentAttachment(string hashCode, string docProcNumber, string docRef, string file, string fileName, string extension)
+        public async Task<List<GDDocument>> ListAllDocuments(string hashCode, int pageRowSize, int currentPage, string assunto, int documentType, int gdBook, string dataRegistoInicio, string dataRegistoFim)
         {
-            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
-            {
-                Debug.WriteLine("No Internet Connection");
-                return;
-            }
+            var documents = new List<GDDocument>();
+            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet) return documents;
 
             try
             {
-                AddDocumentAttachmentDto dto = new AddDocumentAttachmentDto()
-                {
-                    strHashCode = hashCode,
-                    strDocProcNumber = docProcNumber,
-                    strDocRef = docRef,
-                    file = file,
-                    fileName = fileName,
-                    extension = extension
-                };
+                var apiUrl = GetApiUrl();
+                if (string.IsNullOrEmpty(apiUrl)) return documents;
 
-                StringContent content = new StringContent(JsonSerializer.Serialize(dto, _jsonSerializerOptions), Encoding.UTF8, "application/json");
-                HttpResponseMessage response = await _httpClient.PostAsync($"{_url}/Document/AddDocumentAttachment", content);
-
-                if (response.IsSuccessStatusCode)
-                {
-                    Debug.WriteLine("Attachment was added to document");
-                }
-                else
-                {
-                    Debug.WriteLine("Unable to add attachment");
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-            }
-        }
-        public async Task AddDocumentoRelationship(string hashCode, string documentIDEncryted, string documentOtherIDEncrypted)
-        {
-            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
-            {
-                Debug.WriteLine("No Internet Connection");
-                return;
-            }
-
-            try
-            {
-                AddDocumentRelationshipDto dto = new AddDocumentRelationshipDto()
-                {
-                    strHashCode = hashCode,
-                    strDocumentIDEncrypted = documentIDEncryted,
-                    strDocumentOtherIDEncrypted = documentOtherIDEncrypted
-                };
-
-                StringContent content = new StringContent(JsonSerializer.Serialize(dto, _jsonSerializerOptions), Encoding.UTF8, "application/json");
-                HttpResponseMessage response = await _httpClient.PostAsync($"{_url}/Document/AddDocumentoRelationship", content);
-
-                if (response.IsSuccessStatusCode)
-                {
-                    Debug.WriteLine("Relationship was created");
-                }
-                else
-                {
-                    Debug.WriteLine("Unable to create relationship");
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-            }
-
-        }
-        public async Task<GDDocument> GetDocumentDataResumed(string hashCode, string documentoIDEncrypted)
-        {
-            GDDocument document = new GDDocument();
-
-            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
-            {
-                Debug.WriteLine("No Internet Connection");
-                return document;
-            }
-
-            try
-            {
-                GetDocumentDataResumedDto dto = new GetDocumentDataResumedDto()
-                {
-                    strHashCode = hashCode,
-                    strDocumentIDEncrypted = documentoIDEncrypted
-                };
-
-                StringContent contentToSend = new StringContent(JsonSerializer.Serialize(dto, _jsonSerializerOptions), Encoding.UTF8, "application/json");
-                HttpResponseMessage response = await _httpClient.PostAsync($"{_url}/Document/GetDocumentDataResumed", contentToSend);
-
-                if (response.IsSuccessStatusCode)
-                {
-                    string contentToReceive = await response.Content.ReadAsStringAsync();
-
-                    document = JsonSerializer.Deserialize<GDDocument>(contentToReceive, _jsonSerializerOptions);
-                }
-                else
-                {
-                    Debug.WriteLine("No Http Response");
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.ToString());
-            }
-            return document;
-        }
-        public async Task<GDDocument> GetDocumentDataResumedByNumber(string hashCode, string documentNumber)
-        {
-            GDDocument document = new GDDocument();
-            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
-            {
-                Debug.WriteLine("No Internet Connection");
-                return document;
-            }
-
-            try
-            {
-                GetDocumentDataResumedByNumberDto dto = new GetDocumentDataResumedByNumberDto()
-                {
-                    strHashCode = hashCode,
-                    strDocumentNumber = documentNumber
-                };
-
-                StringContent contentToSend = new StringContent(JsonSerializer.Serialize(dto, _jsonSerializerOptions), Encoding.UTF8, "application/json");
-                HttpResponseMessage response = await _httpClient.PostAsync($"{_url}/Document/getDocumentDataResumedByNember", contentToSend);
-
-                if (response.IsSuccessStatusCode)
-                {
-                    string contentToReceive = await response.Content.ReadAsStringAsync();
-
-                    document = JsonSerializer.Deserialize<GDDocument>(contentToReceive, _jsonSerializerOptions);
-                }
-                else
-                {
-                    Debug.WriteLine("No Http Response");
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.ToString());
-            }
-            return document;
-        }
-        public async Task InsertDocumentInProcess(string hashCode, string documentIDEncrypted, string processIDEncrypted, int idProcessTab)
-        {
-            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
-            {
-                Debug.WriteLine("No Internet Connection");
-                return;
-            }
-
-            try
-            {
-                InsertDocumentInProcessDto dto = new InsertDocumentInProcessDto()
-                {
-                    strHashCode = hashCode,
-                    strDocumentIDEncrypted = documentIDEncrypted,
-                    strProcessIDEncrypted = processIDEncrypted,
-                    intIDProcessTab = idProcessTab
-                };
-
-                StringContent content = new StringContent(JsonSerializer.Serialize(dto, _jsonSerializerOptions), Encoding.UTF8, "application/json");
-                HttpResponseMessage response = await _httpClient.PostAsync($"{_url}/Document/InsertDocumentInProcess", content);
-
-                if (response.IsSuccessStatusCode)
-                {
-                    Debug.WriteLine("Document was created");
-                }
-                else
-                {
-                    Debug.WriteLine("Error during the document creation");
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-            }
-        }
-        public async Task InsertGDDocument(string hashCode, GDDocument document, string fileBuf, string ext)
-        {
-            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
-            {
-                Debug.WriteLine("No Internet Connection");
-                return;
-            }
-
-            try
-            {
-                InsertGDDocumentDto dto = new InsertGDDocumentDto()
-                {
-                    strHashCode = hashCode,
-                    wsDocument = document,
-                    fileBuf = fileBuf,
-                    strExt = ext
-                };
-
-                StringContent content = new StringContent(JsonSerializer.Serialize(dto, _jsonSerializerOptions), Encoding.UTF8, "application/json");
-                HttpResponseMessage response = await _httpClient.PostAsync($"{_url}/Document/InsertGDDocument", content);
-
-                if (response.IsSuccessStatusCode)
-                {
-                    Debug.WriteLine("Document was created");
-                }
-                else
-                {
-                    Debug.WriteLine("Error during the document creation");
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-            }
-        }
-        public async Task InsertGDDocumentGetGUID(string hashCode, GDDocument document, string fileBuf, string ext)
-        {
-            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
-            {
-                Debug.WriteLine("No Internet Connection");
-                return;
-            }
-
-            try
-            {
-                InsertGDDocumentGetGUIDDto dto = new InsertGDDocumentGetGUIDDto()
-                {
-                    strHashCode = hashCode,
-                    wsDocument = document,
-                    fileBuf = fileBuf,
-                    strExt = ext
-                };
-
-                StringContent content = new StringContent(JsonSerializer.Serialize(dto, _jsonSerializerOptions), Encoding.UTF8, "application/json");
-                HttpResponseMessage response = await _httpClient.PostAsync($"{_url}/Document/InsertGDDocumentGetGUID", content);
-
-                if (response.IsSuccessStatusCode)
-                {
-                    Debug.WriteLine("Document was created");
-                }
-                else
-                {
-                    Debug.WriteLine("Error during the document creation");
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-            }
-        }
-        public async Task InsertGDDocumentGetID(string hashCode, GDDocument document, string fileBuf, string ext)
-        {
-            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
-            {
-                Debug.WriteLine("No Internet Connection");
-                return;
-            }
-            try
-            {
-                InsertGDDocumentGetIDDto dto = new InsertGDDocumentGetIDDto()
-                {
-                    strHashCode = hashCode,
-                    wsDocument = document,
-                    fileBuf = fileBuf,
-                    strExt = ext
-                };
-
-                StringContent content = new StringContent(JsonSerializer.Serialize(dto, _jsonSerializerOptions), Encoding.UTF8, "application/json");
-                HttpResponseMessage response = await _httpClient.PostAsync($"{_url}/Document/InsertGDDocumentGetID", content);
-
-                if (response.IsSuccessStatusCode)
-                {
-                    Debug.WriteLine("Document was created");
-                }
-                else
-                {
-                    Debug.WriteLine("Error during the document creation");
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-            }
-        }
-        public async Task InsertGDDocumentGetIDAndNumber(string hashCode, GDDocument document, string fileBuf, string ext)
-        {
-            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
-            {
-                Debug.WriteLine("No Internet Connection");
-                return;
-            }
-
-            try
-            {
-                InsertGDDocumentGetIDAndNumberDto dto = new InsertGDDocumentGetIDAndNumberDto()
-                {
-                    strHashCode = hashCode,
-                    wsDocument = document,
-                    fileBuf = fileBuf,
-                    strExt = ext
-                };
-
-                StringContent content = new StringContent(JsonSerializer.Serialize(dto, _jsonSerializerOptions), Encoding.UTF8, "application/json");
-                HttpResponseMessage response = await _httpClient.PostAsync($"{_url}/Document/InsertGDDocumentGetIDAndNumber", content);
-
-                if (response.IsSuccessStatusCode)
-                {
-                    Debug.WriteLine("Document was created");
-                }
-                else
-                {
-                    Debug.WriteLine("Error during the document creation");
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-            }
-        }
-        public async Task InsertGDDocumentNoFile(string hashCode, GDDocument document)
-        {
-            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
-            {
-                Debug.WriteLine("No Internet Connection");
-                return;
-            }
-
-            try
-            {
-                InsertGDDocumentNoFileDto dto = new InsertGDDocumentNoFileDto()
-                {
-                    strHashCode = hashCode,
-                    wsDocument = document
-                };
-
-                StringContent content = new StringContent(JsonSerializer.Serialize(dto, _jsonSerializerOptions), Encoding.UTF8, "application/json");
-                HttpResponseMessage response = await _httpClient.PostAsync($"{_url}/Document/InsertGDDocumentNoFile", content);
-                if (response.IsSuccessStatusCode)
-                {
-                    Debug.WriteLine("Document was created");
-                }
-                else
-                {
-                    Debug.WriteLine("Error during the document creation");
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-            }
-        }
-        public async Task<List<GDDocument>> listALLDocument(string hashCode, int pageRowSize, int currentPage, string assunto, int documentType, int gdBook, string dataRegistoInicio, string dataRegistoFim)
-        {
-            List<GDDocument> list = new List<GDDocument>();
-            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
-            {
-                Debug.WriteLine("No Internet Connection");
-                return list;
-            }
-
-            try
-            {
-                listALLDocumentDto dto = new listALLDocumentDto()
+                var dto = new ListAllDocumentsDto
                 {
                     strHashCode = hashCode,
                     intPageRowSize = pageRowSize,
@@ -451,116 +72,35 @@ namespace WebDocMobile.Services
                     strDataRegistoFim = dataRegistoFim
                 };
 
-                StringContent contentToSend = new StringContent(JsonSerializer.Serialize(dto, _jsonSerializerOptions), Encoding.UTF8, "application/json");
-                HttpResponseMessage response = await _httpClient.PostAsync($"{_url}/Document/listALLDocument", contentToSend);
+                var json = JsonSerializer.Serialize(dto, _jsonSerializerOptions);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                var response = await _httpClient.PostAsync($"{apiUrl}/Document/listALLDocument", content);
 
                 if (response.IsSuccessStatusCode)
                 {
-                    string contentToReceive = await response.Content.ReadAsStringAsync();
-
-                    list = JsonSerializer.Deserialize<List<GDDocument>>(contentToReceive, _jsonSerializerOptions);
-                }
-                else
-                {
-                    Debug.WriteLine("No Http Response");
+                    var responseContent = await response.Content.ReadAsStringAsync();
+                    documents = JsonSerializer.Deserialize<List<GDDocument>>(responseContent, _jsonSerializerOptions);
                 }
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.ToString());
+                Debug.WriteLine($"Error in ListAllDocuments: {ex.Message}");
             }
-            return list;
-        }
-
-        public async Task<List<GDDocument>> ListDocuments(string hashCode, int pageRowSize, int currentPage)
-        {
-            List<GDDocument> list = new List<GDDocument>();
-            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
-            {
-                Debug.WriteLine("No Internet Connection");
-                return list;
-            }
-
-            try
-            {
-                ListDocumentsDto dto = new ListDocumentsDto
-                {
-                    strHashCode = hashCode,
-                    intPageRowSize = pageRowSize,
-                    intCurrentPage = currentPage
-                };
-
-                StringContent contentToSend = new StringContent(JsonSerializer.Serialize(dto, _jsonSerializerOptions), Encoding.UTF8, "application/json");
-                HttpResponseMessage response = await _httpClient.PostAsync($"{_url}/Document/listDocuments", contentToSend);
-
-                if (response.IsSuccessStatusCode)
-                {
-                    string contentToReceive = await response.Content.ReadAsStringAsync();
-
-                    list = JsonSerializer.Deserialize<List<GDDocument>>(contentToReceive, _jsonSerializerOptions);
-                }
-                else
-                {
-                    Debug.WriteLine("No Http Response");
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.ToString());
-            }
-            return list;
-        }
-
-        public async Task<List<GDDocument>> ListMyDocuments(string hashCode, int pageRowSize, int currentPage)
-        {
-            List<GDDocument> list = new List<GDDocument>();
-            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
-            {
-                Debug.WriteLine("No Internet Connection");
-                return list;
-            }
-
-            try
-            {
-                ListMyDocumentsDto dto = new ListMyDocumentsDto
-                {
-                    strHashCode = hashCode,
-                    intPageRowSize = pageRowSize,
-                    intCurrentPage = currentPage
-                };
-
-                StringContent contentToSend = new StringContent(JsonSerializer.Serialize(dto, _jsonSerializerOptions), Encoding.UTF8, "application/json");
-                HttpResponseMessage response = await _httpClient.PostAsync($"{_url}/MyDocumentsApp/listMyDocuments", contentToSend);
-
-                if (response.IsSuccessStatusCode)
-                {
-                    string contentToReceive = await response.Content.ReadAsStringAsync();
-
-                    list = JsonSerializer.Deserialize<List<GDDocument>>(contentToReceive, _jsonSerializerOptions);
-                }
-                else
-                {
-                    Debug.WriteLine("No Http Response");
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.ToString());
-            }
-            return list;
+            return documents;
         }
 
         public async Task<List<GDDocument>> ListAllMyDocuments(string hashCode, int pageRowSize, int currentPage, string search)
         {
-            List<GDDocument> list = new List<GDDocument>();
-            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
-            {
-                Debug.WriteLine("No Internet Connection");
-                return list;
-            }
+            var documents = new List<GDDocument>();
+            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet) return documents;
+
             try
             {
-                ListAllMyDocumentsDto dto = new ListAllMyDocumentsDto
+                var apiUrl = GetApiUrl();
+                if (string.IsNullOrEmpty(apiUrl)) return documents;
+
+                var dto = new ListAllMyDocumentsDto
                 {
                     strHashCode = hashCode,
                     intPageRowSize = pageRowSize,
@@ -568,58 +108,92 @@ namespace WebDocMobile.Services
                     strSearch = search
                 };
 
-                StringContent contentToSend = new StringContent(JsonSerializer.Serialize(dto, _jsonSerializerOptions), Encoding.UTF8, "application/json");
-                HttpResponseMessage response = await _httpClient.PostAsync($"{_url}/MyDocumentsApp/listAllMyDocuments", contentToSend);
+                var json = JsonSerializer.Serialize(dto, _jsonSerializerOptions);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                var response = await _httpClient.PostAsync($"{apiUrl}/Document/ListAllMyDocuments", content);
 
                 if (response.IsSuccessStatusCode)
                 {
-                    string contentToReceive = await response.Content.ReadAsStringAsync();
-
-                    list = JsonSerializer.Deserialize<List<GDDocument>>(contentToReceive, _jsonSerializerOptions);
+                    var responseContent = await response.Content.ReadAsStringAsync();
+                    documents = JsonSerializer.Deserialize<List<GDDocument>>(responseContent, _jsonSerializerOptions);
                 }
-                else
-                {
-                    Debug.WriteLine("No Http Response");
-                }
-
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.ToString());
+                Debug.WriteLine($"Error in ListAllMyDocuments: {ex.Message}");
             }
-            return list;
+            return documents;
         }
 
-        public async Task<int> TotalMyDocuments(string hashCode)
+        public async Task<List<GDDocument>> ListDocuments(string hashCode, int pageRowSize, int currentPage)
         {
-            int myDocuments = 0;
-            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
-            {
-                Debug.WriteLine("No Internet Connection");
-                return myDocuments;
-            }
+            var documents = new List<GDDocument>();
+            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet) return documents;
 
             try
             {
-                HttpResponseMessage response = await _httpClient.GetAsync($"{_url}/MyDocumentsApp/listALLDocument/{hashCode}");
+                var apiUrl = GetApiUrl();
+                if (string.IsNullOrEmpty(apiUrl)) return documents;
+
+                var dto = new ListDocumentsDto
+                {
+                    strHashCode = hashCode,
+                    intPageRowSize = pageRowSize,
+                    intCurrentPage = currentPage
+                };
+
+                var json = JsonSerializer.Serialize(dto, _jsonSerializerOptions);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                var response = await _httpClient.PostAsync($"{apiUrl}/Document/ListDocuments", content);
 
                 if (response.IsSuccessStatusCode)
                 {
-                    string content = await response.Content.ReadAsStringAsync();
-
-                    myDocuments = JsonSerializer.Deserialize<int>(content, _jsonSerializerOptions);
-                }
-                else
-                {
-                    Debug.WriteLine("No Http Response");
+                    var responseContent = await response.Content.ReadAsStringAsync();
+                    documents = JsonSerializer.Deserialize<List<GDDocument>>(responseContent, _jsonSerializerOptions);
                 }
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.ToString());
+                Debug.WriteLine($"Error in ListDocuments: {ex.Message}");
             }
-            return myDocuments;
+            return documents;
         }
 
+        public async Task<List<GDDocument>> ListMyDocuments(string hashCode, int pageRowSize, int currentPage)
+        {
+            var documents = new List<GDDocument>();
+            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet) return documents;
+
+            try
+            {
+                var apiUrl = GetApiUrl();
+                if (string.IsNullOrEmpty(apiUrl)) return documents;
+
+                var dto = new ListMyDocumentsDto
+                {
+                    strHashCode = hashCode,
+                    intPageRowSize = pageRowSize,
+                    intCurrentPage = currentPage
+                };
+
+                var json = JsonSerializer.Serialize(dto, _jsonSerializerOptions);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                var response = await _httpClient.PostAsync($"{apiUrl}/Document/ListMyDocuments", content);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var responseContent = await response.Content.ReadAsStringAsync();
+                    documents = JsonSerializer.Deserialize<List<GDDocument>>(responseContent, _jsonSerializerOptions);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error in ListMyDocuments: {ex.Message}");
+            }
+            return documents;
+        }
     }
 }

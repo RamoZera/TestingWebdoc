@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    x:Class="WebDocMobile.Pages.Mobile.ConsultRegistrationPageMobile"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:customControls="clr-namespace:WebDocMobile.CustomControls"
+    xmlns:d="http://schemas.microsoft.com/dotnet/2021/maui/design"
+    xmlns:local="clr-namespace:WebDocMobile.Pages.Mobile"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:telerik="http://schemas.telerik.com/2022/xaml/maui"
+    mc:Ignorable="d">
+    <Grid BackgroundColor="#F3F3F3" RowDefinitions=".1*,.8*,.1*">
+        <!--  Header  -->
+        <customControls:Header>
+            <Grid>
+                <Button
+                    x:Name="ReturnButton"
+                    Grid.Column="0"
+                    BackgroundColor="{StaticResource Primary}"
+                    BorderColor="#FFFFFF"
+                    BorderWidth="1"
+                    Clicked="ReturnToBack"
+                    CornerRadius="4"
+                    HeightRequest="56"
+                    HorizontalOptions="StartAndExpand"
+                    Opacity="0.15"
+                    WidthRequest="56" />
+                <Image
+                    Grid.Column="0"
+                    Margin="15,0,0,0"
+                    HeightRequest="18.4"
+                    HorizontalOptions="StartAndExpand"
+                    RotationY="180"
+                    Source="icon_anterior"
+                    WidthRequest="24" />
+
+                <telerik:DataFormSwitchEditor
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Margin="0,0,60,0"
+                    HorizontalOptions="End" />
+
+                <Button
+                    x:Name="Funtionality"
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="2"
+                    BackgroundColor="{StaticResource Primary}"
+                    BorderColor="#FFFFFF"
+                    BorderWidth="1"
+                    Clicked="ReturnToBack"
+                    CornerRadius="4"
+                    HeightRequest="56"
+                    HorizontalOptions="EndAndExpand"
+                    Opacity="0.15"
+                    WidthRequest="56" />
+                <Image
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="2"
+                    Margin="0,0,15,0"
+                    HeightRequest="18.4"
+                    HorizontalOptions="EndAndExpand"
+                    RotationY="180"
+                    Source="icon_funcionalidades"
+                    WidthRequest="24" />
+            </Grid>
+        </customControls:Header>
+
+
+        <!--  Content Page  -->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Spacing="5">
+                <Grid Padding="20" BackgroundColor="{StaticResource Primary}">
+
+
+                    <Grid RowDefinitions="*,*" RowSpacing="10">
+                        <!--  Add Document Icon  -->
+
+                        <telerik:RadBorder
+                            Padding="5,3"
+                            BackgroundColor="{StaticResource Blue400Accent}"
+                            CornerRadius="15"
+                            HorizontalOptions="Start"
+                            VerticalOptions="Center">
+                            <Label
+                                Padding="3"
+                                FontFamily="RobotoBold"
+                                FontSize="14"
+                                HorizontalTextAlignment="Center"
+                                MaxLines="1"
+                                Text="E/72023"
+                                TextColor="#FFFFFF"
+                                VerticalTextAlignment="Center" />
+                        </telerik:RadBorder>
+
+                        <Label
+                            Grid.Row="1"
+                            FontFamily="RobotoMedium"
+                            FontSize="22"
+                            HorizontalOptions="Center"
+                            Text="Comprobativo de residência principal "
+                            TextColor="#FFFFFF"
+                            VerticalOptions="Start"
+                            VerticalTextAlignment="Center" />
+                    </Grid>
+
+
+                </Grid>
+                <Label
+                    Padding="20"
+                    FontFamily="RobotoBold"
+                    Text="Documento"
+                    TextColor="{StaticResource Primary}" />
+
+                <telerik:RadBorder
+                    Margin="0,0,0,0"
+                    BackgroundColor="{StaticResource White}"
+                    BorderColor="Transparent"
+                    CornerRadius="16">
+                    <VerticalStackLayout Padding="20">
+                        <Image x:Name="imgPhotoC" />
+                    </VerticalStackLayout>
+                </telerik:RadBorder>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!--  Save Button  -->
+
+    </Grid>
+
+</ContentPage>

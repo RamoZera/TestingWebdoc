@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="WebDocMobile.Pages.Mobile.ContributionsExtra"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:customControl="clr-namespace:WebDocMobile.CustomControls"
+    xmlns:telerik="http://schemas.telerik.com/2022/xaml/maui"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:WebDocMobile.PageModels.PagesViewModels"
+    Title="ContributionsExtra">
+    <Grid>
+        <!--  Main Content  -->
+        <Grid
+            x:Name="MainContent"
+            BackgroundColor="{StaticResource Gray50}"
+            RowDefinitions=".1*,*">
+            <!--  Header  -->
+            <customControl:Header>
+                <Grid ColumnDefinitions="auto,*" VerticalOptions="Center">
+                    <Grid Grid.Column="0" HorizontalOptions="Start">
+                        <Button
+                            BackgroundColor="Transparent"
+                            BorderColor="#FFFFFF"
+                            BorderWidth="1"
+                            Clicked="HandleClickBackPage"
+                            CornerRadius="4"
+                            HeightRequest="50"
+                            Opacity="0.15"
+                            WidthRequest="50" />
+                        <Image
+                            HeightRequest="20"
+                            RotationY="180"
+                            Source="icon_anterior" />
+                    </Grid>
+                    <Grid
+                        Grid.Column="1"
+                        Padding="15,0,0,0"
+                        HorizontalOptions="Start">
+                        <Label
+                            Margin="0,0,0,0"
+                            FontFamily="RobotoMedium"
+                            FontSize="12"
+                            HorizontalOptions="Start"
+                            Text="E/7203"
+                            TextColor="#F1F1F1" />
+                        <Label
+                            Margin="0,15,0,0"
+                            FontFamily="RobotoBold"
+                            FontSize="23"
+                            HorizontalOptions="StartAndExpand"
+                            Text="Contributos"
+                            TextColor="White" />
+                    </Grid>
+
+                </Grid>
+            </customControl:Header>
+            <ScrollView Grid.Row="1" Padding="20">
+                <VerticalStackLayout Spacing="10">
+                    <customControl:ContributionsExtraCard>
+                        <VerticalStackLayout Padding="10" Spacing="10">
+                            <Button
+                                Margin="0,10"
+                                Padding="10"
+                                BackgroundColor="#003962"
+                                CornerRadius="4"
+                                FontFamily="RobotoBold"
+                                FontSize="16"
+                                IsVisible="False"
+                                Text="Alterar anexo"
+                                TextColor="White" />
+                            <Button
+                                Padding="10"
+                                BackgroundColor="Transparent"
+                                BorderColor="#FF5050"
+                                BorderWidth="2"
+                                Clicked="HandleClickRemoverContributo"
+                                CornerRadius="4"
+                                FontFamily="RobotoBold"
+                                FontSize="16"
+                                IsVisible="False"
+                                Text="Remover contributo"
+                                TextColor="#FF5050" />
+                        </VerticalStackLayout>
+                    </customControl:ContributionsExtraCard>
+                </VerticalStackLayout>
+            </ScrollView>
+            <!--  Float button  -->
+            <Button
+                Grid.Row="1"
+                Margin="0,0,0,20"
+                Padding="10"
+                BackgroundColor="White"
+                BorderColor="#959595"
+                BorderWidth="1"
+                Clicked="HandleClickAddContribution"
+                CornerRadius="50"
+                FontFamily="RobotoBold"
+                FontSize="16"
+                HorizontalOptions="Center"
+                IsVisible="False"
+                Text="Novo contributo"
+                TextColor="#003962"
+                VerticalOptions="End">
+                <Button.Shadow>
+                    <Shadow
+                        Brush="Black"
+                        Opacity="1"
+                        Radius="100"
+                        Offset="0,0" />
+                </Button.Shadow>
+            </Button>
+        </Grid>
+
+        <!--  Modal Alert  -->
+        <Grid
+            x:Name="ModalAtentionAlert"
+            IsVisible="false"
+            RowDefinitions="*,.6*">
+            <Grid
+                Grid.Row="0"
+                BackgroundColor="#000000"
+                Opacity="0.75" />
+            <Grid
+                Grid.Row="1"
+                BackgroundColor="#000000"
+                Opacity="0.75">
+                <Border
+                    Padding="15"
+                    Background="White"
+                    StrokeShape="RoundRectangle 16,16,0,0"
+                    StrokeThickness="1">
+                    <StackLayout Spacing="10">
+                        <Image HeightRequest="55" Source="icon_alerta" />
+                        <Label
+                            FontFamily="RobotoBold"
+                            FontSize="22"
+                            HorizontalTextAlignment="Center"
+                            Text="Atenção"
+                            TextColor="Black" />
+                        <Label
+                            FontFamily="RobotoRegular"
+                            FontSize="16"
+                            HorizontalTextAlignment="Center"
+                            Text="Tem a certeza que pretende apagar o contributo?"
+                            TextColor="#959595" />
+                        <Button
+                            Padding="10"
+                            BackgroundColor="Transparent"
+                            BorderColor="#EBEBEB"
+                            BorderWidth="2"
+                            Clicked="HandleClickVoltaRegisto"
+                            CornerRadius="4"
+                            FontFamily="RobotoBold"
+                            FontSize="16"
+                            Text="Voltar ao registo"
+                            TextColor="{StaticResource Primary}" />
+                        <Button
+                            Padding="10"
+                            BackgroundColor="Transparent"
+                            BorderColor="#EBEBEB"
+                            BorderWidth="2"
+                            CornerRadius="4"
+                            FontFamily="RobotoBold"
+                            FontSize="16"
+                            Text="Confirmar"
+                            TextColor="{StaticResource Primary}" />
+                    </StackLayout>
+                </Border>
+            </Grid>
+        </Grid>
+
+        <!--  Modal Add Contribution  -->
+        <Grid
+            x:Name="ModalAddContribution"
+            IsVisible="false"
+            RowDefinitions=".1*,*">
+            <Grid
+                Grid.Row="0"
+                BackgroundColor="#000000"
+                Opacity="0.75" />
+            <Grid
+                Grid.Row="1"
+                BackgroundColor="#000000"
+                Opacity="0.75">
+                <Border
+                    Padding="15"
+                    Background="White"
+                    StrokeShape="RoundRectangle 16,16,0,0"
+                    StrokeThickness="1">
+                    <Grid RowDefinitions=".1*,*" RowSpacing="20">
+                        <Grid
+                            Grid.Row="0"
+                            ColumnDefinitions="*, .1*"
+                            RowDefinitions="*,*">
+                            <Label
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                FontFamily="RobotoBold"
+                                FontSize="22"
+                                HorizontalOptions="StartAndExpand"
+                                Text="Novo contributo"
+                                TextColor="Black" />
+                            <Label
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                FontFamily="RobotoBold"
+                                FontSize="12"
+                                HorizontalOptions="StartAndExpand"
+                                Text="E/7203"
+                                TextColor="#959595" />
+                            <Button
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                BackgroundColor="Transparent"
+                                Clicked="HandleClickVoltaRegisto"
+                                HeightRequest="25"
+                                VerticalOptions="Start" />
+                            <Image
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                HeightRequest="25"
+                                Source="btn_close"
+                                VerticalOptions="Start" />
+                        </Grid>
+                        <Grid Grid.Row="1" RowDefinitions="*,*,*">
+                            <StackLayout Spacing="10">
+                                <Label
+                                    FontFamily="RobotoMedium"
+                                    FontSize="22"
+                                    HorizontalOptions="StartAndExpand"
+                                    Text="Contributo"
+                                    TextColor="Black" />
+                                <Editor HeightRequest="150" Placeholder="Enter your response here" />
+                                <Label
+                                    FontFamily="RobotoMedium"
+                                    FontSize="22"
+                                    HorizontalOptions="StartAndExpand"
+                                    Text="Anexo"
+                                    TextColor="Black" />
+                                <Border
+                                    Padding="5"
+                                    HeightRequest="52"
+                                    Stroke="#003962"
+                                    StrokeShape="RoundRectangle 4"
+                                    StrokeThickness="2">
+                                    <Grid ColumnDefinitions=".2*,*" VerticalOptions="Center">
+                                        <Button
+                                            Grid.Column="0"
+                                            BackgroundColor="Transparent"
+                                            HeightRequest="25" />
+                                        <Image
+                                            Grid.Column="0"
+                                            HeightRequest="25"
+                                            Source="icon_carregar" />
+                                        <Label
+                                            Grid.Column="1"
+                                            FontFamily="RobotoBold"
+                                            FontSize="23"
+                                            HorizontalOptions="StartAndExpand"
+                                            Text="Escolher ficheiro"
+                                            TextColor="#003962" />
+                                    </Grid>
+                                </Border>
+                                <Border
+                                    Padding="5"
+                                    HeightRequest="62"
+                                    StrokeShape="RoundRectangle 4">
+                                    <Grid ColumnDefinitions="*,.1*" RowDefinitions="*,*">
+                                        <Label
+                                            Grid.Row="0"
+                                            Grid.Column="0"
+                                            FontFamily="RobotoBold"
+                                            FontSize="14"
+                                            HorizontalOptions="StartAndExpand"
+                                            Text="Data"
+                                            TextColor="#959595" />
+                                        <Label
+                                            Grid.Row="1"
+                                            Grid.Column="0"
+                                            FontFamily="RobotoBold"
+                                            FontSize="14"
+                                            HorizontalOptions="StartAndExpand"
+                                            Text="Defina uma data"
+                                            TextColor="Black" />
+                                        <telerik:RadDatePicker
+                                            Grid.Row="1"
+                                            Grid.Column="1"
+                                            Placeholder="Defina uma data"
+                                            Style="{StaticResource RadDatePickerStyle}"
+                                            VerticalOptions="End" />
+                                    </Grid>
+                                </Border>
+                            </StackLayout>
+                        </Grid>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Grid>
+    </Grid>
+</ContentPage>

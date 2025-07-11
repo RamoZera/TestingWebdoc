@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+
+<telerik:RadBorder
+    x:Class="WebDocMobile.CustomControls.NotificationCard"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:telerik="http://schemas.telerik.com/2022/xaml/maui"
+    x:Name="this"
+    Grid.ColumnSpan="3"
+    BackgroundColor="{StaticResource White}"
+    BorderColor="Transparent"
+    BorderThickness="1"
+    CornerRadius="5"
+    IsVisible="{Binding Source={x:Reference this}, Path=Visible}">
+    <Grid ColumnDefinitions=".2*,.7*,.1*">
+        <Grid Padding="20" VerticalOptions="Start">
+            <RoundRectangle
+                BackgroundColor="{Binding Source={x:Reference this}, Path=BackgroundIconColor}"
+                CornerRadius="30"
+                HeightRequest="40"
+                VerticalOptions="Center"
+                WidthRequest="40" />
+            <Image
+                HeightRequest="24"
+                Source="{Binding Source={x:Reference this}, Path=IconSource}"
+                VerticalOptions="Center"
+                WidthRequest="24" />
+        </Grid>
+
+        <Grid
+            Grid.Column="1"
+            Padding="0,20,0,20"
+            RowDefinitions="*,*,*"
+            RowSpacing="10">
+            <Label
+                FontAttributes="Bold"
+                FontFamily="RobotoBold"
+                Text="{Binding Source={x:Reference this}, Path=PrimaryText}" />
+            <Label
+                Grid.Row="1"
+                Grid.ColumnSpan="3"
+                Margin="0,0,0,10"
+                FontFamily="Roboto"
+                Text="{Binding Source={x:Reference this}, Path=SecondaryText}" />
+
+            <HorizontalStackLayout
+                Grid.Row="3"
+                IsVisible="{Binding Source={x:Reference this}, Path=SwitchVisible}"
+                Spacing="10">
+                <Label
+                    FontAttributes="Bold"
+                    FontFamily="RobotoBold"
+                    Text="{Binding Source={x:Reference this}, Path=SwitchLabel}"
+                    VerticalOptions="Center" />
+                <Switch HeightRequest="20" IsToggled="{Binding Source={x:Reference this}, Path=SwitchOn}" />
+            </HorizontalStackLayout>
+
+            <Grid Grid.Row="3" IsVisible="{Binding Source={x:Reference this}, Path=HyperlinkVisible}">
+                <Label
+                    FontAttributes="Bold"
+                    FontFamily="RobotoBold"
+                    Text="{Binding Source={x:Reference this}, Path=HyperlinkText}"
+                    TextColor="{Binding Source={x:Reference this}, Path=HyperlinkTextColor}"
+                    TextDecorations="Underline">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding Source={x:Reference this}, Path=Command}" />
+                    </Label.GestureRecognizers>
+                </Label>
+            </Grid>
+        </Grid>
+
+        <Grid
+            Grid.Column="2"
+            Padding="12,5,12,12"
+            BackgroundColor="{Binding Source={x:Reference this}, Path=BackgroundRightBarColor}">
+            <telerik:RadButton
+                BackgroundColor="Transparent"
+                Clicked="CloseNotificationCard"
+                HeightRequest="24"
+                VerticalOptions="Start"
+                WidthRequest="24" />
+            <Image
+                HeightRequest="24"
+                Source="icon_close"
+                VerticalOptions="Start"
+                WidthRequest="24" />
+        </Grid>
+
+    </Grid>
+</telerik:RadBorder>

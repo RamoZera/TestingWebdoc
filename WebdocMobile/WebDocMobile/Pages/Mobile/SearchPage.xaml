@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="WebDocMobile.Pages.Mobile.SearchPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:customControls="clr-namespace:WebDocMobile.CustomControls"
+    xmlns:telerik="http://schemas.telerik.com/2022/xaml/maui"
+    xmlns:vm="clr-namespace:WebDocMobile.PageModels.PagesViewModels"
+    Title="Search"
+    x:DataType="vm:SearchPageViewModel">
+    <ContentPage.Resources>
+        <Style x:Key="toggleButtonStyle" TargetType="telerik:RadButton">
+            <Setter Property="ImageSource" Value="icon_calendario" />
+            <Setter Property="Text" Value="" />
+        </Style>
+        <Style x:Key="comboBoxButtonStyle" TargetType="telerik:RadButton">
+            <Setter Property="TextColor" Value="{StaticResource Secondary}" />
+        </Style>
+        <ControlTemplate x:Key="headerTemplate">
+            <Grid>
+                <Label
+                    Padding="20"
+                    BackgroundColor="#003962"
+                    HorizontalTextAlignment="Center"
+                    Text="Defina uma data"
+                    TextColor="{StaticResource White}"
+                    VerticalTextAlignment="Center" />
+            </Grid>
+        </ControlTemplate>
+
+        <ControlTemplate x:Key="footerTemplate">
+            <Grid BackgroundColor="#003962" HorizontalOptions="Fill">
+                <HorizontalStackLayout HorizontalOptions="End" Spacing="0">
+                    <telerik:RadButton
+                        BackgroundColor="Transparent"
+                        Command="{TemplateBinding CancelCommand}"
+                        Text="Cancelar"
+                        TextColor="{StaticResource White}" />
+                    <telerik:RadButton
+                        BackgroundColor="Transparent"
+                        Command="{TemplateBinding AcceptCommand}"
+                        Text="OK"
+                        TextColor="{StaticResource White}" />
+                </HorizontalStackLayout>
+            </Grid>
+        </ControlTemplate>
+    </ContentPage.Resources>
+    <Grid BackgroundColor="#F3F3F3" RowDefinitions=".12*,.78*,.1*">
+        <!--  Header  -->
+        <customControls:Header>
+            <HorizontalStackLayout Spacing="20" VerticalOptions="Center">
+                <Grid>
+                    <Button
+                        x:Name="ReturnButton"
+                        BackgroundColor="{StaticResource Primary}"
+                        BorderColor="#FFFFFF"
+                        BorderWidth="1"
+                        Command="{Binding GoBackCommand}"
+                        CornerRadius="4"
+                        HeightRequest="56"
+                        HorizontalOptions="StartAndExpand"
+                        Opacity="0.15"
+                        WidthRequest="56" />
+                    <Image
+                        Margin="15,0,0,0"
+                        HeightRequest="18.4"
+                        HorizontalOptions="StartAndExpand"
+                        RotationY="180"
+                        Source="icon_anterior"
+                        WidthRequest="24" />
+                </Grid>
+                <Grid RowDefinitions="*,2*">
+                    <Label
+                        FontFamily="RobotoMedium"
+                        FontSize="11"
+                        Text="Registos"
+                        TextColor="White"
+                        TextTransform="Uppercase" />
+                    <Label
+                        Grid.Row="1"
+                        FontAttributes="Bold"
+                        FontFamily="RobotoBold"
+                        FontSize="25"
+                        Text="Pesquisa"
+                        TextColor="White" />
+                </Grid>
+            </HorizontalStackLayout>
+        </customControls:Header>
+
+        <!--  Page Content  -->
+        <ScrollView Grid.Row="1" BackgroundColor="Transparent">
+            <StackLayout Spacing="15">
+                <!--  Register Section  -->
+                <VerticalStackLayout
+                    Padding="20"
+                    BackgroundColor="{StaticResource White}"
+                    Spacing="20">
+                    <!--  Title & Description  -->
+                    <VerticalStackLayout Spacing="10">
+                        <Label
+                            FontFamily="RobotoBold"
+                            FontSize="22"
+                            Text="Registos"
+                            TextColor="#1F2125" />
+                        <Label
+                            FontFamily="RobotoRegular"
+                            FontSize="16"
+                            Text="Selecione as opções necessárias ou insira informação relevante para localizar registos"
+                            TextColor="#1F2125" />
+                    </VerticalStackLayout>
+                    <!--  Switch Options  -->
+                    <VerticalStackLayout Spacing="10">
+                        <StackLayout Orientation="Horizontal">
+                            <Label
+                                FontFamily="RobotoMedium"
+                                HorizontalOptions="Start"
+                                Text="Documentos"
+                                TextColor="{StaticResource Black}"
+                                VerticalOptions="Center"
+                                VerticalTextAlignment="Center" />
+                            <Switch Margin="0,-10" HorizontalOptions="EndAndExpand" />
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal">
+                            <Label
+                                FontFamily="RobotoMedium"
+                                HorizontalOptions="Start"
+                                Text="Processos"
+                                TextColor="{StaticResource Black}"
+                                VerticalOptions="Center"
+                                VerticalTextAlignment="Center" />
+                            <Switch Margin="0,-10" HorizontalOptions="EndAndExpand" />
+                        </StackLayout>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+
+                <!--  Filters Section  -->
+                <VerticalStackLayout
+                    Padding="20"
+                    BackgroundColor="{StaticResource White}"
+                    Spacing="20">
+                    <!--  Title  -->
+                    <Label
+                        FontFamily="RobotoBold"
+                        FontSize="22"
+                        Text="Filtros"
+                        TextColor="#1F2125" />
+
+                    <!--  Switch Options  -->
+                    <VerticalStackLayout Spacing="10">
+                        <StackLayout Orientation="Horizontal">
+                            <Label
+                                FontFamily="RobotoMedium"
+                                HorizontalOptions="Start"
+                                Text="Urgente"
+                                TextColor="{StaticResource Black}"
+                                VerticalOptions="Center"
+                                VerticalTextAlignment="Center" />
+                            <Switch Margin="0,-10" HorizontalOptions="EndAndExpand" />
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal">
+                            <Label
+                                FontFamily="RobotoMedium"
+                                HorizontalOptions="Start"
+                                Text="Aguarda resposta"
+                                TextColor="{StaticResource Black}"
+                                VerticalOptions="Center"
+                                VerticalTextAlignment="Center" />
+                            <Switch Margin="0,-10" HorizontalOptions="EndAndExpand" />
+                        </StackLayout>
+                    </VerticalStackLayout>
+
+                    <!--  Cards  -->
+                    <VerticalStackLayout Spacing="10">
+                        <!--  Number  -->
+                        <telerik:RadBorder BorderColor="#EBEBEB" BorderThickness="1">
+                            <Grid Padding="10,10,10,0" RowDefinitions="*,*">
+                                <Label
+                                    FontFamily="RobotoMedium"
+                                    Text="Número"
+                                    TextColor="#959595" />
+                                <telerik:RadEntry
+                                    Grid.Row="1"
+                                    Margin="-5,0,0,0"
+                                    BorderThickness="0"
+                                    ClearButtonVisibility="Never"
+                                    FocusedBorderThickness="0"
+                                    FontFamily="RobotoRegular"
+                                    FontSize="14"
+                                    Keyboard="Numeric"
+                                    Placeholder="Escreva o número do registo"
+                                    PlaceholderColor="#343A40"
+                                    VerticalOptions="Center" />
+                            </Grid>
+                        </telerik:RadBorder>
+
+                        <!--  Topic  -->
+                        <telerik:RadBorder BorderColor="#EBEBEB" BorderThickness="1">
+                            <Grid Padding="10,10,10,0" RowDefinitions="*,*">
+                                <Label
+                                    FontFamily="RobotoMedium"
+                                    Text="Assunto"
+                                    TextColor="#959595" />
+                                <telerik:RadEntry
+                                    Grid.Row="1"
+                                    Margin="-5,0,0,0"
+                                    BorderThickness="0"
+                                    ClearButtonVisibility="Never"
+                                    FocusedBorderThickness="0"
+                                    FontFamily="RobotoRegular"
+                                    FontSize="14"
+                                    Placeholder="Escreva o assunto do registo"
+                                    PlaceholderColor="#343A40"
+                                    VerticalOptions="Center" />
+                            </Grid>
+                        </telerik:RadBorder>
+
+                        <!--  Register Date  -->
+                        <telerik:RadBorder BorderColor="#EBEBEB" BorderThickness="1">
+                            <Grid Padding="10,10,10,0" RowDefinitions="*,*">
+                                <Label
+                                    FontFamily="RobotoMedium"
+                                    Text="Data de registo"
+                                    TextColor="#959595" />
+                                <Grid
+                                    Grid.Row="1"
+                                    Margin="-5,0,0,0"
+                                    ColumnDefinitions=".7*,.3*">
+                                    <telerik:RadDatePicker
+                                        Grid.ColumnSpan="2"
+                                        AreSpinnerHeadersVisible="False"
+                                        DisplayStringFormat="dd/MMM/yyyy"
+                                        IsToggleButtonVisible="True"
+                                        Placeholder="Defina uma data"
+                                        SpinnerFormat="dd/MMM/yyyy"
+                                        ToggleButtonStyle="{StaticResource toggleButtonStyle}"
+                                        VerticalOptions="Center">
+                                        <telerik:RadDatePicker.PopupSettings>
+                                            <telerik:PickerPopupSettings FooterTemplate="{StaticResource footerTemplate}" HeaderTemplate="{StaticResource headerTemplate}" />
+                                        </telerik:RadDatePicker.PopupSettings>
+                                        <telerik:RadDatePicker.DropDownSettings>
+                                            <telerik:PickerDropDownSettings FooterTemplate="{StaticResource footerTemplate}" />
+                                        </telerik:RadDatePicker.DropDownSettings>
+                                    </telerik:RadDatePicker>
+
+                                </Grid>
+                            </Grid>
+                        </telerik:RadBorder>
+
+                        <!--  Entity  -->
+                        <telerik:RadBorder BorderColor="#EBEBEB" BorderThickness="1">
+                            <Grid Padding="10,10,10,0" RowDefinitions="*,*">
+                                <Label
+                                    FontFamily="RobotoMedium"
+                                    Text="Entidade"
+                                    TextColor="#959595" />
+                                <telerik:RadComboBox
+                                    Grid.Row="1"
+                                    Margin="0,0,0,0"
+                                    Padding="-5,0,0,0"
+                                    BorderThickness="0"
+                                    DropDownButtonStyle="{StaticResource comboBoxButtonStyle}"
+                                    FocusedBorderBrush="{StaticResource Secondary}"
+                                    FontFamily="RobotoRegular"
+                                    FontSize="14"
+                                    ItemsSource="{Binding Entities}"
+                                    Placeholder="Selecione uma opção "
+                                    PlaceholderColor="#343A40" />
+                            </Grid>
+                        </telerik:RadBorder>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </StackLayout>
+        </ScrollView>
+
+        <!--  Pesquisar Button  -->
+        <telerik:RadBorder
+            Grid.Row="2"
+            Padding="20,15"
+            BackgroundColor="{StaticResource White}"
+            BorderThickness="0">
+            <telerik:RadBorder.Shadow>
+                <Shadow
+                    Brush="{StaticResource Gray300}"
+                    Opacity="1"
+                    Radius="30"
+                    Offset="0,0" />
+            </telerik:RadBorder.Shadow>
+            <Button
+                BackgroundColor="#003962"
+                Command="{Binding SearchCommand}"
+                CornerRadius="5"
+                FontFamily="RobotoBold"
+                Text="Pesquisar"
+                TextColor="White" />
+        </telerik:RadBorder>
+    </Grid>
+</ContentPage>

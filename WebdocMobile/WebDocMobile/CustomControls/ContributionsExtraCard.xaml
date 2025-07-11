@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="WebDocMobile.CustomControls.ContributionsExtraCard"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:customControl="clr-namespace:WebDocMobile.CustomControls"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:WebDocMobile.PageModels"
+    x:Name="this">
+    <ContentView.ControlTemplate>
+        <ControlTemplate>
+            <Border
+                HorizontalOptions="FillAndExpand"
+                Stroke="{StaticResource Gray300}"
+                StrokeShape="RoundRectangle 5"
+                StrokeThickness="2">
+                <toolkit:Expander Padding="0,10">
+                    <toolkit:Expander.Header>
+                        <Grid
+                            Padding="10,0,0,0"
+                            ColumnDefinitions="*,.2*"
+                            ColumnSpacing="1"
+                            RowDefinitions="Auto,Auto">
+                            <Label
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                FontFamily="RobotoMedium"
+                                FontSize="16"
+                                Text="02/01/2024"
+                                TextColor="#262930" />
+                            <toolkit:AvatarView
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                BackgroundColor="Blue"
+                                HeightRequest="24"
+                                HorizontalOptions="Start"
+                                Text="J"
+                                TextColor="White"
+                                VerticalOptions="Center"
+                                WidthRequest="24" />
+                            <Label
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                Margin="30,0,0,0"
+                                FontFamily="RobotoRegular"
+                                FontSize="16"
+                                Text="Jaime Pacheco"
+                                TextColor="#343A40" />
+                            <Image
+                                Grid.Row="0"
+                                Grid.Column="2"
+                                HeightRequest="25"
+                                Source="icon_accordion"
+                                VerticalOptions="Start" />
+                        </Grid>
+                    </toolkit:Expander.Header>
+                    <VerticalStackLayout Padding="10,30,10,10" Spacing="10">
+                        <Border
+                            Padding="10"
+                            HorizontalOptions="FillAndExpand"
+                            Stroke="{StaticResource Gray300}"
+                            StrokeShape="RoundRectangle 5"
+                            StrokeThickness="1">
+                            <Grid RowDefinitions="Auto,Auto" RowSpacing="10">
+                                <Label
+                                    Grid.Row="0"
+                                    FontFamily="RobotoMedium"
+                                    FontSize="16"
+                                    Text="Contributo"
+                                    TextColor="#959595" />
+                                <Label
+                                    Grid.Row="1"
+                                    FontFamily="RobotoRegular"
+                                    FontSize="16"
+                                    Text="Lorem ipsum"
+                                    TextColor="#343A40" />
+                            </Grid>
+                        </Border>
+
+                        <Border
+                            Padding="10"
+                            HorizontalOptions="FillAndExpand"
+                            Stroke="{StaticResource Gray300}"
+                            StrokeShape="RoundRectangle 5"
+                            StrokeThickness="1">
+                            <Grid RowDefinitions="Auto,Auto" RowSpacing="10">
+                                <Label
+                                    Grid.Row="0"
+                                    FontFamily="RobotoMedium"
+                                    FontSize="16"
+                                    Text="Ficheiro"
+                                    TextColor="#959595" />
+                                <Image
+                                    Grid.Row="1"
+                                    HeightRequest="20"
+                                    HorizontalOptions="Start"
+                                    Source="icon_documentos_blue"
+                                    VerticalOptions="Center" />
+                                <Label
+                                    Grid.Row="1"
+                                    Margin="30,0,0,0"
+                                    FontFamily="RobotoRegular"
+                                    FontSize="16"
+                                    Text="declaração.png"
+                                    TextColor="#0074C8"
+                                    TextDecorations="Underline" />
+                            </Grid>
+                        </Border>
+
+                        <ContentPresenter />
+                    </VerticalStackLayout>
+                </toolkit:Expander>
+            </Border>
+        </ControlTemplate>
+    </ContentView.ControlTemplate>
+</ContentView>

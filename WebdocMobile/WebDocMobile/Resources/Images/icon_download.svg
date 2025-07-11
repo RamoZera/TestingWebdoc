@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <g id="icon-download" transform="translate(-297 -60)">
+    <rect id="box" width="24" height="24" transform="translate(297 60)" fill="rgba(255,255,255,0)"/>
+    <path id="icon" d="M172-782l-7.5-7.5,2.1-2.175,3.9,3.9V-800h3v12.225l3.9-3.9,2.1,2.175Zm-9,6a2.888,2.888,0,0,1-2.119-.881A2.889,2.889,0,0,1,160-779v-4.5h3v4.5h18v-4.5h3v4.5a2.889,2.889,0,0,1-.881,2.119A2.888,2.888,0,0,1,181-776Z" transform="translate(137 860)" fill="#fff"/>
+  </g>
+</svg>

@@ -7,11 +7,19 @@
        Shell.FlyoutBehavior="Disabled"
        Shell.TabBarIsVisible="False"
        xmlns:mobilePages="clr-namespace:WebDocMobile.Pages.Mobile"
-       BackgroundColor="#262930">
+       xmlns:desktopPages="clr-namespace:WebDocMobile.Pages.Desktop"
+       BackgroundColor="{StaticResource Primary}">
 
-      <!-- 
-    The Shell is now just a container for routes. The initial page is determined by the logic in AppShell.xaml.cs.
-    This prevents a "flash" of a default page before navigating to the correct one.
-    -->
+    <ShellContent Title="FirstPageMobile"
+                  FlyoutItemIsVisible="False" 
+                  Shell.FlyoutBehavior="Disabled"
+                  ContentTemplate="{DataTemplate mobilePages:FirstPageMobile}"
+                  Route="FirstPageMobile" />
+
+    <ShellContent Title="ReLoginPageMobile" 
+                  FlyoutItemIsVisible="False"
+                  Shell.FlyoutBehavior="Disabled"
+                  ContentTemplate="{DataTemplate mobilePages:ReLoginPageMobile}"
+                  Route="ReLoginPageMobile"/>
 
 </Shell>

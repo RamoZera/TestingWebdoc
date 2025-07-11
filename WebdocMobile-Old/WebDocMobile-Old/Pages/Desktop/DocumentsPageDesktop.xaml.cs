@@ -4,10 +4,9 @@ namespace WebDocMobile.Pages.Desktop;
 
 public partial class DocumentsPageDesktop : ContentPage
 {
-	public DocumentsPageDesktop()
+	public DocumentsPageDesktop(DocumentsPageViewModel viewModel)
 	{
 		InitializeComponent();
-
-        this.BindingContext = new DocumentsPageViewModel(this.Navigation);
+        this.BindingContext = viewModel;
     }
 }

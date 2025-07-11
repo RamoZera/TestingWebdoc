@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="WebDocMobile.CustomControls.MessagesExtraCard"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:customControl="clr-namespace:WebDocMobile.CustomControls"
+    xmlns:telerik="http://schemas.telerik.com/2022/xaml/maui"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:WebDocMobile.PageModels.PagesViewModels"
+    x:Name="this">
+    <Border
+        Padding="15"
+        Background="White"
+        HorizontalOptions="FillAndExpand"
+        Stroke="{StaticResource Gray300}"
+        StrokeShape="RoundRectangle 5"
+        StrokeThickness="2">
+        <Grid ColumnDefinitions="auto,*" ColumnSpacing="10">
+            <toolkit:AvatarView
+                Grid.Column="0"
+                HeightRequest="45"
+                HorizontalOptions="Center"
+                ImageSource="{Binding Source={x:Reference this}, Path=IconSource}"
+                VerticalOptions="Center"
+                WidthRequest="45" />
+            <VerticalStackLayout Grid.Column="1">
+                <Grid>
+                    <Label
+                        FontFamily="RobotoBold"
+                        FontSize="14"
+                        HorizontalTextAlignment="Start"
+                        VerticalTextAlignment="Center"
+                        Text="{Binding Source={x:Reference this}, Path=PrimaryText}"
+                        TextColor="#1F2125" />
+                    <Label
+                        FontFamily="RobotoRegular"
+                        FontSize="12"
+                        HorizontalTextAlignment="End"
+                        VerticalTextAlignment="Center"
+                        Text="{Binding Source={x:Reference this}, Path=HourText}"
+                        TextColor="#959595" />
+                </Grid>
+                <Label
+                    FontFamily="RobotoRegular"
+                    FontSize="12"
+                    Text="{Binding Source={x:Reference this}, Path=SecondaryText}"
+                    TextColor="#1F2125" />
+            </VerticalStackLayout>
+        </Grid>
+    </Border>
+</ContentView>

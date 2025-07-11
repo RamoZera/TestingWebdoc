@@ -1,0 +1,425 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    x:Class="WebDocMobile.Pages.Mobile.AplicationPageMobile"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:customControl="clr-namespace:WebDocMobile.CustomControls"
+    xmlns:local="clr-namespace:WebDocMobile.Models.DashBoard"
+    xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
+    xmlns:telerik="http://schemas.telerik.com/2022/xaml/maui"
+    xmlns:vm="clr-namespace:WebDocMobile.PageModels"
+    Title="">
+    <Grid
+        x:Name="Principal"
+        BackgroundColor="{StaticResource Gray50}"
+        RowDefinitions=".1*,.8*,.1*,.1*">
+        <!--  Header  -->
+        <customControl:Header>
+            <Grid ColumnDefinitions="auto,*" VerticalOptions="Center">
+                <!--  User Info  -->
+                <Grid HorizontalOptions="Start" MaximumWidthRequest="300">
+                    <Label
+                        Margin="0,0,0,0"
+                        FontFamily="RobotoMedium"
+                        FontSize="12"
+                        HorizontalOptions="Start"
+                        Text="{Binding Date}"
+                        TextColor="#F1F1F1" />
+                    <Label
+                        Margin="5,15,0,0"
+                        FontFamily="RobotoBold"
+                        FontSize="23"
+                        HorizontalOptions="StartAndExpand"
+                        Text="Aplicação"
+                        TextColor="White" />
+                </Grid>
+
+                <!--  Search Button  -->
+
+            </Grid>
+        </customControl:Header>
+        <ScrollView Grid.Row="1" Orientation="Vertical">
+            <Grid
+                Grid.Row="1"
+                RowDefinitions="*,*,*,*,*,*,*,*,*,*,*"
+                VerticalOptions="Start">
+                <VerticalStackLayout>
+                    <ScrollView Grid.Row="1" VerticalOptions="Start">
+                        <Frame
+                            BackgroundColor="Transparent"
+                            BorderColor="Transparent"
+                            CornerRadius="4">
+                            <Label
+                                Padding="10,0,0,0"
+                                FontFamily="RobotoBold"
+                                FontSize="20"
+                                HorizontalTextAlignment="Start"
+                                Text="Conta"
+                                TextColor="Black"
+                                VerticalTextAlignment="Start" />
+
+                        </Frame>
+                    </ScrollView>
+                    <ScrollView
+                        Grid.Row="2"
+                        Padding="0,20,0,0"
+                        VerticalOptions="Start">
+
+
+                        <Frame HeightRequest="74" WidthRequest="380">
+
+                            <Grid>
+                                <Button BackgroundColor="Transparent" />
+                                <Grid ColumnDefinitions="auto,*" ColumnSpacing="10">
+                                    <Frame
+                                        Padding="10"
+                                        BackgroundColor="#EBEBEB"
+                                        BorderColor="Transparent"
+                                        CornerRadius="20"
+                                        HeightRequest="37"
+                                        WidthRequest="37">
+                                        <Grid>
+                                            <Image Aspect="AspectFit" Source="icon_user" />
+                                        </Grid>
+                                    </Frame>
+
+                                    <Label
+                                        Grid.Column="1"
+                                        Padding="10,0,0,0"
+                                        FontFamily="RobotoBold"
+                                        FontSize="20"
+                                        HorizontalTextAlignment="Start"
+                                        Text="{Binding Username}"
+                                        TextColor="Black"
+                                        VerticalTextAlignment="Center" />
+                                    <Label
+                                        Grid.Column="1"
+                                        Padding="10,0,0,0"
+                                        FontFamily="RobotoBold"
+                                        FontSize="20"
+                                        HorizontalTextAlignment="End"
+                                        Text="&gt;"
+                                        TextColor="{StaticResource Gray400}"
+                                        VerticalTextAlignment="Center" />
+                                </Grid>
+                            </Grid>
+                        </Frame>
+                    </ScrollView>
+                    <ScrollView Grid.Row="3" VerticalOptions="Start">
+                        <Frame
+                            BackgroundColor="Transparent"
+                            BorderColor="Transparent"
+                            CornerRadius="4">
+                            <Label
+                                Padding="10,0,0,0"
+                                FontFamily="RobotoBold"
+                                FontSize="20"
+                                HorizontalTextAlignment="Start"
+                                Text="Definições"
+                                TextColor="Black"
+                                VerticalTextAlignment="Center" />
+
+                        </Frame>
+                    </ScrollView>
+                    <ScrollView
+                        Grid.Row="4"
+                        Padding="0,10,0,0"
+                        VerticalOptions="Start">
+
+
+                        <Frame HeightRequest="74" WidthRequest="380">
+
+                            <Grid>
+                                <Button BackgroundColor="Transparent" />
+                                <Grid ColumnDefinitions="auto,*" ColumnSpacing="10">
+                                    <Frame
+                                        Padding="10"
+                                        BackgroundColor="#EBEBEB"
+                                        BorderColor="Transparent"
+                                        CornerRadius="20"
+                                        HeightRequest="37"
+                                        WidthRequest="37">
+                                        <Grid>
+                                            <Image Aspect="AspectFit" Source="icon_tema" />
+                                        </Grid>
+                                    </Frame>
+
+                                    <Label
+                                        Grid.Column="1"
+                                        Padding="10,0,0,0"
+                                        FontFamily="RobotoBold"
+                                        FontSize="20"
+                                        HorizontalTextAlignment="Start"
+                                        Text="Tema"
+                                        TextColor="Black"
+                                        VerticalTextAlignment="Center" />
+                                    <Switch
+                                        x:Name="Tema"
+                                        Grid.Column="1"
+                                        Background="Transparent"
+                                        BackgroundColor="Transparent"
+                                        HorizontalOptions="End"
+                                        Toggled="Tema_Toggled" />
+
+                                </Grid>
+                            </Grid>
+                        </Frame>
+                    </ScrollView>
+                    <ScrollView
+                        Grid.Row="5"
+                        Padding="0,10,0,0"
+                        VerticalOptions="Start">
+
+
+                        <Frame HeightRequest="74" WidthRequest="380">
+
+                            <Grid>
+                                <Button BackgroundColor="Transparent" />
+                                <Grid ColumnDefinitions="auto,*" ColumnSpacing="10">
+                                    <Frame
+                                        Padding="10"
+                                        BackgroundColor="#EBEBEB"
+                                        BorderColor="Transparent"
+                                        CornerRadius="20"
+                                        HeightRequest="37"
+                                        WidthRequest="37">
+                                        <Grid>
+                                            <Image Aspect="AspectFit" Source="icon_seguranca_blue" />
+                                        </Grid>
+                                    </Frame>
+
+                                    <Label
+                                        Grid.Column="1"
+                                        Padding="10,0,0,0"
+                                        FontFamily="RobotoBold"
+                                        FontSize="20"
+                                        HorizontalTextAlignment="Start"
+                                        Text="Segurança"
+                                        TextColor="Black"
+                                        VerticalTextAlignment="Center" />
+                                    <Label
+                                        Grid.Column="1"
+                                        Padding="10,0,0,0"
+                                        FontFamily="RobotoBold"
+                                        FontSize="20"
+                                        HorizontalTextAlignment="End"
+                                        Text="&gt;"
+                                        TextColor="{StaticResource Gray400}"
+                                        VerticalTextAlignment="Center" />
+
+                                </Grid>
+                            </Grid>
+                        </Frame>
+                    </ScrollView>
+                    <ScrollView
+                        Grid.Row="6"
+                        Padding="0,10,0,0"
+                        VerticalOptions="Start">
+
+
+                        <Frame HeightRequest="74" WidthRequest="380">
+
+                            <Grid>
+                                <Button BackgroundColor="Transparent" />
+                                <Grid ColumnDefinitions="auto,*" ColumnSpacing="10">
+                                    <Frame
+                                        Padding="10"
+                                        BackgroundColor="#EBEBEB"
+                                        BorderColor="Transparent"
+                                        CornerRadius="20"
+                                        HeightRequest="37"
+                                        WidthRequest="37">
+                                        <Grid>
+                                            <Image Aspect="AspectFit" Source="icon_notificacoes_blue" />
+                                        </Grid>
+                                    </Frame>
+
+                                    <Label
+                                        Grid.Column="1"
+                                        Padding="10,0,0,0"
+                                        FontFamily="RobotoBold"
+                                        FontSize="20"
+                                        HorizontalTextAlignment="Start"
+                                        Text="Notificações"
+                                        TextColor="Black"
+                                        VerticalTextAlignment="Center" />
+                                    <Label
+                                        Grid.Column="1"
+                                        Padding="10,0,0,0"
+                                        FontFamily="RobotoBold"
+                                        FontSize="20"
+                                        HorizontalTextAlignment="End"
+                                        Text="&gt;"
+                                        TextColor="{StaticResource Gray400}"
+                                        VerticalTextAlignment="Center" />
+
+                                </Grid>
+                            </Grid>
+                        </Frame>
+                    </ScrollView>
+                    <ScrollView
+                        Grid.Row="7"
+                        Padding="0,10,0,0"
+                        VerticalOptions="Start">
+
+
+                        <Frame HeightRequest="74" WidthRequest="380">
+
+                            <Grid>
+                                <Button BackgroundColor="Transparent" />
+                                <Grid ColumnDefinitions="auto,*" ColumnSpacing="10">
+                                    <Frame
+                                        Padding="10"
+                                        BackgroundColor="#EBEBEB"
+                                        BorderColor="Transparent"
+                                        CornerRadius="20"
+                                        HeightRequest="37"
+                                        WidthRequest="37">
+                                        <Grid>
+                                            <Image Aspect="AspectFit" Source="icon_ajuda" />
+                                        </Grid>
+                                    </Frame>
+
+                                    <Label
+                                        Grid.Column="1"
+                                        Padding="10,0,0,0"
+                                        FontFamily="RobotoBold"
+                                        FontSize="20"
+                                        HorizontalTextAlignment="Start"
+                                        Text="Ajuda"
+                                        TextColor="Black"
+                                        VerticalTextAlignment="Center" />
+                                    <Label
+                                        Grid.Column="1"
+                                        Padding="10,0,0,0"
+                                        FontFamily="RobotoBold"
+                                        FontSize="20"
+                                        HorizontalTextAlignment="End"
+                                        Text="&gt;"
+                                        TextColor="{StaticResource Gray400}"
+                                        VerticalTextAlignment="Center" />
+
+                                </Grid>
+                            </Grid>
+                        </Frame>
+                    </ScrollView>
+                    <ScrollView Grid.Row="8" VerticalOptions="Start">
+                        <Frame
+                            BackgroundColor="Transparent"
+                            BorderColor="Transparent"
+                            CornerRadius="4">
+                            <Label
+                                Padding="10,0,0,0"
+                                FontFamily="RobotoBold"
+                                FontSize="20"
+                                HorizontalTextAlignment="Start"
+                                Text="Feedback"
+                                TextColor="Black"
+                                VerticalTextAlignment="Center" />
+
+                        </Frame>
+                    </ScrollView>
+                    <ScrollView
+                        Grid.Row="9"
+                        Padding="0,10,0,0"
+                        VerticalOptions="Start">
+
+
+                        <Frame HeightRequest="74" WidthRequest="380">
+
+                            <Grid>
+                                <Button BackgroundColor="Transparent" />
+                                <Grid ColumnDefinitions="auto,*" ColumnSpacing="10">
+                                    <Frame
+                                        Padding="10"
+                                        BackgroundColor="#EBEBEB"
+                                        BorderColor="Transparent"
+                                        CornerRadius="20"
+                                        HeightRequest="37"
+                                        WidthRequest="37">
+                                        <Grid>
+                                            <Image Aspect="AspectFit" Source="icon_sugerir" />
+                                        </Grid>
+                                    </Frame>
+
+                                    <Label
+                                        Grid.Column="1"
+                                        Padding="10,0,0,0"
+                                        FontFamily="RobotoBold"
+                                        FontSize="20"
+                                        HorizontalTextAlignment="Start"
+                                        Text="Sugestões"
+                                        TextColor="Black"
+                                        VerticalTextAlignment="Center" />
+                                    <Label
+                                        Grid.Column="1"
+                                        Padding="10,0,0,0"
+                                        FontFamily="RobotoBold"
+                                        FontSize="20"
+                                        HorizontalTextAlignment="End"
+                                        Text="&gt;"
+                                        TextColor="{StaticResource Gray400}"
+                                        VerticalTextAlignment="Center" />
+
+                                </Grid>
+                            </Grid>
+                        </Frame>
+                    </ScrollView>
+                    <ScrollView
+                        Grid.Row="9"
+                        Padding="0,10,0,0"
+                        VerticalOptions="Start">
+
+
+                        <Frame HeightRequest="74" WidthRequest="380">
+
+                            <Grid>
+                                <Button BackgroundColor="Transparent" />
+                                <Grid ColumnDefinitions="auto,*" ColumnSpacing="10">
+                                    <Frame
+                                        Padding="11"
+                                        BackgroundColor="#EBEBEB"
+                                        BorderColor="Transparent"
+                                        CornerRadius="20"
+                                        HeightRequest="37"
+                                        WidthRequest="37">
+                                        <Grid>
+                                            <Image Aspect="AspectFit" Source="icon_reportar" />
+                                        </Grid>
+                                    </Frame>
+
+                                    <Label
+                                        Grid.Column="1"
+                                        Padding="10,0,0,0"
+                                        FontFamily="RobotoBold"
+                                        FontSize="20"
+                                        HorizontalTextAlignment="Start"
+                                        Text="Reportar"
+                                        TextColor="Black"
+                                        VerticalTextAlignment="Center" />
+                                    <Label
+                                        Grid.Column="1"
+                                        Padding="10,0,0,0"
+                                        FontFamily="RobotoBold"
+                                        FontSize="20"
+                                        HorizontalTextAlignment="End"
+                                        Text="&gt;"
+                                        TextColor="{StaticResource Gray400}"
+                                        VerticalTextAlignment="Center" />
+
+                                </Grid>
+                            </Grid>
+                        </Frame>
+                    </ScrollView>
+                </VerticalStackLayout>
+
+            </Grid>
+        </ScrollView>
+        <StackLayout />
+
+
+        <!--  NAVBAR  -->
+        <Grid x:Name="bar" Grid.Row="3" />
+    </Grid>
+
+</ContentPage>

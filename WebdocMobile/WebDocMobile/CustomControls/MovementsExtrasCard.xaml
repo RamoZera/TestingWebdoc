@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="WebDocMobile.CustomControls.MovementsExtrasCard"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:customControl="clr-namespace:WebDocMobile.CustomControls"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:WebDocMobile.PageModels"
+    x:Name="this">
+    <ContentView.ControlTemplate>
+        <ControlTemplate>
+            <Border
+                HorizontalOptions="FillAndExpand"
+                Stroke="{StaticResource Gray300}"
+                StrokeShape="RoundRectangle 5"
+                StrokeThickness="2">
+                <toolkit:Expander Padding="0,10">
+                    <toolkit:Expander.Header>
+                        <Grid
+                            ColumnDefinitions=".2*,*,.2*"
+                            ColumnSpacing="1"
+                            RowDefinitions="Auto,Auto">
+                            <toolkit:AvatarView
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                BackgroundColor="Blue"
+                                HeightRequest="35"
+                                Text="{Binding Source={x:Reference this}, Path=AvatarTagText}"
+                                TextColor="White"
+                                WidthRequest="35" />
+                            <Label Grid.Row="0" Grid.Column="1">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span
+                                            FontAttributes="Bold"
+                                            FontFamily="RobotoMedium"
+                                            FontSize="14"
+                                            Text="{Binding Source={x:Reference this}, Path=FromCardText}"
+                                            TextColor="#1F2125" />
+                                        <Span
+                                            FontFamily="RobotoRegular"
+                                            FontSize="13"
+                                            Text=" movimentou para "
+                                            TextColor="#959595" />
+                                        <Span
+                                            FontAttributes="Bold"
+                                            FontFamily="RobotoMedium"
+                                            FontSize="14"
+                                            Text="{Binding Source={x:Reference this}, Path=ToText}"
+                                            TextColor="#959595" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+
+                            <Label
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                FontFamily="RobotoMedium"
+                                FontSize="12"
+                                TextColor="#262930"
+                                Text="{Binding Source={x:Reference this}, Path=DateTimeText}" />
+                            <Image
+                                Grid.Row="0"
+                                Grid.Column="2"
+                                HeightRequest="25"
+                                Source="icon_accordion"
+                                VerticalOptions="Start" />
+                        </Grid>
+                    </toolkit:Expander.Header>
+                    <VerticalStackLayout Padding="10" Spacing="10">
+                        <Border
+                            Padding="10"
+                            HorizontalOptions="FillAndExpand"
+                            Stroke="{StaticResource Gray300}"
+                            StrokeShape="RoundRectangle 5"
+                            StrokeThickness="1">
+                            <Grid RowDefinitions="Auto,Auto" RowSpacing="10">
+                                <Label
+                                    Grid.Row="0"
+                                    FontFamily="RobotoMedium"
+                                    FontSize="15"
+                                    Text="De"
+                                    TextColor="#959595" />
+                                <toolkit:AvatarView
+                                    Grid.Row="1"
+                                    BackgroundColor="Blue"
+                                    HeightRequest="25"
+                                    HorizontalOptions="Start"
+                                    Text="{Binding Source={x:Reference this}, Path=AvatarTagText}"
+                                    TextColor="White"
+                                    VerticalOptions="Center"
+                                    WidthRequest="25" />
+                                <Label
+                                    Grid.Row="1"
+                                    Margin="30,0,0,0"
+                                    FontFamily="RobotoRegular"
+                                    FontSize="15"
+                                    Text="{Binding Source={x:Reference this}, Path=FromCardText}"
+                                    TextColor="#343A40" />
+                            </Grid>
+                        </Border>
+
+                        <Border
+                            Padding="10"
+                            HorizontalOptions="FillAndExpand"
+                            Stroke="{StaticResource Gray300}"
+                            StrokeShape="RoundRectangle 5"
+                            StrokeThickness="1">
+                            <Grid RowDefinitions="Auto,Auto" RowSpacing="10">
+                                <Label
+                                    Grid.Row="0"
+                                    FontFamily="RobotoMedium"
+                                    FontSize="15"
+                                    Text="Informação"
+                                    TextColor="#959595" />
+                                <Label
+                                    Grid.Row="1"
+                                    FontFamily="RobotoRegular"
+                                    FontSize="15"
+                                    Text="{Binding Source={x:Reference this}, Path=InformationText}"
+                                    TextColor="#343A40" />
+                            </Grid>
+                        </Border>
+
+                        <Border
+                            Padding="10"
+                            HorizontalOptions="FillAndExpand"
+                            Stroke="{StaticResource Gray300}"
+                            StrokeShape="RoundRectangle 5"
+                            StrokeThickness="1">
+                            <Grid RowDefinitions="Auto,Auto" RowSpacing="10">
+                                <Label
+                                    Grid.Row="0"
+                                    FontFamily="RobotoMedium"
+                                    FontSize="15"
+                                    Text="Conhecimento"
+                                    TextColor="#959595" />
+                                <Label
+                                    Grid.Row="1"
+                                    FontFamily="RobotoRegular"
+                                    FontSize="15"
+                                    Text=""
+                                    TextColor="#343A40" />
+                            </Grid>
+                        </Border>
+
+                        <Border
+                            Padding="10"
+                            HorizontalOptions="FillAndExpand"
+                            Stroke="{StaticResource Gray300}"
+                            StrokeShape="RoundRectangle 5"
+                            StrokeThickness="1">
+                            <Grid RowDefinitions="Auto,Auto" RowSpacing="10">
+                                <Label
+                                    Grid.Row="0"
+                                    FontFamily="RobotoMedium"
+                                    FontSize="15"
+                                    Text="Parecer"
+                                    TextColor="#959595" />
+                                <Label
+                                    Grid.Row="1"
+                                    FontFamily="RobotoRegular"
+                                    FontSize="15"
+                                    Text=""
+                                    TextColor="#343A40" />
+                            </Grid>
+                        </Border>
+
+                        <Border
+                            Padding="10"
+                            HorizontalOptions="FillAndExpand"
+                            Stroke="{StaticResource Gray300}"
+                            StrokeShape="RoundRectangle 5"
+                            StrokeThickness="1">
+                            <Grid RowDefinitions="Auto,Auto" RowSpacing="10">
+                                <Label
+                                    Grid.Row="0"
+                                    FontFamily="RobotoMedium"
+                                    FontSize="15"
+                                    Text="Por delegação"
+                                    TextColor="#959595" />
+                                <Label
+                                    Grid.Row="1"
+                                    FontFamily="RobotoRegular"
+                                    FontSize="15"
+                                    Text=""
+                                    TextColor="#343A40" />
+                            </Grid>
+                        </Border>
+
+                        <ContentPresenter />
+                    </VerticalStackLayout>
+                </toolkit:Expander>
+            </Border>
+        </ControlTemplate>
+    </ContentView.ControlTemplate>
+</ContentView>

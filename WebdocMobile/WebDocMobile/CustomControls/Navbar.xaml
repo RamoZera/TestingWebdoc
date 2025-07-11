@@ -1,0 +1,687 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<telerik:RadBorder
+    x:Class="WebDocMobile.CustomControls.Navbar"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:telerik="http://schemas.telerik.com/2022/xaml/maui"
+    xmlns:vm="clr-namespace:WebDocMobile.PageModels.PagesViewModels"
+    x:DataType="vm:NavbarViewModel"
+    BackgroundColor="White"
+    CornerRadius="15,15,0,0"
+    HorizontalOptions="Fill">
+    <telerik:RadBorder.Shadow>
+        <Shadow
+            Brush="{StaticResource Gray300}"
+            Opacity="1"
+            Radius="30"
+            Offset="0,0" />
+    </telerik:RadBorder.Shadow>
+    <telerik:RadBorder.Resources>
+        <ResourceDictionary>
+            <Grid x:Key="NewRegisterPopup">
+                <Frame
+                    Margin="0,0,0,-10"
+                    BorderColor="Transparent"
+                    CornerRadius="16"
+                    HeightRequest="380">
+                    <StackLayout Padding="0" Spacing="40">
+                        <!--  Header Popup  -->
+                        <Grid RowDefinitions="*,*" RowSpacing="20">
+                            <!--  Title  -->
+                            <Label
+                                FontFamily="RobotoBold"
+                                FontSize="20"
+                                HorizontalTextAlignment="Start"
+                                Text="Novo registo"
+                                TextColor="Black" />
+
+                            <!--  Close Button  -->
+                            <Frame
+                                Margin="0,0,15,0"
+                                Padding="0"
+                                BackgroundColor="#EBEBEB"
+                                BorderColor="Transparent"
+                                CornerRadius="30"
+                                HeightRequest="30"
+                                HorizontalOptions="End"
+                                WidthRequest="30">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="Close_NewRegisterPopup" />
+                                </Frame.GestureRecognizers>
+                                <Frame.Content>
+                                    <Grid>
+                                        <Image Aspect="AspectFit" Source="icon_close" />
+                                    </Grid>
+                                </Frame.Content>
+                            </Frame>
+
+                            <!--  Description  -->
+                            <Label
+                                Grid.Row="1"
+                                FontFamily="RobotoRegular"
+                                FontSize="16"
+                                LineHeight="1.2"
+                                Text="Seleciona uma das opções abaixo indicadas para começar a registar"
+                                TextColor="#959595" />
+                        </Grid>
+
+                        <!--  Button Actions  -->
+                        <Grid RowDefinitions="*,*" RowSpacing="10">
+                            <!--  Create new Document Button  -->
+                            <Frame
+                                BackgroundColor="#FFFFFF"
+                                BorderColor="#EBEBEB"
+                                CornerRadius="4"
+                                HeightRequest="80">
+                                <Grid>
+                                    <Button BackgroundColor="Transparent" Clicked="CreateDocumentButton" />
+                                    <Grid ColumnDefinitions="auto,*" ColumnSpacing="10">
+                                        <Frame
+                                            Padding="10"
+                                            BackgroundColor="#EBEBEB"
+                                            BorderColor="Transparent"
+                                            CornerRadius="20"
+                                            HeightRequest="40"
+                                            WidthRequest="40">
+                                            <Grid>
+                                                <Image Aspect="AspectFit" Source="icon_documentos_blue" />
+                                            </Grid>
+                                        </Frame>
+                                        <Label
+                                            Grid.Column="1"
+                                            FontFamily="RobotoBold"
+                                            FontSize="20"
+                                            HorizontalTextAlignment="Start"
+                                            Text="Documento"
+                                            TextColor="Black"
+                                            VerticalTextAlignment="Center" />
+                                    </Grid>
+                                </Grid>
+                            </Frame>
+
+                            <!--  Create new Process Button  -->
+                            <Frame
+                                Grid.Row="1"
+                                BackgroundColor="#FFFFFF"
+                                BorderColor="#EBEBEB"
+                                CornerRadius="4"
+                                HeightRequest="80">
+                                <Grid>
+                                    <Button BackgroundColor="Transparent" Clicked="CreateProcessButton" />
+                                    <Grid ColumnDefinitions="auto,*" ColumnSpacing="10">
+                                        <Frame
+                                            Padding="10"
+                                            BackgroundColor="#EBEBEB"
+                                            BorderColor="Transparent"
+                                            CornerRadius="20"
+                                            HeightRequest="40"
+                                            WidthRequest="40">
+                                            <Grid>
+                                                <Image Aspect="AspectFit" Source="icon_processos_blue" />
+                                            </Grid>
+                                        </Frame>
+                                        <Label
+                                            Grid.Column="1"
+                                            FontFamily="RobotoBold"
+                                            FontSize="20"
+                                            HorizontalTextAlignment="Start"
+                                            Text="Processo"
+                                            TextColor="Black"
+                                            VerticalTextAlignment="Center" />
+                                    </Grid>
+                                </Grid>
+                            </Frame>
+                        </Grid>
+                    </StackLayout>
+                </Frame>
+            </Grid>
+
+            <Grid x:Key="ConsultRegisterPopup">
+                <Frame
+                    Margin="0,0,0,-10"
+                    BorderColor="Transparent"
+                    CornerRadius="16"
+                    HeightRequest="500">
+                    <StackLayout Padding="0" Spacing="30">
+                        <!--  Header Popup  -->
+                        <Grid RowDefinitions="*,*" RowSpacing="20">
+                            <!--  Title  -->
+                            <Label
+                                FontFamily="RobotoBold"
+                                FontSize="20"
+                                HorizontalTextAlignment="Start"
+                                Text="Consultar registos"
+                                TextColor="Black" />
+
+                            <!--  Close Button  -->
+                            <Frame
+                                Margin="0,0,15,0"
+                                Padding="0"
+                                BackgroundColor="#EBEBEB"
+                                BorderColor="Transparent"
+                                CornerRadius="30"
+                                HeightRequest="30"
+                                HorizontalOptions="End"
+                                WidthRequest="30">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="Close_ConsultRegisterPopup" />
+                                </Frame.GestureRecognizers>
+                                <Frame.Content>
+                                    <Grid>
+                                        <Image Aspect="AspectFit" Source="icon_close" />
+                                    </Grid>
+                                </Frame.Content>
+                            </Frame>
+
+                            <!--  Description  -->
+                            <Label
+                                Grid.Row="1"
+                                FontFamily="RobotoRegular"
+                                FontSize="16"
+                                LineHeight="1.2"
+                                Text="Pesquisa ou seleciona uma das opções para consultar registos"
+                                TextColor="#959595" />
+                        </Grid>
+
+                        <!--  Search Box  -->
+                        <telerik:RadBorder
+                            BorderColor="#EBEBEB"
+                            BorderThickness="1"
+                            CornerRadius="5">
+                            <Grid
+                                Padding="15,10,15,10"
+                                ColumnDefinitions="*,.2*"
+                                RowDefinitions="*,*">
+
+                                <Label
+                                    FontFamily="RobotoMedium"
+                                    Text="Pesquisar registos"
+                                    TextColor="#959595" />
+
+                                <telerik:RadEntry
+                                    x:Name="ConsultRegisterEntry"
+                                    Grid.Row="1"
+                                    Margin="-5,0,0,0"
+                                    AutomationId="ConsultRegisterEntry"
+                                    BackgroundColor="White"
+                                    BorderThickness="0"
+                                    FocusedBorderThickness="0"
+                                    FontFamily="RobotoBold"
+                                    FontSize="14"
+                                    Keyboard="Default"
+                                    Placeholder="Nº ou assunto"
+                                    PlaceholderColor="#1F2125"
+                                    TextColor="#1F2125"
+                                    VerticalOptions="Center" />
+
+                                <Grid
+                                    Grid.RowSpan="2"
+                                    Grid.Column="1"
+                                    HorizontalOptions="End"
+                                    VerticalOptions="Center">
+                                    <RoundRectangle
+                                        BackgroundColor="#003962"
+                                        CornerRadius="5"
+                                        HeightRequest="40"
+                                        WidthRequest="40" />
+                                    <Image
+                                        Aspect="AspectFit"
+                                        HeightRequest="20"
+                                        Source="icon_pesquisar"
+                                        WidthRequest="20" />
+                                </Grid>
+                            </Grid>
+                        </telerik:RadBorder>
+
+                        <!--  Button Actions  -->
+                        <Grid RowDefinitions="*,*" RowSpacing="10">
+                            <!--  Consult Documents Button  -->
+                            <Frame
+                                BackgroundColor="#FFFFFF"
+                                BorderColor="#EBEBEB"
+                                CornerRadius="4"
+                                HeightRequest="80">
+                                <Grid>
+                                    <Button BackgroundColor="Transparent" Clicked="ConsultRegisterClickDocument" />
+                                    <Grid ColumnDefinitions="auto,*" ColumnSpacing="10">
+
+                                        <Frame
+                                            Padding="10"
+                                            BackgroundColor="#EBEBEB"
+                                            BorderColor="Transparent"
+                                            CornerRadius="20"
+                                            HeightRequest="40"
+                                            WidthRequest="40">
+                                            <Grid>
+                                                <Image Aspect="AspectFit" Source="icon_documentos_blue" />
+                                            </Grid>
+                                        </Frame>
+
+
+                                        <Label
+                                            Grid.Column="1"
+                                            FontFamily="RobotoBold"
+                                            FontSize="20"
+                                            HorizontalTextAlignment="Start"
+                                            Text="Documentos"
+                                            TextColor="Black"
+                                            VerticalTextAlignment="Center" />
+                                    </Grid>
+                                </Grid>
+
+                            </Frame>
+
+                            <!--  Consult Process Button  -->
+                            <Frame
+                                Grid.Row="1"
+                                BackgroundColor="#FFFFFF"
+                                BorderColor="#EBEBEB"
+                                CornerRadius="4"
+                                HeightRequest="80">
+
+                                <Grid>
+                                    <Button
+                                        x:Name="ProcesesList"
+                                        BackgroundColor="Transparent"
+                                        Clicked="ConsultRegisterClickProceses" />
+                                    <Grid ColumnDefinitions="auto,*" ColumnSpacing="10">
+                                        <Frame
+                                            Padding="10"
+                                            BackgroundColor="#EBEBEB"
+                                            BorderColor="Transparent"
+                                            CornerRadius="20"
+                                            HeightRequest="40"
+                                            WidthRequest="40">
+                                            <Grid>
+                                                <Image Aspect="AspectFit" Source="icon_processos_blue" />
+                                            </Grid>
+                                        </Frame>
+
+                                        <Label
+                                            Grid.Column="1"
+                                            FontFamily="RobotoBold"
+                                            FontSize="20"
+                                            HorizontalTextAlignment="Start"
+                                            Text="Processos"
+                                            TextColor="Black"
+                                            VerticalTextAlignment="Center" />
+                                    </Grid>
+                                </Grid>
+                            </Frame>
+                        </Grid>
+                    </StackLayout>
+                </Frame>
+            </Grid>
+
+            <!--  User Popup  -->
+            <Grid x:Key="UserInfoPopup">
+                <Frame
+                    Margin="0,0,0,-10"
+                    BorderColor="Transparent"
+                    CornerRadius="16"
+                    HeightRequest="450">
+                    <StackLayout Padding="0" Spacing="30">
+                        <!--  Header Popup  -->
+                        <Grid RowDefinitions="*,*" RowSpacing="20">
+                            <!--  Title  -->
+                            <Label
+                                FontFamily="RobotoBold"
+                                FontSize="20"
+                                HorizontalTextAlignment="Start"
+                                Text="Consultar registos"
+                                TextColor="Black" />
+
+                            <!--  Close Button  -->
+                            <Frame
+                                Margin="0,0,15,0"
+                                Padding="0"
+                                BackgroundColor="#EBEBEB"
+                                BorderColor="Transparent"
+                                CornerRadius="30"
+                                HeightRequest="30"
+                                HorizontalOptions="End"
+                                WidthRequest="30">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="Close_UserInfoPopup" />
+                                </Frame.GestureRecognizers>
+                                <Frame.Content>
+                                    <Grid>
+                                        <Image Aspect="AspectFit" Source="icon_close" />
+                                    </Grid>
+                                </Frame.Content>
+                            </Frame>
+
+                            <!--  Description  -->
+                            <Label
+                                Grid.Row="1"
+                                FontFamily="RobotoRegular"
+                                FontSize="16"
+                                LineHeight="1.2"
+                                Text="Pesquisa ou seleciona uma das opções para consultar registos"
+                                TextColor="#959595" />
+                        </Grid>
+
+                        <!--  Search Box  -->
+                        <telerik:RadBorder
+                            BorderColor="#EBEBEB"
+                            BorderThickness="1"
+                            CornerRadius="5">
+                            <Grid
+                                Padding="15,10,15,10"
+                                ColumnDefinitions="*,.2*"
+                                RowDefinitions="*,*">
+
+                                <Label
+                                    FontFamily="RobotoMedium"
+                                    Text="Pesquisar registos"
+                                    TextColor="#959595" />
+
+                                <telerik:RadEntry
+                                    x:Name="ConsultUserEntry"
+                                    Grid.Row="1"
+                                    Margin="-5,0,0,0"
+                                    AutomationId="ConsultUserEntry"
+                                    BackgroundColor="White"
+                                    BorderThickness="0"
+                                    FocusedBorderThickness="0"
+                                    FontFamily="RobotoBold"
+                                    FontSize="14"
+                                    Keyboard="Numeric"
+                                    Placeholder="Nº ou assunto"
+                                    PlaceholderColor="#1F2125"
+                                    TextColor="#1F2125"
+                                    VerticalOptions="Center" />
+
+                                <Grid
+                                    Grid.RowSpan="2"
+                                    Grid.Column="1"
+                                    HorizontalOptions="End"
+                                    VerticalOptions="Center">
+                                    <RoundRectangle
+                                        BackgroundColor="#003962"
+                                        CornerRadius="5"
+                                        HeightRequest="40"
+                                        WidthRequest="40" />
+                                    <Image
+                                        Aspect="AspectFit"
+                                        HeightRequest="20"
+                                        Source="icon_pesquisar"
+                                        WidthRequest="20" />
+                                </Grid>
+                            </Grid>
+                        </telerik:RadBorder>
+
+                        <!--  Button Actions  -->
+                        <Grid RowDefinitions="*,*" RowSpacing="10">
+                            <!--  Consult Documents Button  -->
+                            <Frame
+                                BackgroundColor="#FFFFFF"
+                                BorderColor="#EBEBEB"
+                                CornerRadius="4"
+                                HeightRequest="80">
+                                <Grid>
+                                    <Button BackgroundColor="Transparent" />
+                                    <Grid ColumnDefinitions="auto,*" ColumnSpacing="10">
+
+                                        <Frame
+                                            Padding="10"
+                                            BackgroundColor="#EBEBEB"
+                                            BorderColor="Transparent"
+                                            CornerRadius="20"
+                                            HeightRequest="40"
+                                            WidthRequest="40">
+                                            <Grid>
+                                                <Image Aspect="AspectFit" Source="icon_documentos_blue" />
+                                            </Grid>
+                                        </Frame>
+
+
+                                        <Label
+                                            Grid.Column="1"
+                                            FontFamily="RobotoBold"
+                                            FontSize="20"
+                                            HorizontalTextAlignment="Start"
+                                            Text="Documento"
+                                            TextColor="Black"
+                                            VerticalTextAlignment="Center" />
+                                    </Grid>
+                                </Grid>
+
+                            </Frame>
+
+                            <!--  Consult Process Button  -->
+                            <Frame
+                                Grid.Row="1"
+                                BackgroundColor="#FFFFFF"
+                                BorderColor="#EBEBEB"
+                                CornerRadius="4"
+                                HeightRequest="80">
+
+                                <Grid>
+                                    <Button BackgroundColor="Transparent" />
+                                    <Grid ColumnDefinitions="auto,*" ColumnSpacing="10">
+                                        <Frame
+                                            Padding="10"
+                                            BackgroundColor="#EBEBEB"
+                                            BorderColor="Transparent"
+                                            CornerRadius="20"
+                                            HeightRequest="40"
+                                            WidthRequest="40">
+                                            <Grid>
+                                                <Image Aspect="AspectFit" Source="icon_processos_blue" />
+                                            </Grid>
+                                        </Frame>
+
+                                        <Label
+                                            Grid.Column="1"
+                                            FontFamily="RobotoBold"
+                                            FontSize="20"
+                                            HorizontalTextAlignment="Start"
+                                            Text="Processo"
+                                            TextColor="Black"
+                                            VerticalTextAlignment="Center" />
+                                    </Grid>
+                                </Grid>
+                            </Frame>
+                        </Grid>
+                    </StackLayout>
+                </Frame>
+            </Grid>
+
+            <!--  Modal Loader  -->
+            <Grid x:Key="LoaderPopup">
+                <Frame
+                    Margin="0,0,0,-10"
+                    BorderColor="Transparent"
+                    CornerRadius="16"
+                    HeightRequest="100">
+                    <StackLayout Padding="0" Spacing="30">
+                        <Grid ColumnDefinitions="auto,*" ColumnSpacing="20">
+                            <ActivityIndicator
+                                Grid.Column="0"
+                                BackgroundColor="Transparent"
+                                HeightRequest="50"
+                                IsRunning="True"
+                                WidthRequest="50"
+                                Color="{StaticResource Secondary}" />
+                            <VerticalStackLayout Grid.Column="1">
+                                <Label
+                                    FontFamily="RobotoBold"
+                                    FontSize="22"
+                                    HorizontalTextAlignment="Start"
+                                    Text="Aguarde"
+                                    TextColor="#1F2125" />
+                                <Label
+                                    FontFamily="RobotoBold"
+                                    FontSize="16"
+                                    HorizontalTextAlignment="Start"
+                                    Text="Validação em progresso"
+                                    TextColor="#959595" />
+                            </VerticalStackLayout>
+                        </Grid>
+                    </StackLayout>
+                </Frame>
+
+            </Grid>
+        </ResourceDictionary>
+    </telerik:RadBorder.Resources>
+    <Grid
+        Padding="20,5"
+        ColumnDefinitions="auto,auto,auto,auto,auto"
+        ColumnSpacing="10"
+        HorizontalOptions="Center"
+        VerticalOptions="Center">
+
+        <!--  New Register Button  -->
+        <Grid Grid.Column="0">
+            <telerik:RadButton
+                BackgroundColor="#003962"
+                Clicked="Open_NewRegisterPopup"
+                CornerRadius="20"
+                HeightRequest="40"
+                HorizontalOptions="Start"
+                ImageSource="icon_novo"
+                VerticalOptions="Center"
+                WidthRequest="40" />
+        </Grid>
+
+        <!--  Dashboard Button  -->
+        <Grid Grid.Column="1">
+            <telerik:RadButton
+                x:Name="ButtonDashboar"
+                BackgroundColor="#F1F1F1"
+                Clicked="ButtonDashboar_Clicked"
+                CornerRadius="5"
+                HorizontalOptions="Fill"
+                VerticalOptions="Center" />
+            <StackLayout
+                Padding="10"
+                Orientation="Horizontal"
+                Spacing="5">
+                <Image
+                    x:Name="IconDashboard"
+                    HeightRequest="24"
+                    WidthRequest="24" />
+                <Label
+                    x:Name="DashboardText"
+                    FontFamily="RobotoBold"
+                    HorizontalOptions="Center"
+                    IsVisible="True"
+                    Text="Dashboard"
+                    TextColor="#1F2125"
+                    VerticalOptions="Center" />
+            </StackLayout>
+        </Grid>
+
+        <!--  Consult Registers Button  -->
+        <Grid Grid.Column="2">
+            <telerik:RadButton
+                x:Name="ButtonRegister"
+                BackgroundColor="Transparent"
+                Clicked="Open_ConsultRegisterPopup"
+                CornerRadius="5"
+                HorizontalOptions="Fill"
+                VerticalOptions="Center" />
+            <StackLayout
+                Padding="10"
+                Orientation="Horizontal"
+                Spacing="5">
+                <Image
+                    x:Name="IconRegistos"
+                    HeightRequest="24"
+                    Source="icon_registos"
+                    WidthRequest="24" />
+                <Label
+                    x:Name="ConsulRegisterText"
+                    FontFamily="RobotoBold"
+                    HorizontalOptions="Center"
+                    IsVisible="False"
+                    Text="Registos"
+                    TextColor="#1F2125"
+                    VerticalOptions="Center" />
+            </StackLayout>
+        </Grid>
+
+        <!--  Notification Button  -->
+        <Grid Grid.Column="3">
+            <telerik:RadButton
+                BackgroundColor="Transparent"
+                Clicked="Open_PageAtividade"
+                CornerRadius="5"
+                HorizontalOptions="Fill"
+                VerticalOptions="Center" />
+            <StackLayout
+                Padding="10"
+                Orientation="Horizontal"
+                Spacing="5">
+                <telerik:RadBadgeView
+                    Margin="0,-8,0,0"
+                    AutomationId="badgeNotifications"
+                    BadgeAnimationDuration="300"
+                    BadgeAnimationType="Scale"
+                    BadgeBackgroundColor="{StaticResource Secondary}"
+                    BadgeBorderColor="#FFFFFF"
+                    BadgeBorderThickness="1.5"
+                    BadgeCornerRadius="20"
+                    BadgeHorizontalAlignment="End"
+                    BadgeHorizontalPosition="End"
+                    BadgeMinimumHeight="20"
+                    BadgeMinimumWidth="20"
+                    BadgeOffsetX="8"
+                    BadgeOffsetY="2"
+                    BadgeText="9"
+                    BadgeTextColor="#FFFFFF"
+                    BadgeTextMargin="0"
+                    BadgeVerticalAlignment="Center"
+                    BadgeVerticalPosition="Start"
+                    BadgeVisibility="Visible"
+                    HorizontalOptions="CenterAndExpand"
+                    VerticalOptions="CenterAndExpand">
+                    <telerik:RadBadgeView.Content>
+                        <Image
+                            HeightRequest="24"
+                            Source="icon_notificacoes"
+                            WidthRequest="24" />
+                    </telerik:RadBadgeView.Content>
+                </telerik:RadBadgeView>
+                <Label
+                    FontFamily="RobotoBold"
+                    HorizontalOptions="Center"
+                    IsVisible="False"
+                    Text="Atividade"
+                    TextColor="#1F2125"
+                    VerticalOptions="Center" />
+            </StackLayout>
+        </Grid>
+
+        <!--  User Button  -->
+        <Grid Grid.Column="4">
+            <telerik:RadButton
+                x:Name="ButtonUser"
+                BackgroundColor="Transparent"
+                Clicked="Open_UserInfoPopup"
+                CornerRadius="5"
+                HorizontalOptions="Fill"
+                VerticalOptions="Center" />
+            <StackLayout
+                Padding="10"
+                Orientation="Horizontal"
+                Spacing="5">
+                <Image
+                    x:Name="IconUser"
+                    HeightRequest="24"
+                    Source="icon_user"
+                    WidthRequest="24" />
+                <Label
+                    x:Name="UserText"
+                    FontFamily="RobotoBold"
+                    HorizontalOptions="Center"
+                    IsVisible="False"
+                    Text="User"
+                    TextColor="#1F2125"
+                    VerticalOptions="Center" />
+            </StackLayout>
+        </Grid>
+
+    </Grid>
+</telerik:RadBorder>

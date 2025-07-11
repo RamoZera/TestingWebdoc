@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+  <g id="icon-seguranca" transform="translate(-193 -1157)">
+    <rect id="box" width="16" height="16" transform="translate(193 1157)" fill="rgba(255,255,255,0)"/>
+    <g id="icon" transform="translate(196 1157)">
+      <path id="Path_3257" data-name="Path 3257" d="M213.75,231.85V236.5a5.2,5.2,0,0,0,10.394,0V231.85Zm5.588,4.4.19,1.262H218.3l.193-1.291a.957.957,0,1,1,.84.028Z" transform="translate(-213.75 -225.58)" fill="#fff"/>
+      <path id="Path_3258" data-name="Path 3258" d="M253.209,73.3h-1.282V71.38a2.716,2.716,0,0,0-5.43,0V73.3h-1.282V71.38a4,4,0,0,1,7.993,0Z" transform="translate(-244.016 -67.456)" fill="#fff"/>
+    </g>
+  </g>
+</svg>

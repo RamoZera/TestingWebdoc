@@ -38,14 +38,14 @@
                      Spacing="25">
             <customControls:OutlinedControlEntry Placeholder="Utilizador"
                                                  x:Name="UserEntry"
-                                                 Text="{Binding strUserName}"/>
+                                                 Text="{Binding StrUserName}"/>
             
             <customControls:OutlinedControlEntry Placeholder="Palavra-Passe"
                                                  x:Name="PasswordEntry"
-                                                 Text="{Binding strPassword}"/>
+                                                 Text="{Binding StrPassword}"/>
             
             <customControls:OutlinedControlEntry x:Name="DomainEntry"
-                                                 Text="{Binding strDomainName}"
+                                                 Text="{Binding StrDomainName}"
                                                  IsVisible="False"/>
 
         </StackLayout>

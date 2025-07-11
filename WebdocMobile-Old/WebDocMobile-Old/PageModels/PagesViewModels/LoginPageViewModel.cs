@@ -1,198 +1,132 @@
-﻿﻿using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Collections.Generic;
+﻿﻿﻿﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using WebDocMobile.Helpers.WsMethods;
+using WebDocMobile.Models;
 using WebDocMobile.Pages.Desktop;
 using WebDocMobile.Pages.Mobile;
 using WebDocMobile.Services;
-using WebDocMobile.Helpers;
-using WebDocMobile.Models;
-using Newtonsoft.Json;
-using WebDocMobile.Helpers.WsMethods;
 
 namespace WebDocMobile.PageModels
 {
-    public partial class LoginPageViewModel
+    [QueryProperty(nameof(CodigoEntidade), "codEntidade")]
+    public partial class LoginPageViewModel : ObservableObject
     {
-        public string strUserName { get; set; }
-        public string strPassword { get; set; }
-        public string strDomainName { get; set; }
-        private string codEntidade { get; set; }
+        [ObservableProperty]
+        private string strUserName;
+        [ObservableProperty]
+        private string strPassword;
+        [ObservableProperty]
+        private string strDomainName;
+        [ObservableProperty]
+        private string codigoEntidade;
 
         private readonly ILoginService _loginService;
         private readonly IInitService _initService;
         private readonly IDocumentService _documentService;
         private readonly IAlertService _alertService;
-        private INavigation _navigationService;
+        private readonly IAppStateService _appStateService;
+        private readonly ISettingsService _settingsService;
 
-        public LoginPageViewModel(INavigation navigation, string codEntidade)
+        public LoginPageViewModel(ILoginService loginService, IInitService initService, IDocumentService documentService, IAlertService alertService, IAppStateService appStateService, ISettingsService settingsService)
         {
-            this._navigationService = navigation;
-
-            _loginService = new LoginService();
-            _initService = new InitService();
-            _documentService = new DocumentService();
-            _alertService = new AlertService();
-
-            this.codEntidade = codEntidade;
-            ProcessCodEntidade(codEntidade);
+            _loginService = loginService;
+            _initService = initService;
+            _documentService = documentService;
+            _alertService = alertService;
+            _appStateService = appStateService;
+            _settingsService = settingsService;
         }
 
         private void ProcessCodEntidade(string codEntidade)
         {
-            switch(codEntidade)
+            switch (codEntidade)
             {
                 case "1994":
-                    strDomainName = "Ambisig";
+                    StrDomainName = "Ambisig";
                     break;
                 case "1995":
-                    strDomainName = "INTERNAL";
+                    StrDomainName = "INTERNAL";
+                    break;
+                case "DEMO":
+                    // You may need to ask your colleague for the correct domain for this environment
+                    StrDomainName = "DEMO_DOMAIN"; 
                     break;
             }
+        }
+
+        partial void OnCodigoEntidadeChanged(string value)
+        {
+            ProcessCodEntidade(value);
         }
 
         [RelayCommand]
         public async Task HandleLogIn()
         {
-            Debug.WriteLine("strUserName: " + strUserName);
-            Debug.WriteLine("strPassword: " + strPassword);
-            Debug.WriteLine("strDomainName: " + strDomainName);
-
             var initComponents = await _initService.Init();
+            if (initComponents == null)
+            {
+                await _alertService.ShowAlertAsync("Erro", "Não foi possível inicializar a sessão. Verifique a ligação e o código de entidade.");
+                return;
+            }
             string strHashCode = initComponents.hashCode;
 
-            Debug.WriteLine("Generated HashCode: " + strHashCode);
+            bool isLoginSuccessful = await _loginService.LoginUserBasic(strHashCode, StrUserName, StrPassword, StrDomainName);
 
-            bool IsLoginSuccessful = await _loginService.LoginUserBasic(strHashCode, strUserName, strPassword, strDomainName);
-
-            if (IsLoginSuccessful)
+            if (isLoginSuccessful)
             {
                 var userDetails = new UserBasicInfo
                 {
                     strHashCode = strHashCode,
-                    strName = strUserName,
-                    strDomain = strDomainName,
-                    codEntidade = codEntidade,
+                    strName = StrUserName,
+                    strDomain = StrDomainName,
+                    codEntidade = CodigoEntidade,
                     PIN = string.Empty,
                     hasBiometricsActive = false
                 };
 
-                if(Preferences.ContainsKey(nameof(App.UserDetails)))
-                {
-                    Preferences.Remove(nameof(App.UserDetails));
-                }
-                string userDetailsStr = JsonConvert.SerializeObject(userDetails);
-                Preferences.Set(nameof(App.UserDetails), userDetailsStr);
-                App.UserDetails = userDetails;
-                GetDocuments(_documentService);
-#if ANDROID || IOS
-                var list = _navigationService.NavigationStack;
-                int x = 0;
-            while(x < list.Count)
-                {
-                    Page p = list[x];
-                    if (!(list[x] is PINPageMobile))
-                    {
-                        if (list[x] is LoginPageMobile)
-                        {
-                            _navigationService.InsertPageBefore(new PINPageMobile(), list[x]);
-                        }
-                        _navigationService.RemovePage(p);
-                    }
-                    else
-                    {
-                        x++;
-                    }
-                }
-#else
-                var list = _navigationService.NavigationStack;
-                int x = 0;
-            while(x < list.Count)
-                {
-                    Page p = list[x];
-                    if (!(list[x] is PINPageDesktop))
-                    {
-                        if (list[x] is LoginPageDesktop)
-                        {
-                            _navigationService.InsertPageBefore(new PINPageDesktop(), list[x]);
-                        }
-                        _navigationService.RemovePage(p);
-                    }
-                    else
-                    {
-                        x++;
-                    }
-                }
-#endif
+                _settingsService.UserInfo = userDetails;
+                _appStateService.UserDetails = userDetails;
 
+                await GetDocuments();
+
+#if ANDROID || IOS
+                await Shell.Current.GoToAsync($"//{nameof(PINPageMobile)}");
+#else
+                await Shell.Current.GoToAsync($"//{nameof(PINPageDesktop)}");
+#endif
             }
             else
             {
-                _alertService.ShowAlert("Erro", "Dados Incorretos");
-                Preferences.Remove(nameof(App.UserDetails));
+                await _alertService.ShowAlertAsync("Erro", "Dados Incorretos");
             }
         }
 
-        public async void GetDocuments(IDocumentService _documentService)
+        public async Task GetDocuments()
         {
-            var myDocuments = await _documentService.ListMyDocuments(App.UserDetails.strHashCode, 1000, 1);
-            var allDocuments = await _documentService.ListDocuments(App.UserDetails.strHashCode, 1000, 1);
-            var allMyDocuments = await _documentService.ListAllMyDocuments(App.UserDetails.strHashCode, 1000, 1, "");
+            if (_appStateService.UserDetails == null) return;
+
+            var myDocuments = await _documentService.ListMyDocuments(_appStateService.UserDetails.strHashCode, 1000, 1);
+            var allDocuments = await _documentService.ListDocuments(_appStateService.UserDetails.strHashCode, 1000, 1);
+            var allMyDocuments = await _documentService.ListAllMyDocuments(_appStateService.UserDetails.strHashCode, 1000, 1, "");
 
             var departmentDocuments = new List<GDDocument>();
             var knownDocuments = new List<GDDocument>();
 
-
-            foreach (GDDocument document in allDocuments)
+            // This logic can be optimized, but we'll keep it for now.
+            if (allDocuments != null && allMyDocuments != null)
             {
-                bool isKnownDoc = true;
-                foreach (GDDocument myDoc in allMyDocuments)
-                {
-                    if (document.Code == myDoc.Code)
-                    {
-                        isKnownDoc = false;
-                    }
-                }
-                if (isKnownDoc)
-                {
-                    knownDocuments.Add(document);
-                }
+                knownDocuments = allDocuments.Where(doc => !allMyDocuments.Any(myDoc => myDoc.Code == doc.Code)).ToList();
             }
-            foreach (GDDocument document in allMyDocuments)
+            if (allMyDocuments != null && myDocuments != null)
             {
-                bool isDepDoc = true;
-                foreach (GDDocument doc in myDocuments)
-                {
-                    if (document.Code == doc.Code)
-                    {
-                        isDepDoc = false;
-                    }
-                }
-                if (isDepDoc)
-                {
-                    departmentDocuments.Add(document);
-                }
+                departmentDocuments = allMyDocuments.Where(myDoc => !myDocuments.Any(doc => doc.Code == myDoc.Code)).ToList();
             }
 
-            if (Preferences.ContainsKey(nameof(App.allDocuments)) || Preferences.ContainsKey(nameof(App.myDocuments)) ||
-                Preferences.ContainsKey(nameof(App.departmentDocuments)) || Preferences.ContainsKey(nameof(App.knownDocuments)))
-            {
-                Preferences.Remove(nameof(App.allDocuments));
-                Preferences.Remove(nameof(App.myDocuments));
-                Preferences.Remove(nameof(App.departmentDocuments));
-                Preferences.Remove(nameof(App.knownDocuments));
-            }
-            Preferences.Set(nameof(App.allDocuments), JsonConvert.SerializeObject(allDocuments));
-            Preferences.Set(nameof(App.myDocuments), JsonConvert.SerializeObject(myDocuments));
-            Preferences.Set(nameof(App.departmentDocuments), JsonConvert.SerializeObject(departmentDocuments));
-            Preferences.Set(nameof(App.knownDocuments), JsonConvert.SerializeObject(knownDocuments));
-            App.allDocuments = allDocuments;
-            App.myDocuments = myDocuments;
-            App.departmentDocuments = departmentDocuments;
-            App.knownDocuments = knownDocuments;
+            _appStateService.AllDocuments = allDocuments ?? new List<GDDocument>();
+            _appStateService.MyDocuments = myDocuments ?? new List<GDDocument>();
+            _appStateService.DepartmentDocuments = departmentDocuments;
+            _appStateService.KnownDocuments = knownDocuments;
         }
     }
 }

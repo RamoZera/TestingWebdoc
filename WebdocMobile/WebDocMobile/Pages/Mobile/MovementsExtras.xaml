@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="WebDocMobile.Pages.Mobile.MovementsExtras"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:customControl="clr-namespace:WebDocMobile.CustomControls"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:WebDocMobile.PageModels.PagesViewModels"
+    Title="MovementsExtras">
+    <ContentPage.BindingContext>
+        <vm:MovementExtraViewModel />
+    </ContentPage.BindingContext>
+    <Grid>
+        <!--  Main Content  -->
+        <Grid
+            x:Name="MainContent"
+            BackgroundColor="{StaticResource Gray50}"
+            RowDefinitions=".1*,*">
+            <!--  Header  -->
+            <customControl:Header>
+                <Grid ColumnDefinitions="auto,*" VerticalOptions="Center">
+                    <Grid Grid.Column="0" HorizontalOptions="Start">
+                        <Button
+                            BackgroundColor="Transparent"
+                            BorderColor="#FFFFFF"
+                            BorderWidth="1"
+                            Clicked="HandleClickBackPage"
+                            CornerRadius="4"
+                            HeightRequest="50"
+                            Opacity="0.15"
+                            WidthRequest="50" />
+                        <Image
+                            HeightRequest="20"
+                            RotationY="180"
+                            Source="icon_anterior" />
+                    </Grid>
+                    <Grid
+                        Grid.Column="1"
+                        Padding="15,0,0,0"
+                        HorizontalOptions="Start">
+                        <Label
+                            x:Name="NumberText"
+                            Margin="0,0,0,0"
+                            FontFamily="RobotoMedium"
+                            FontSize="12"
+                            HorizontalOptions="Start"
+                            Text=""
+                            TextColor="#F1F1F1" />
+                        <Label
+                            Margin="0,15,0,0"
+                            FontFamily="RobotoBold"
+                            FontSize="23"
+                            HorizontalOptions="StartAndExpand"
+                            Text="Movimentos"
+                            TextColor="White" />
+                    </Grid>
+
+                </Grid>
+            </customControl:Header>
+            <ScrollView Grid.Row="1" Padding="20">
+                <VerticalStackLayout Spacing="10">
+                    <CollectionView
+                        x:Name="list"
+                        HorizontalOptions="StartAndExpand"
+                        ItemsSource="{Binding movements}">
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout ItemSpacing="5" Orientation="Vertical" />
+                        </CollectionView.ItemsLayout>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <customControl:MovementsExtrasCard
+                                    AvatarTagText="{Binding from[0]}"
+                                    FromCardText="{Binding from}"
+                                    InformationText="{Binding observations}"
+                                    DateTimeText="{Binding date, StringFormat='{}{0:dd/MM/yyyy hh:mm}'}" 
+                                    ToText="{Binding to}">
+                                    <VerticalStackLayout Padding="10" Spacing="10">
+                                        <Button
+                                            Margin="0,10"
+                                            Padding="10"
+                                            BackgroundColor="#003962"
+                                            Clicked="HandleClickEditarMovimento"
+                                            CornerRadius="4"
+                                            FontFamily="RobotoBold"
+                                            FontSize="16"
+                                            IsVisible="False"
+                                            Text="Editar movimento" />
+                                        <Button
+                                            Padding="10"
+                                            BackgroundColor="Transparent"
+                                            BorderColor="#FF5050"
+                                            BorderWidth="2"
+                                            Clicked="HandleClickApagarMovimento"
+                                            CornerRadius="4"
+                                            FontFamily="RobotoBold"
+                                            FontSize="16"
+                                            IsVisible="False"
+                                            Text="Apagar movimento"
+                                            TextColor="#FF5050" />
+                                    </VerticalStackLayout>
+                                </customControl:MovementsExtrasCard>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+            </ScrollView>
+        </Grid>
+
+        <!--  Modal Alert  -->
+        <Grid
+            x:Name="ModalAtentionAlert"
+            IsVisible="false"
+            RowDefinitions="*,.6*">
+            <Grid
+                Grid.Row="0"
+                BackgroundColor="#000000"
+                Opacity="0.75" />
+            <Grid
+                Grid.Row="1"
+                BackgroundColor="#000000"
+                Opacity="0.75">
+                <Border
+                    Padding="15"
+                    Background="White"
+                    StrokeShape="RoundRectangle 16,16,0,0"
+                    StrokeThickness="1">
+                    <StackLayout Spacing="10">
+                        <Image HeightRequest="55" Source="icon_alerta" />
+                        <Label
+                            FontFamily="RobotoBold"
+                            FontSize="22"
+                            HorizontalTextAlignment="Center"
+                            Text="Atenção"
+                            TextColor="Black" />
+                        <Label
+                            FontFamily="RobotoRegular"
+                            FontSize="16"
+                            HorizontalTextAlignment="Center"
+                            Text="Tem a certeza que pretende apagar o registo?"
+                            TextColor="#959595" />
+                        <Button
+                            Padding="10"
+                            BackgroundColor="Transparent"
+                            BorderColor="#EBEBEB"
+                            BorderWidth="2"
+                            Clicked="HandleClickVoltaRegisto"
+                            CornerRadius="4"
+                            FontFamily="RobotoBold"
+                            FontSize="16"
+                            Text="Voltar ao registo"
+                            TextColor="{StaticResource Primary}" />
+                        <Button
+                            Padding="10"
+                            BackgroundColor="Transparent"
+                            BorderColor="#EBEBEB"
+                            BorderWidth="2"
+                            CornerRadius="4"
+                            FontFamily="RobotoBold"
+                            FontSize="16"
+                            Text="Confirmar"
+                            TextColor="{StaticResource Primary}" />
+                    </StackLayout>
+                </Border>
+            </Grid>
+        </Grid>
+
+        <!--  Modal Editar Movement  -->
+        <Grid
+            x:Name="ModalEditarMovimento"
+            IsVisible="false"
+            RowDefinitions=".1*,*">
+            <Grid
+                Grid.Row="0"
+                BackgroundColor="#000000"
+                Opacity="0.75" />
+            <Grid
+                Grid.Row="1"
+                BackgroundColor="#000000"
+                Opacity="0.75">
+                <Border
+                    Padding="15"
+                    Background="White"
+                    StrokeShape="RoundRectangle 16,16,0,0"
+                    StrokeThickness="1">
+                    <Grid RowDefinitions=".1*,*">
+                        <Grid
+                            Grid.Row="0"
+                            ColumnDefinitions="*, .1*"
+                            RowDefinitions="*,*">
+                            <Label
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                FontFamily="RobotoBold"
+                                FontSize="23"
+                                HorizontalOptions="StartAndExpand"
+                                Text="Editar movimento"
+                                TextColor="Black" />
+                            <Label
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                FontFamily="RobotoMedium"
+                                FontSize="12"
+                                HorizontalOptions="Start"
+                                Text="E/7203"
+                                TextColor="#959595" />
+                            <Button
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                BackgroundColor="Transparent"
+                                Clicked="HandleClickVoltaRegisto"
+                                HeightRequest="25"
+                                VerticalOptions="Center" />
+                            <Image
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                HeightRequest="25"
+                                Source="btn_close"
+                                VerticalOptions="Center" />
+
+                        </Grid>
+                        <Grid Grid.Row="1">
+                            <StackLayout>
+                                <Label
+                                    Margin="0,30,0,0"
+                                    FontFamily="Roboto"
+                                    FontSize="23"
+                                    HorizontalOptions="StartAndExpand"
+                                    Text="Opções"
+                                    TextColor="Black" />
+                                <Grid ColumnDefinitions=".1*,*">
+                                    <CheckBox
+                                        Grid.Column="0"
+                                        HorizontalOptions="Start"
+                                        IsChecked="false"
+                                        VerticalOptions="Center"
+                                        Color="#0074C8" />
+                                    <Label
+                                        Grid.Column="1"
+                                        FontFamily="RobotoMedium"
+                                        FontSize="16"
+                                        HorizontalOptions="Start"
+                                        Text="Notificação de leitura"
+                                        TextColor="{StaticResource Primary}"
+                                        VerticalOptions="Center" />
+                                </Grid>
+                                <Grid ColumnDefinitions=".1*,*">
+                                    <CheckBox
+                                        Grid.Column="0"
+                                        HorizontalOptions="Start"
+                                        IsChecked="true"
+                                        VerticalOptions="Center"
+                                        Color="#0074C8" />
+                                    <Label
+                                        Grid.Column="1"
+                                        FontFamily="RobotoMedium"
+                                        FontSize="16"
+                                        HorizontalOptions="Start"
+                                        Text="Enviar e-mail no movimento"
+                                        TextColor="{StaticResource Primary}"
+                                        VerticalOptions="Center" />
+                                </Grid>
+                                <Label
+                                    Margin="0,30,0,0"
+                                    FontFamily="Roboto"
+                                    FontSize="23"
+                                    HorizontalOptions="StartAndExpand"
+                                    Text="Descrição"
+                                    TextColor="Black" />
+                                <Editor HeightRequest="250" Placeholder="Enter your response here" />
+                                <Button
+                                    Margin="0,10"
+                                    Padding="10"
+                                    BackgroundColor="#003962"
+                                    CornerRadius="4"
+                                    FontFamily="RobotoBold"
+                                    FontSize="16"
+                                    Text="Gravar" />
+                                <Button
+                                    Padding="10"
+                                    BackgroundColor="Transparent"
+                                    BorderColor="#FF5050"
+                                    BorderWidth="2"
+                                    Clicked="HandleClickVoltaRegisto"
+                                    CornerRadius="4"
+                                    FontFamily="RobotoBold"
+                                    FontSize="16"
+                                    Text="Cancelar"
+                                    TextColor="#FF5050" />
+                            </StackLayout>
+
+                        </Grid>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Grid>
+    </Grid>
+</ContentPage>

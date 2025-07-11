@@ -1,13 +1,13 @@
-﻿﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace WebDocMobile.PageModels.StandardViewModels
 {
     public partial class BaseViewModel : ObservableObject
     {
         [ObservableProperty]
-        private bool isBusy;
+        private bool _isBusy;
 
         [ObservableProperty]
-        private string title;
+        private bool _title;
     }
 }

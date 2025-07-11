@@ -4,12 +4,10 @@ namespace WebDocMobile.Pages.Desktop;
 
 public partial class FirstPageDesktop : ContentPage
 {
-	public FirstPageDesktop()
+	public FirstPageDesktop(FirstPageViewModel viewModel)
 	{
 		InitializeComponent();
-
-        this.BindingContext = new FirstPageViewModel(this.Navigation);
-
+        this.BindingContext = viewModel;
         NavigationPage.SetHasNavigationBar(this, false);
     }
 }

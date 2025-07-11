@@ -1,0 +1,895 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    x:Class="WebDocMobile.Pages.Mobile.ListProceses"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:customControl="clr-namespace:WebDocMobile.CustomControls"
+    xmlns:d="http://schemas.microsoft.com/dotnet/2021/maui/design"
+    xmlns:local="clr-namespace:WebDocMobile.Pages.Mobile"
+    xmlns:locald="clr-namespace:WebDocMobile.Models.DashBoard"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
+    xmlns:telerik="http://schemas.telerik.com/2022/xaml/maui"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:WebDocMobile.PageModels"
+    mc:Ignorable="d">
+    <ContentPage.BindingContext>
+        <vm:ProcessesPageViewModel />
+    </ContentPage.BindingContext>
+    <Grid>
+        <!--  Main Content  -->
+        <Grid
+            x:Name="MainContent"
+            BackgroundColor="{StaticResource Gray50}"
+            RowDefinitions=".1*,*,.1*">
+            <!--  Header  -->
+            <customControl:Header>
+                <Grid ColumnDefinitions="auto,*" VerticalOptions="Center">
+                    <!--  User Info  -->
+                    <Grid HorizontalOptions="Start" MaximumWidthRequest="300">
+                        <Label
+                            Margin="0,0,0,0"
+                            FontFamily="RobotoMedium"
+                            FontSize="12"
+                            HorizontalOptions="Start"
+                            Text="{Binding date}"
+                            TextColor="#F1F1F1" />
+                        <Label
+                            Margin="0,15,0,0"
+                            FontFamily="RobotoBold"
+                            FontSize="23"
+                            HorizontalOptions="StartAndExpand"
+                            Text="Processos"
+                            TextColor="White" />
+                    </Grid>
+
+                    <!--  Search Button  -->
+                    <Grid Grid.Column="1" HorizontalOptions="End">
+
+                        <Button
+                            BackgroundColor="Transparent"
+                            BorderColor="#FFFFFF"
+                            BorderWidth="1"
+                            Clicked="HandleClickShowFilter"
+                            CornerRadius="4"
+                            HeightRequest="37"
+                            IsVisible="False"
+                            Opacity="0.15"
+                            WidthRequest="37" />
+
+                        <Image
+                            HeightRequest="16"
+                            IsVisible="False"
+                            Source="icon_filtrar" />
+                    </Grid>
+                </Grid>
+            </customControl:Header>
+            <ScrollView Grid.Row="1">
+                <VerticalStackLayout>
+                    <!--  Add document section  -->
+                    <ScrollView
+                        BackgroundColor="{StaticResource Primary}"
+                        Orientation="Horizontal">
+                        <HorizontalStackLayout Padding="20" Spacing="16">
+                            <!--  Start: Options  -->
+                            <!--  Start: Comigo (Note: active style must be dynamic)  -->
+                            <Frame
+                                Padding="10"
+                                BackgroundColor="#1F2125"
+                                BorderColor="#0074C8"
+                                CornerRadius="4"
+                                HeightRequest="80"
+                                WidthRequest="120">
+                                <!--<Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnFrameTapped" />
+                                </Frame.GestureRecognizers>-->
+                                <VerticalStackLayout
+                                    HorizontalOptions="Start"
+                                    Spacing="2"
+                                    VerticalOptions="Center">
+                                    <HorizontalStackLayout
+                                        HorizontalOptions="Start"
+                                        Spacing="5"
+                                        VerticalOptions="Center">
+                                        <!--  Icon  -->
+                                        <Image
+                                            HeightRequest="16"
+                                            Source="icon_comigo"
+                                            WidthRequest="16" />
+
+                                        <!--  Counter  -->
+                                        <Label
+                                            FontAttributes="Bold"
+                                            FontSize="22"
+                                            Text="{Binding dataProcesses[0].Value}"
+                                            TextColor="White"
+                                            VerticalOptions="Center" />
+                                    </HorizontalStackLayout>
+
+                                    <!--  Filter name  -->
+                                    <Label
+                                        FontAttributes="Bold"
+                                        FontSize="14"
+                                        Text="Comigo"
+                                        TextColor="White" />
+                                </VerticalStackLayout>
+                            </Frame>
+                            <!--  End: Comigo  -->
+                            <!--  Start: Departamento  -->
+                            <Frame
+                                Padding="10"
+                                BackgroundColor="#2C2F36"
+                                BorderColor="#707070"
+                                CornerRadius="4"
+                                HeightRequest="80"
+                                WidthRequest="120">
+                                <VerticalStackLayout
+                                    HorizontalOptions="Start"
+                                    Spacing="2"
+                                    VerticalOptions="Center">
+                                    <HorizontalStackLayout
+                                        HorizontalOptions="Start"
+                                        Spacing="5"
+                                        VerticalOptions="Center">
+                                        <!--  Icon  -->
+                                        <Image
+                                            HeightRequest="16"
+                                            Source="icon_departamento"
+                                            WidthRequest="16" />
+
+                                        <!--  Counter  -->
+                                        <Label
+                                            FontAttributes="Bold"
+                                            FontSize="22"
+                                            Text="{Binding dataProcesses[1].Value}"
+                                            TextColor="White"
+                                            VerticalOptions="Center" />
+                                    </HorizontalStackLayout>
+
+                                    <!--  Filter name  -->
+                                    <Label
+                                        FontAttributes="Bold"
+                                        FontSize="14"
+                                        Text="Departamento"
+                                        TextColor="White" />
+                                </VerticalStackLayout>
+                            </Frame>
+                            <!--  End: Departamento  -->
+                            <!--  Start: Tomar conhecimento  -->
+                            <Frame
+                                Padding="10"
+                                BackgroundColor="#2C2F36"
+                                BorderColor="#707070"
+                                CornerRadius="4"
+                                HeightRequest="80"
+                                WidthRequest="190">
+                                <VerticalStackLayout
+                                    HorizontalOptions="Start"
+                                    Spacing="2"
+                                    VerticalOptions="Center">
+                                    <HorizontalStackLayout
+                                        HorizontalOptions="Start"
+                                        Spacing="5"
+                                        VerticalOptions="Center">
+                                        <!--  Icon  -->
+                                        <Image
+                                            HeightRequest="16"
+                                            Source="icon_conhecimento"
+                                            WidthRequest="16" />
+
+                                        <!--  Counter  -->
+                                        <Label
+                                            FontAttributes="Bold"
+                                            FontSize="22"
+                                            Text="{Binding dataProcesses[2].Value}"
+                                            TextColor="White"
+                                            VerticalOptions="Center" />
+                                    </HorizontalStackLayout>
+
+                                    <!--  Filter name  -->
+                                    <Label
+                                        FontAttributes="Bold"
+                                        FontSize="14"
+                                        Text="Tomar conhecimento"
+                                        TextColor="White" />
+                                </VerticalStackLayout>
+                            </Frame>
+                            <!--  End: Tomar conhecimento  -->
+                            <!--  Start: Passou por mim  -->
+                            <Frame
+                                Padding="10"
+                                BackgroundColor="#2C2F36"
+                                BorderColor="#707070"
+                                CornerRadius="4"
+                                HeightRequest="80"
+                                WidthRequest="160">
+                                <VerticalStackLayout
+                                    HorizontalOptions="Start"
+                                    Spacing="2"
+                                    VerticalOptions="Center">
+                                    <HorizontalStackLayout
+                                        HorizontalOptions="Start"
+                                        Spacing="5"
+                                        VerticalOptions="Center">
+                                        <!--  Icon  -->
+                                        <Image
+                                            HeightRequest="16"
+                                            Source="icon_passoupormim"
+                                            WidthRequest="16" />
+
+                                        <!--  Counter  -->
+                                        <Label
+                                            FontAttributes="Bold"
+                                            FontSize="22"
+                                            Text="###"
+                                            TextColor="White"
+                                            VerticalOptions="Center" />
+                                    </HorizontalStackLayout>
+
+                                    <!--  Filter name  -->
+                                    <Label
+                                        FontAttributes="Bold"
+                                        FontSize="14"
+                                        Text="Passou por mim"
+                                        TextColor="White" />
+                                </VerticalStackLayout>
+                            </Frame>
+                            <!--  End: Passou por mim  -->
+                            <!--  Start: Tomei conhecimento  -->
+                            <Frame
+                                Padding="10"
+                                BackgroundColor="#2C2F36"
+                                BorderColor="#707070"
+                                CornerRadius="4"
+                                HeightRequest="80"
+                                WidthRequest="190">
+                                <VerticalStackLayout
+                                    HorizontalOptions="Start"
+                                    Spacing="2"
+                                    VerticalOptions="Center">
+                                    <HorizontalStackLayout
+                                        HorizontalOptions="Start"
+                                        Spacing="5"
+                                        VerticalOptions="Center">
+                                        <!--  Icon  -->
+                                        <Image
+                                            HeightRequest="16"
+                                            Source="icon_tomeiconhecimento"
+                                            WidthRequest="16" />
+
+                                        <!--  Counter  -->
+                                        <Label
+                                            FontAttributes="Bold"
+                                            FontSize="22"
+                                            Text="###"
+                                            TextColor="White"
+                                            VerticalOptions="Center" />
+                                    </HorizontalStackLayout>
+
+                                    <!--  Filter name  -->
+                                    <Label
+                                        FontAttributes="Bold"
+                                        FontSize="14"
+                                        Text="Tomei conhecimento"
+                                        TextColor="White" />
+                                </VerticalStackLayout>
+                            </Frame>
+                            <!--  End: Tomei conhecimento  -->
+                            <!--  Start: Dar parecer  -->
+                            <Frame
+                                Padding="10"
+                                BackgroundColor="#2C2F36"
+                                BorderColor="#707070"
+                                CornerRadius="4"
+                                HeightRequest="80"
+                                WidthRequest="190">
+                                <VerticalStackLayout
+                                    HorizontalOptions="Start"
+                                    Spacing="2"
+                                    VerticalOptions="Center">
+                                    <HorizontalStackLayout
+                                        HorizontalOptions="Start"
+                                        Spacing="5"
+                                        VerticalOptions="Center">
+                                        <!--  Icon  -->
+                                        <Image
+                                            HeightRequest="16"
+                                            Source="icon_darparecer"
+                                            WidthRequest="16" />
+
+                                        <!--  Counter  -->
+                                        <Label
+                                            FontAttributes="Bold"
+                                            FontSize="22"
+                                            Text="###"
+                                            TextColor="White"
+                                            VerticalOptions="Center" />
+                                    </HorizontalStackLayout>
+
+                                    <!--  Filter name  -->
+                                    <Label
+                                        FontAttributes="Bold"
+                                        FontSize="14"
+                                        Text="Tomei conhecimento"
+                                        TextColor="White" />
+                                </VerticalStackLayout>
+                            </Frame>
+                            <!--  End: Dar parecer  -->
+                            <!--  End: Options  -->
+                        </HorizontalStackLayout>
+                    </ScrollView>
+
+                    <Grid RowDefinitions="*,2*,*">
+                        <Grid Padding="10">
+                            <ScrollView Orientation="Vertical">
+                                <VerticalStackLayout Spacing="3">
+                                    <CollectionView
+                                        HorizontalOptions="StartAndExpand"
+                                        ItemsSource="{Binding ProcesesA}"
+                                        SelectionChanged="CollectionView_SelectionChanged_1"
+                                        SelectionMode="Single">
+                                        <CollectionView.ItemsLayout>
+                                            <LinearItemsLayout ItemSpacing="5" Orientation="Vertical" />
+                                        </CollectionView.ItemsLayout>
+                                        <CollectionView.ItemTemplate>
+                                            <DataTemplate>
+                                                <customControl:ProcessCard
+                                                    Margin="0,10,0,0"
+                                                    Padding="15"
+                                                    DateTimeText="{Binding dateString}"
+                                                    DescriptionText="{Binding subject}"
+                                                    NumberTagText="{Binding number}"
+                                                    StatusText="{Binding workflowState}" />
+                                            </DataTemplate>
+                                        </CollectionView.ItemTemplate>
+                                    </CollectionView>
+                                </VerticalStackLayout>
+                            </ScrollView>
+                        </Grid>
+                    </Grid>
+                </VerticalStackLayout>
+
+
+            </ScrollView>
+            <!--  NAVBAR  -->
+            <Grid x:Name="bar" Grid.Row="2" />
+        </Grid>
+
+        <!--  Modal filter  -->
+        <Grid
+            x:Name="ModalFilterList"
+            IsVisible="false"
+            RowDefinitions=".1*,*">
+            <Grid
+                Grid.Row="0"
+                BackgroundColor="#000000"
+                Opacity="0.75" />
+            <Grid
+                Grid.Row="1"
+                BackgroundColor="#000000"
+                Opacity="1">
+                <Border
+                    Padding="0,15,0,0"
+                    Background="White"
+                    StrokeShape="RoundRectangle 16,16,0,0"
+                    StrokeThickness="1">
+                    <Grid RowDefinitions=".1*,*,.3*" RowSpacing="10">
+                        <!--  Header popup  -->
+                        <Grid
+                            Grid.Row="0"
+                            Padding="15,0"
+                            ColumnDefinitions="*,.1*">
+                            <Label
+                                Grid.Column="0"
+                                FontFamily="RobotoBold"
+                                FontSize="23"
+                                HorizontalOptions="StartAndExpand"
+                                Text="Filtrar registros"
+                                TextColor="Black" />
+                            <Button
+                                Grid.Column="1"
+                                BackgroundColor="Transparent"
+                                Clicked="HandleClickVoltaRegisto"
+                                HeightRequest="25"
+                                VerticalOptions="Start" />
+                            <Image
+                                Grid.Column="1"
+                                HeightRequest="25"
+                                Source="btn_close"
+                                VerticalOptions="Start" />
+                        </Grid>
+
+                        <!--  Filters  -->
+                        <Grid Grid.Row="1" RowDefinitions="*">
+                            <ScrollView>
+                                <VerticalStackLayout Spacing="0">
+                                    <!--  First expander  -->
+                                    <toolkit:Expander Padding="0,10">
+                                        <toolkit:Expander.Header>
+                                            <VerticalStackLayout Spacing="10">
+                                                <BoxView
+                                                    HeightRequest="1"
+                                                    HorizontalOptions="Fill"
+                                                    Color="{StaticResource Gray300}" />
+                                                <Grid
+                                                    Padding="15,0"
+                                                    ColumnDefinitions="*,.2*,.1*"
+                                                    ColumnSpacing="1">
+                                                    <Label
+                                                        Grid.Column="0"
+                                                        FontFamily="RobotoMedium"
+                                                        FontSize="22"
+                                                        Text="Estado do fluxo"
+                                                        TextColor="#1F2125" />
+                                                    <Border
+                                                        Grid.Column="1"
+                                                        BackgroundColor="#0074C8"
+                                                        HeightRequest="25"
+                                                        Stroke="#0074C8"
+                                                        StrokeShape="RoundRectangle 0"
+                                                        StrokeThickness="2"
+                                                        WidthRequest="25">
+                                                        <Label
+                                                            Grid.Row="0"
+                                                            FontFamily="RobotoMedium"
+                                                            FontSize="15"
+                                                            HorizontalTextAlignment="Center"
+                                                            Text="1"
+                                                            TextColor="White"
+                                                            VerticalTextAlignment="Center" />
+                                                    </Border>
+                                                    <Image
+                                                        Grid.Column="2"
+                                                        HeightRequest="25"
+                                                        HorizontalOptions="End"
+                                                        Source="btn_close"
+                                                        VerticalOptions="Center" />
+                                                </Grid>
+                                            </VerticalStackLayout>
+                                        </toolkit:Expander.Header>
+                                        <VerticalStackLayout Padding="15,30" Spacing="10">
+                                            <Grid ColumnDefinitions="auto,auto" ColumnSpacing="10">
+                                                <Border
+                                                    Grid.Column="0"
+                                                    Padding="10,5"
+                                                    HorizontalOptions="FillAndExpand"
+                                                    Stroke="{StaticResource Gray300}"
+                                                    StrokeShape="RoundRectangle 50"
+                                                    StrokeThickness="1">
+                                                    <Grid ColumnDefinitions="auto,auto">
+                                                        <Label
+                                                            Grid.Column="0"
+                                                            FontFamily="RobotoMedium"
+                                                            FontSize="14"
+                                                            HorizontalOptions="Start"
+                                                            Text="Todos"
+                                                            TextColor="{StaticResource Primary}"
+                                                            VerticalOptions="Center" />
+                                                        <telerik:RadCheckBox
+                                                            Grid.Column="1"
+                                                            CheckedColor="#0074C8"
+                                                            CornerRadius="10"
+                                                            HorizontalOptions="End"
+                                                            IsChecked="False"
+                                                            Length="20"
+                                                            UncheckedColor="#0074C8"
+                                                            VerticalOptions="Center" />
+                                                    </Grid>
+                                                </Border>
+                                                <Border
+                                                    Grid.Column="1"
+                                                    Padding="10,5"
+                                                    HorizontalOptions="FillAndExpand"
+                                                    Stroke="{StaticResource Gray300}"
+                                                    StrokeShape="RoundRectangle 50"
+                                                    StrokeThickness="1">
+                                                    <Grid ColumnDefinitions="auto,auto">
+                                                        <Label
+                                                            Grid.Column="0"
+                                                            FontFamily="RobotoMedium"
+                                                            FontSize="14"
+                                                            HorizontalOptions="Start"
+                                                            Text="Comigo"
+                                                            TextColor="{StaticResource Primary}"
+                                                            VerticalOptions="Center" />
+                                                        <telerik:RadCheckBox
+                                                            Grid.Column="1"
+                                                            CheckedColor="#0074C8"
+                                                            CornerRadius="10"
+                                                            HorizontalOptions="End"
+                                                            IsChecked="False"
+                                                            Length="20"
+                                                            UncheckedColor="#0074C8"
+                                                            VerticalOptions="Center" />
+                                                    </Grid>
+                                                </Border>
+                                            </Grid>
+                                            <Grid ColumnDefinitions="auto,auto" ColumnSpacing="10">
+                                                <Border
+                                                    Grid.Column="0"
+                                                    Padding="10,5"
+                                                    HorizontalOptions="FillAndExpand"
+                                                    Stroke="{StaticResource Gray300}"
+                                                    StrokeShape="RoundRectangle 50"
+                                                    StrokeThickness="1">
+                                                    <Grid ColumnDefinitions="auto,auto">
+                                                        <Label
+                                                            Grid.Column="0"
+                                                            FontFamily="RobotoMedium"
+                                                            FontSize="14"
+                                                            HorizontalOptions="Start"
+                                                            Text="Departamento"
+                                                            TextColor="{StaticResource Primary}"
+                                                            VerticalOptions="Center" />
+                                                        <telerik:RadCheckBox
+                                                            Grid.Column="1"
+                                                            CheckedColor="#0074C8"
+                                                            CornerRadius="10"
+                                                            HorizontalOptions="End"
+                                                            IsChecked="False"
+                                                            Length="20"
+                                                            UncheckedColor="#0074C8"
+                                                            VerticalOptions="Center" />
+                                                    </Grid>
+                                                </Border>
+                                                <Border
+                                                    Grid.Column="1"
+                                                    Padding="10,5"
+                                                    HorizontalOptions="FillAndExpand"
+                                                    Stroke="{StaticResource Gray300}"
+                                                    StrokeShape="RoundRectangle 50"
+                                                    StrokeThickness="1">
+                                                    <Grid ColumnDefinitions="auto,auto">
+                                                        <Label
+                                                            Grid.Column="0"
+                                                            FontFamily="RobotoMedium"
+                                                            FontSize="14"
+                                                            HorizontalOptions="Start"
+                                                            Text="Conhecimento"
+                                                            TextColor="{StaticResource Primary}"
+                                                            VerticalOptions="Center" />
+                                                        <telerik:RadCheckBox
+                                                            Grid.Column="1"
+                                                            CheckedColor="#0074C8"
+                                                            CornerRadius="10"
+                                                            HorizontalOptions="End"
+                                                            IsChecked="False"
+                                                            Length="20"
+                                                            UncheckedColor="#0074C8"
+                                                            VerticalOptions="Center" />
+                                                    </Grid>
+                                                </Border>
+                                            </Grid>
+                                            <Label
+                                                Margin="0,20,0,0"
+                                                FontFamily="RobotoMedium"
+                                                FontSize="16"
+                                                HorizontalOptions="StartAndExpand"
+                                                Text="Outros estados"
+                                                TextColor="#959595" />
+                                            <Grid ColumnDefinitions="auto,auto" ColumnSpacing="10">
+                                                <Border
+                                                    Grid.Column="0"
+                                                    Padding="10,5"
+                                                    HorizontalOptions="FillAndExpand"
+                                                    Stroke="{StaticResource Gray300}"
+                                                    StrokeShape="RoundRectangle 50"
+                                                    StrokeThickness="1">
+                                                    <Grid ColumnDefinitions="auto,auto">
+                                                        <Label
+                                                            Grid.Column="0"
+                                                            FontFamily="RobotoMedium"
+                                                            FontSize="14"
+                                                            HorizontalOptions="Start"
+                                                            Text="Lorem ipsum"
+                                                            TextColor="{StaticResource Primary}"
+                                                            VerticalOptions="Center" />
+                                                        <telerik:RadCheckBox
+                                                            Grid.Column="1"
+                                                            CheckedColor="#0074C8"
+                                                            CornerRadius="10"
+                                                            HorizontalOptions="End"
+                                                            IsChecked="False"
+                                                            Length="20"
+                                                            UncheckedColor="#0074C8"
+                                                            VerticalOptions="Center" />
+                                                    </Grid>
+                                                </Border>
+
+                                                <Border
+                                                    Grid.Column="1"
+                                                    Padding="10,5"
+                                                    HorizontalOptions="FillAndExpand"
+                                                    Stroke="{StaticResource Gray300}"
+                                                    StrokeShape="RoundRectangle 50"
+                                                    StrokeThickness="1">
+                                                    <Grid ColumnDefinitions="auto,auto">
+                                                        <Label
+                                                            Grid.Column="0"
+                                                            FontFamily="RobotoMedium"
+                                                            FontSize="14"
+                                                            HorizontalOptions="Start"
+                                                            Text="dolor"
+                                                            TextColor="{StaticResource Primary}"
+                                                            VerticalOptions="Center" />
+                                                        <telerik:RadCheckBox
+                                                            Grid.Column="1"
+                                                            CheckedColor="#0074C8"
+                                                            CornerRadius="10"
+                                                            HorizontalOptions="End"
+                                                            IsChecked="False"
+                                                            Length="20"
+                                                            UncheckedColor="#0074C8"
+                                                            VerticalOptions="Center" />
+                                                    </Grid>
+                                                </Border>
+                                            </Grid>
+                                            <Grid ColumnDefinitions="auto,auto" ColumnSpacing="10">
+                                                <Border
+                                                    Grid.Column="0"
+                                                    Padding="10,5"
+                                                    HorizontalOptions="FillAndExpand"
+                                                    Stroke="{StaticResource Gray300}"
+                                                    StrokeShape="RoundRectangle 50"
+                                                    StrokeThickness="1">
+                                                    <Grid ColumnDefinitions="auto,auto">
+                                                        <Label
+                                                            Grid.Column="0"
+                                                            FontFamily="RobotoMedium"
+                                                            FontSize="14"
+                                                            HorizontalOptions="Start"
+                                                            Text="Amet"
+                                                            TextColor="{StaticResource Primary}"
+                                                            VerticalOptions="Center" />
+                                                        <telerik:RadCheckBox
+                                                            Grid.Column="1"
+                                                            CheckedColor="#0074C8"
+                                                            CornerRadius="10"
+                                                            HorizontalOptions="End"
+                                                            IsChecked="False"
+                                                            Length="20"
+                                                            UncheckedColor="#0074C8"
+                                                            VerticalOptions="Center" />
+                                                    </Grid>
+                                                </Border>
+
+                                                <Border
+                                                    Grid.Column="1"
+                                                    Padding="10,5"
+                                                    HorizontalOptions="FillAndExpand"
+                                                    Stroke="{StaticResource Gray300}"
+                                                    StrokeShape="RoundRectangle 50"
+                                                    StrokeThickness="1">
+                                                    <Grid ColumnDefinitions="auto,auto">
+                                                        <Label
+                                                            Grid.Column="0"
+                                                            FontFamily="RobotoMedium"
+                                                            FontSize="14"
+                                                            HorizontalOptions="Start"
+                                                            Text="Consectetur"
+                                                            TextColor="{StaticResource Primary}"
+                                                            VerticalOptions="Center" />
+                                                        <telerik:RadCheckBox
+                                                            Grid.Column="1"
+                                                            CheckedColor="#0074C8"
+                                                            CornerRadius="10"
+                                                            HorizontalOptions="End"
+                                                            IsChecked="False"
+                                                            Length="20"
+                                                            UncheckedColor="#0074C8"
+                                                            VerticalOptions="Center" />
+                                                    </Grid>
+                                                </Border>
+                                            </Grid>
+                                            <Grid ColumnDefinitions="auto,auto" ColumnSpacing="10">
+                                                <Border
+                                                    Grid.Column="0"
+                                                    Padding="10,5"
+                                                    HorizontalOptions="FillAndExpand"
+                                                    Stroke="{StaticResource Gray300}"
+                                                    StrokeShape="RoundRectangle 50"
+                                                    StrokeThickness="1">
+                                                    <Grid ColumnDefinitions="auto,auto">
+                                                        <Label
+                                                            Grid.Column="0"
+                                                            FontFamily="RobotoMedium"
+                                                            FontSize="14"
+                                                            HorizontalOptions="Start"
+                                                            Text="Adipiscing"
+                                                            TextColor="{StaticResource Primary}"
+                                                            VerticalOptions="Center" />
+                                                        <telerik:RadCheckBox
+                                                            Grid.Column="1"
+                                                            CheckedColor="#0074C8"
+                                                            CornerRadius="10"
+                                                            HorizontalOptions="End"
+                                                            IsChecked="False"
+                                                            Length="20"
+                                                            UncheckedColor="#0074C8"
+                                                            VerticalOptions="Center" />
+                                                    </Grid>
+                                                </Border>
+
+                                                <Border
+                                                    Grid.Column="1"
+                                                    Padding="10,5"
+                                                    HorizontalOptions="FillAndExpand"
+                                                    Stroke="{StaticResource Gray300}"
+                                                    StrokeShape="RoundRectangle 50"
+                                                    StrokeThickness="1">
+                                                    <Grid ColumnDefinitions="auto,auto">
+                                                        <Label
+                                                            Grid.Column="0"
+                                                            FontFamily="RobotoMedium"
+                                                            FontSize="14"
+                                                            HorizontalOptions="Start"
+                                                            Text="Elit"
+                                                            TextColor="{StaticResource Primary}"
+                                                            VerticalOptions="Center" />
+                                                        <telerik:RadCheckBox
+                                                            Grid.Column="1"
+                                                            CheckedColor="#0074C8"
+                                                            CornerRadius="10"
+                                                            HorizontalOptions="End"
+                                                            IsChecked="False"
+                                                            Length="20"
+                                                            UncheckedColor="#0074C8"
+                                                            VerticalOptions="Center" />
+                                                    </Grid>
+                                                </Border>
+                                            </Grid>
+                                        </VerticalStackLayout>
+                                    </toolkit:Expander>
+
+                                    <!--  Second expander  -->
+                                    <toolkit:Expander Padding="0,10">
+                                        <toolkit:Expander.Header>
+                                            <VerticalStackLayout Spacing="10">
+                                                <BoxView
+                                                    HeightRequest="1"
+                                                    HorizontalOptions="Fill"
+                                                    Color="{StaticResource Gray300}" />
+                                                <Grid
+                                                    Padding="15,0"
+                                                    ColumnDefinitions="*,.1*"
+                                                    ColumnSpacing="1">
+                                                    <Label
+                                                        Grid.Column="0"
+                                                        FontFamily="RobotoMedium"
+                                                        FontSize="22"
+                                                        Text="Estado do workflow"
+                                                        TextColor="#1F2125" />
+                                                    <Image
+                                                        Grid.Column="2"
+                                                        HeightRequest="25"
+                                                        HorizontalOptions="End"
+                                                        Source="btn_close"
+                                                        VerticalOptions="Center" />
+                                                </Grid>
+                                            </VerticalStackLayout>
+                                        </toolkit:Expander.Header>
+                                    </toolkit:Expander>
+
+                                    <!--  Third expander  -->
+                                    <toolkit:Expander Padding="0,10">
+                                        <toolkit:Expander.Header>
+                                            <VerticalStackLayout Spacing="10">
+                                                <BoxView
+                                                    HeightRequest="1"
+                                                    HorizontalOptions="Fill"
+                                                    Color="{StaticResource Gray300}" />
+                                                <Grid
+                                                    Padding="15,0"
+                                                    ColumnDefinitions="*,.1*"
+                                                    ColumnSpacing="1">
+                                                    <Label
+                                                        Grid.Column="0"
+                                                        FontFamily="RobotoMedium"
+                                                        FontSize="22"
+                                                        Text="Tipo de documento"
+                                                        TextColor="#1F2125" />
+                                                    <Image
+                                                        Grid.Column="2"
+                                                        HeightRequest="25"
+                                                        HorizontalOptions="End"
+                                                        Source="btn_close"
+                                                        VerticalOptions="Center" />
+                                                </Grid>
+                                            </VerticalStackLayout>
+                                        </toolkit:Expander.Header>
+                                    </toolkit:Expander>
+                                </VerticalStackLayout>
+                            </ScrollView>
+                        </Grid>
+
+                        <!--  Buttons  -->
+                        <Grid Grid.Row="2">
+                            <Border
+                                Padding="10"
+                                HorizontalOptions="FillAndExpand"
+                                Stroke="{StaticResource Gray300}"
+                                StrokeShape="RoundRectangle 16,16,0,0"
+                                StrokeThickness="2">
+                                <VerticalStackLayout Padding="10">
+                                    <Button
+                                        Margin="0,10"
+                                        Padding="10"
+                                        BackgroundColor="#003962"
+                                        CornerRadius="4"
+                                        FontFamily="RobotoBold"
+                                        FontSize="16"
+                                        Text="Aplicar filtros" />
+                                    <Button
+                                        Padding="10"
+                                        BackgroundColor="Transparent"
+                                        BorderColor="#FF5050"
+                                        BorderWidth="2"
+                                        CornerRadius="4"
+                                        FontFamily="RobotoBold"
+                                        FontSize="16"
+                                        Text="Limpar filtros"
+                                        TextColor="#FF5050" />
+                                </VerticalStackLayout>
+                            </Border>
+                        </Grid>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Grid>
+
+        <!--  Modal Loader  -->
+        <Grid
+            x:Name="ModalLoader"
+            IsVisible="false"
+            RowDefinitions="auto,*">
+            <Grid
+                Grid.Row="0"
+                Padding="20"
+                BackgroundColor="#BF000000"
+                Opacity="1">
+                <Border
+                    Padding="15"
+                    Background="White"
+                    StrokeShape="RoundRectangle 16"
+                    StrokeThickness="1">
+                    <Grid ColumnDefinitions="auto,*" ColumnSpacing="10">
+                        <Border
+                            Grid.Column="0"
+                            Padding="5"
+                            Background="{StaticResource Secondary}"
+                            HeightRequest="54"
+                            StrokeShape="RoundRectangle 50"
+                            StrokeThickness="1"
+                            WidthRequest="54">
+                            <ActivityIndicator
+                                BackgroundColor="Transparent"
+                                HeightRequest="30"
+                                IsRunning="True"
+                                WidthRequest="30"
+                                Color="White" />
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1">
+                            <Label
+                                FontFamily="RobotoBold"
+                                FontSize="22"
+                                HorizontalTextAlignment="Start"
+                                Text="Aguarde"
+                                TextColor="#1F2125" />
+                            <Label
+                                FontFamily="RobotoBold"
+                                FontSize="16"
+                                HorizontalTextAlignment="Start"
+                                Text="Validação em progresso"
+                                TextColor="#959595" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+            </Grid>
+            <Grid
+                Grid.Row="1"
+                BackgroundColor="#000000"
+                Opacity="0.75" />
+        </Grid>
+    </Grid>
+
+</ContentPage>

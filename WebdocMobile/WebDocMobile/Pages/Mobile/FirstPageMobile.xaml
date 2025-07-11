@@ -1,40 +1,37 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
-             x:Class="WebDocMobile.Pages.Mobile.FirstPageMobile"
-             Title="FirstPageMobile"
-             Shell.NavBarIsVisible="False">
+<ContentPage
+    x:Class="WebDocMobile.Pages.Mobile.FirstPageMobile"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
+    Title="FirstPageMobile"
+    Shell.NavBarIsVisible="False">
 
     <Page.Behaviors>
-        <mct:StatusBarBehavior x:Name="statusbar" StatusBarColor="#262930"/>
+        <mct:StatusBarBehavior x:Name="statusbar" StatusBarColor="{StaticResource Primary}" />
     </Page.Behaviors>
 
-    <VerticalStackLayout 
-        Spacing="25"
+    <VerticalStackLayout
         Padding="30,0"
-        BackgroundColor="#262930">
-
-
+        BackgroundColor="{StaticResource Primary}"
+        Spacing="25">
+        
+        <Button
+            Text="Go to Onboarding"
+            Clicked="GoTo_Onboarding"
+            VerticalOptions="Center"
+            HorizontalOptions="Center" />
+        
         <Grid Margin="-29,0,-29,70">
-            <Image
-        Source="img_splash2.png"
-    />
-            <Image
-        Source="img_splash_fx.png"
-    />
+            <Image Source="img_splash2.png" />
+            <Image Source="img_splash_fx.png" />
         </Grid>
 
         <StackLayout Spacing="15">
-            <Image
-    Source="logo.png"/>
-            <Image
-        Source="version.png"/>
+            <Image Source="logo.png" />
+            <Image Source="version.png" />
         </StackLayout>
 
-        <Button Text="Next Page (Temporary Button)"
-                Command="{Binding GoToLoginFlowCommand}" />
-
-
+     
     </VerticalStackLayout>
 </ContentPage>

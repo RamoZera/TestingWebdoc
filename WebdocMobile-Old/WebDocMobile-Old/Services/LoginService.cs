@@ -1,124 +1,92 @@
-﻿using System;
-using System.Collections.Generic;
+﻿﻿using Newtonsoft.Json;
 using System.Diagnostics;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Text;
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Threading.Tasks;
 using WebDocMobile.Models.LoginService;
 
 namespace WebDocMobile.Services
 {
     public interface ILoginService
     {
-        Task<Boolean> LoginUserBasic(string hashCode, string username, string password, string domain);
+        Task<bool> LoginUserBasic(string strHashCode, string strUserName, string strPassword, string strDomainName);
+        Task<string> GetWsSoapAddress();
+        Task<string> GetWsHttpAddress();
     }
 
     public class LoginService : ILoginService
     {
+        private readonly ISettingsService _settingsService;
         private readonly HttpClient _httpClient;
-        private readonly string _url;
-        private readonly JsonSerializerOptions _jsonSerializerOptions;
 
-        public LoginService()
+        public LoginService(ISettingsService settingsService)
         {
+            _settingsService = settingsService;
 #if DEBUG
-            HttpClientHandler insecureHandler = GetInsecureHandler();
-            _httpClient = new HttpClient(insecureHandler);
+            var handler = new HttpClientHandler
+            {
+                ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => true
+            };
+            _httpClient = new HttpClient(handler);
 #else
             _httpClient = new HttpClient();
 #endif
-            if (App.codigoEntidade == "1994")
-            {
-                _url = $"{App.baseAddress}/api/v1";
-            }
-            else if (App.codigoEntidade == "1995")
-            {
-                _url = $"{App.baseAddress}/wsservices/wsgetinfo.asmx";
-            }
-
-            _jsonSerializerOptions = new JsonSerializerOptions
-            {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-            };
         }
 
-        public HttpClientHandler GetInsecureHandler()
+        public async Task<bool> LoginUserBasic(string strHashCode, string strUserName, string strPassword, string strDomainName)
         {
-            HttpClientHandler handler = new HttpClientHandler();
-            handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) =>
-            {
-                if (cert.Issuer.Equals("CN=localhost"))
-                    return true;
-                return errors == System.Net.Security.SslPolicyErrors.None;
-            };
-            return handler;
-        }
-
-        public async Task<Boolean> LoginUserBasic(string hashCode, string username, string password, string domain)
-        {
-            bool loginStatus = false;
-            if(Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
-            {
-                Debug.WriteLine("No Internet Connection");
-                return loginStatus;
-            }
-
             try
             {
-                LoginUserBasicDto dto = new LoginUserBasicDto()
+                Debug.WriteLine($"[LoginService] ==> Attempting LoginUserBasic for user '{strUserName}' with hash '{strHashCode}'.");
+                var baseAddress = _settingsService.BaseAddress;
+                if (string.IsNullOrEmpty(baseAddress))
                 {
-                    strHashCode = hashCode,
-                    strUserName = username,
-                    strPassword = password,
-                    strDomainName = domain
+                    Debug.WriteLine("[LoginService] ==> ERROR: BaseAddress is not set in SettingsService.");
+                    return false;
+                }
+                Debug.WriteLine($"[LoginService] ==> Using BaseAddress: '{baseAddress}'");
+                _httpClient.BaseAddress = new Uri(baseAddress);
+
+                var loginRequest = new LoginUserBasicDto
+                {
+                    strHashCode = strHashCode,
+                    strUserName = strUserName,
+                    strPassword = strPassword,
+                    strDomainName = strDomainName
                 };
-                StringContent content = new StringContent(JsonSerializer.Serialize(dto, _jsonSerializerOptions), Encoding.UTF8, "application/json");
-                HttpResponseMessage response;
-                if(App.codigoEntidade == "1994")
-                {
-                    response = await _httpClient.PostAsync($"{_url}/Login/loginUserBasic", content);
-                }
-                else if(App.codigoEntidade == "1995")
-                {
-                    response = await _httpClient.PostAsync($"{_url}/loginUserBasic", content);
-                }
-                else
-                {
-                    response = new HttpResponseMessage(HttpStatusCode.NotFound);
-                }
 
-                if(response.IsSuccessStatusCode)
-                {
-                    Debug.WriteLine("Request was successful");
+                var json = JsonConvert.SerializeObject(loginRequest);
+                Debug.WriteLine($"[LoginService] ==> Sending POST to /Login/LoginUserBasic with JSON body: {json}");
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-                    string contentToReceive = await response.Content.ReadAsStringAsync();
+                var response = await _httpClient.PostAsync("/Login/LoginUserBasic", content);
+                Debug.WriteLine($"[LoginService] ==> Received response with status code: {response.StatusCode}");
 
-                    loginStatus = JsonSerializer.Deserialize<bool>(contentToReceive, _jsonSerializerOptions);
-
-                    if (loginStatus)
-                    {
-                        Debug.WriteLine("User " + username + " is signed in");
-                    }
-                    else
-                    {
-                        Debug.WriteLine("Username or password incorret");
-                    }
-                    return loginStatus;
-                }
-                else
-                {
-                    Debug.WriteLine("Request failed");
-                }
+                return response.IsSuccessStatusCode;
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.Message);              
+                Debug.WriteLine($"[LoginService] ==> EXCEPTION in LoginUserBasic: {ex.Message}");
+                return false;
             }
-            return loginStatus;
+        }
+
+        public async Task<string> GetWsSoapAddress()
+        {
+            var baseAddress = _settingsService.BaseAddress;
+            if (string.IsNullOrEmpty(baseAddress)) return string.Empty;
+
+            _httpClient.BaseAddress = new Uri(baseAddress);
+            var response = await _httpClient.GetAsync("/Login/GetWsSoapAddress");
+            return await response.Content.ReadAsStringAsync();
+        }
+
+        public async Task<string> GetWsHttpAddress()
+        {
+            var baseAddress = _settingsService.BaseAddress;
+            if (string.IsNullOrEmpty(baseAddress)) return string.Empty;
+
+            _httpClient.BaseAddress = new Uri(baseAddress);
+            var response = await _httpClient.GetAsync("/Login/GetWsHttpAddress");
+            return await response.Content.ReadAsStringAsync();
         }
     }
 }

@@ -1,16 +1,14 @@
-using System.Diagnostics;
 using WebDocMobile.PageModels;
 
 namespace WebDocMobile.Pages.Mobile;
 
 public partial class FirstPageMobile : ContentPage
 {
-	public FirstPageMobile()
+    // The ViewModel is now injected by the DI container
+	public FirstPageMobile(FirstPageViewModel viewModel)
 	{
         InitializeComponent();
-
-        this.BindingContext = new FirstPageViewModel(this.Navigation);
-
+        this.BindingContext = viewModel;
         NavigationPage.SetHasNavigationBar(this, false);
     }
 }

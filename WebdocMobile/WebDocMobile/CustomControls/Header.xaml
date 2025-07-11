@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="WebDocMobile.CustomControls.Header"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Padding="20,0"
+    BackgroundColor="{StaticResource Primary}"
+    MinimumHeightRequest="100">
+    <ContentView.ControlTemplate>
+        <ControlTemplate>
+            <ContentPresenter />
+        </ControlTemplate>
+    </ContentView.ControlTemplate>
+</ContentView>

@@ -1,86 +1,280 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:customControls="clr-namespace:WebDocMobile.CustomControls"
-             x:Class="WebDocMobile.Pages.Mobile.LoginPageMobile"
-             Title="LoginPageMobile"
-             Shell.NavBarIsVisible="False"
-             BackgroundColor="#FFFFFF">
+<ContentPage
+    x:Class="WebDocMobile.Pages.Mobile.LoginPageMobile"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:customControls="clr-namespace:WebDocMobile.CustomControls"
+    xmlns:local="clr-namespace:WebDocMobile.CustomControls"
+    xmlns:telerik="http://schemas.telerik.com/2022/xaml/maui"
+    xmlns:vm="clr-namespace:WebDocMobile.PageModels"
+    Title="LoginPageMobile"
+    x:DataType="vm:LoginPageViewModel"
+    BackgroundColor="{StaticResource Primary}"
+    Shell.NavBarIsVisible="False">
 
-    <VerticalStackLayout Spacing="15"
-                         Padding="30.0">
-
-        <Grid BackgroundColor="#262930"
-              WidthRequest="400"
-              HeightRequest="280"
-              Margin="-30"
-              RowDefinitions="Auto">
-            <StackLayout Spacing="50">
-                <Image Source="logo_temp_small"
-                       HorizontalOptions="Start"
-                       Margin="30,35,30,0" />
-                <Label Text="Utilizador"
-                       TextColor="White"
-                       FontFamily="RobotoLight"
-                       FontSize="36"
-                       Margin="30, 0,30, 0" />
-                <Label Text="Acede à tua conta com as mesmas credenciais que já utilizas na versão desktop"
-                       TextColor="White"
-                       FontFamily="RobotoRegular"
-                       FontSize="16" 
-                       Margin="30,-20,30,0"/>
+    <Grid>
+        <!--  Main Content  -->
+        <Grid
+            x:Name="MainContent"
+            BackgroundColor="{StaticResource Gray50}"
+            RowDefinitions=".6*,*">
+            <StackLayout
+                Grid.Row="0"
+                Padding="40"
+                BackgroundColor="{StaticResource Primary}"
+                Spacing="30">
+                <Image HorizontalOptions="Start" Source="logo_temp_small" />
+                <Label
+                    FontFamily="RobotoLight"
+                    FontSize="36"
+                    Text="Utilizador"
+                    TextColor="White" />
+                <Label
+                    FontFamily="RobotoRegular"
+                    FontSize="16"
+                    Text="Acede à tua conta com as mesmas credenciais que já utilizas na versão desktop"
+                    TextColor="White" />
             </StackLayout>
+            <ScrollView Grid.Row="1" Padding="20">
+                <StackLayout Spacing="10">
+                    <Border
+                        HorizontalOptions="FillAndExpand"
+                        Stroke="#ADB3BC"
+                        StrokeShape="RoundRectangle 5"
+                        StrokeThickness="2">
+                        <Grid Padding="10,5" RowDefinitions="*,*">
+                            <Label
+                                Grid.Row="0"
+                                Margin="7,0,0,0"
+                                FontFamily="RobotoMedium"
+                                FontSize="16"
+                                Text="Código de entidade"
+                                TextColor="#959595" />
+                            <AbsoluteLayout HeightRequest="65" Padding="0, 20, 0, 0" >
+                                <telerik:RadComboBox
+                                    x:Name="EntityEntry"
+                                    Grid.Row="1"
+                                    AutomationId="radEntry"
+                                    BackgroundColor="Transparent"
+                                    BorderBrush="Transparent"
+                                    BorderThickness="0,0,0,0"
+                                    DisplayMemberPath="Name"
+                                    FocusedBorderBrush="Transparent"
+                                    FontSize="16"
+                                    HorizontalOptions="Fill"
+                                    ItemsSource="{Binding EntitiesLogin}"
+                                    Placeholder="Escreva o código"
+                                    PlaceholderColor="#343A40"
+                                    SelectionChanged="EntityEntry_SelectionChanged"
+                                    SelectionMode="Single"
+                                    Text="{Binding codEntidade}"
+                                    AbsoluteLayout.LayoutBounds="0, 0, 1, 1" 
+                                    AbsoluteLayout.LayoutFlags="All"    />
+                            </AbsoluteLayout>
+                            
+                        </Grid>
+                    </Border>
 
+                    <Border
+                        HorizontalOptions="FillAndExpand"
+                        Stroke="#ADB3BC"
+                        StrokeShape="RoundRectangle 5"
+                        StrokeThickness="2">
+                        <Grid Padding="10,5" RowDefinitions="*,*">
+                            <Label
+                                Grid.Row="0"
+                                Margin="7,0,0,0"
+                                FontFamily="RobotoMedium"
+                                FontSize="16"
+                                Text="Utilizador"
+                                TextColor="#959595" />
+                            <AbsoluteLayout HeightRequest="65" Padding="0, 20, 0, 0" >
+                                <telerik:RadEntry
+                                    x:Name="UserEntry"
+                                    Grid.Row="1"
+                                    AutomationId="radEntry"
+                                    BackgroundColor="Transparent"
+                                    BorderBrush="Transparent"
+                                    BorderThickness="0,0,0,0"
+                                    FocusedBorderBrush="Transparent"
+                                    FocusedBorderThickness="0,0,0,0"
+                                    FontSize="16"
+                                    Placeholder="Escreva o utilizador"
+                                    PlaceholderColor="#343A40"
+                                    Text="{Binding strUserName}"
+                                    AbsoluteLayout.LayoutBounds="0, 0, 1, 1" 
+                                    AbsoluteLayout.LayoutFlags="All"/>
+                            </AbsoluteLayout>
+                        </Grid>
+                    </Border>
+
+                    <Border
+                        HorizontalOptions="FillAndExpand"
+                        Stroke="#ADB3BC"
+                        StrokeShape="RoundRectangle 5"
+                        StrokeThickness="2">
+                        
+                        <Grid Padding="10,5" RowDefinitions="*,*">
+                            <Label
+                                Grid.Row="0"
+                                Margin="7,0,0,0"
+                                FontFamily="RobotoMedium"
+                                FontSize="16"
+                                Text="Palavra-passe"
+                                TextColor="#959595" />
+                            <AbsoluteLayout HeightRequest="65" Padding="0, 20, 0, 0" >
+                                <telerik:RadEntry
+                                    x:Name="PasswordEntry"
+                                    AutomationId="radEntry"
+                                    BackgroundColor="Transparent"
+                                    BorderBrush="Transparent"
+                                    BorderThickness="0,0,0,0"
+                                    FocusedBorderBrush="Transparent"
+                                    FocusedBorderThickness="0,0,0,0"
+                                    FontSize="16"
+                                    IsPassword="{Binding IsPasswordVisible, Converter={StaticResource InverseBooleanConverter}}"
+                                    Placeholder="Escreva a palavra-passe"
+                                    PlaceholderColor="#343A40"
+                                    Text="{Binding strPassword}" 
+                                    AbsoluteLayout.LayoutBounds="0, 0, 1, 1" 
+                                    AbsoluteLayout.LayoutFlags="All" />
+
+                                <ImageButton
+                                    x:Name="PasswordVisibilityButton"
+                                    Source="{Binding IconPassword}"
+                                    Command="{Binding TogglePasswordVisibilityCommand}" 
+                                    Clicked="OnPasswordToggleClicked"
+                                    BackgroundColor="Transparent"
+                                    Padding="0"
+                                    WidthRequest="40"
+                                    HeightRequest="20"
+                                    IsVisible="True"
+                                    AbsoluteLayout.LayoutBounds="1, 0.45, AutoSize, AutoSize"                 
+                                    AbsoluteLayout.LayoutFlags="PositionProportional" />
+                            </AbsoluteLayout>
+
+                        </Grid>
+                    </Border>
+
+                    <customControls:OutlinedControlEntry
+                        x:Name="DomainEntry"
+                        IsVisible="False"
+                        Text="{Binding strDomainName}" />
+
+                    <Button
+                        Margin="0,20,0,0"
+                        Padding="18"
+                        BackgroundColor="#003962"
+                        Command="{Binding HandleLogInCommand}"
+                        CornerRadius="5"
+                        FontFamily="RobotoBold"
+                        Text="Entrar"
+                        TextColor="#FFFFFF" />
+                </StackLayout>
+            </ScrollView>
         </Grid>
 
-
-        <StackLayout Margin="-5, 50, -5, 25"
-                     Spacing="25">
-            <customControls:OutlinedControlEntry Placeholder="Utilizador"
-                                                 x:Name="UserEntry"
-                                                 Text="{Binding strUserName}"/>
-            
-            <customControls:OutlinedControlEntry Placeholder="Palavra-Passe"
-                                                 x:Name="PasswordEntry"
-                                                 Text="{Binding strPassword}"/>
-            
-            <customControls:OutlinedControlEntry x:Name="DomainEntry"
-                                                 Text="{Binding strDomainName}"
-                                                 IsVisible="False"/>
-
-        </StackLayout>
-
-        <StackLayout Margin="0, -20, 0, 25"
-                     Spacing="5">
-
-            <Button BackgroundColor="#003962"
-                               Text="Entrar"
-                               TextColor="#FFFFFF"
-                               FontFamily="RobotoBold"
-                               Padding="18"
-                               CornerRadius="5" 
-                               Margin="-5,0,-5,20"
-                               Command="{Binding HandleLogInCommand}"/>
-
-            <Grid>
-                <Button Background="#3C5DBC"
-                                   Padding="25"
-                                   CornerRadius="5"
-                                   Margin="-5,0,-5,0"/>
-                <Image 
-                    Source="logo_ag" 
-                    HorizontalOptions="Start"
-                    Scale="0.8"
-                    Margin="-2,0,0,0"/>
-                <Image Source="icon_abrir"
-                       Scale="1"
-                       HorizontalOptions="End"
-                       Margin="0,0,10,40"/>
+        <!--  Modal Alert  -->
+        <Grid
+            x:Name="ModalAtentionAlert"
+            IsVisible="{Binding GbModalError}"
+            RowDefinitions="*,auto">
+            <Grid
+                Grid.Row="0"
+                BackgroundColor="#000000"
+                Opacity="0.75" />
+            <Grid
+                Grid.Row="1"
+                BackgroundColor="#BF000000"
+                Opacity="1">
+                <Border
+                    Padding="15"
+                    Background="White"
+                    StrokeShape="RoundRectangle 16,16,0,0"
+                    StrokeThickness="1">
+                    <StackLayout Spacing="20">
+                        <Image HeightRequest="55" Source="{Binding GbIconModalError}" />
+                        <Label
+                            FontFamily="RobotoBold"
+                            FontSize="22"
+                            HorizontalTextAlignment="Center"
+                            Text="{Binding GbTitleModalError}"
+                            TextColor="Black" />
+                        <Label
+                            FontFamily="RobotoRegular"
+                            FontSize="16"
+                            HorizontalTextAlignment="Center"
+                            Text="{Binding GbTextModalError}"
+                            TextColor="#959595" />
+                        <Button
+                            Padding="10"
+                            BackgroundColor="#003962"
+                            BorderWidth="2"
+                            Command="{Binding FecharModalClickedCommand}"
+                            CornerRadius="4"
+                            FontFamily="RobotoBold"
+                            FontSize="16"
+                            Text="Fechar"
+                            TextColor="White" />
+                    </StackLayout>
+                </Border>
             </Grid>
+        </Grid>
 
+        <!--  Modal Loader  -->
+        <Grid
+            x:Name="ModalLoader"
+            IsVisible="{Binding GbLoader}"
+            RowDefinitions="auto,*">
+            <Grid
+                Grid.Row="0"
+                Padding="20"
+                BackgroundColor="#BF000000"
+                Opacity="1">
+                <Border
+                    Padding="15"
+                    Background="White"
+                    StrokeShape="RoundRectangle 16"
+                    StrokeThickness="1">
+                    <Grid ColumnDefinitions="auto,*" ColumnSpacing="10">
+                        <Border
+                            Grid.Column="0"
+                            Padding="5"
+                            Background="{StaticResource Secondary}"
+                            HeightRequest="54"
+                            StrokeShape="RoundRectangle 50"
+                            StrokeThickness="1"
+                            WidthRequest="54">
+                            <ActivityIndicator
+                                BackgroundColor="Transparent"
+                                HeightRequest="30"
+                                IsRunning="True"
+                                WidthRequest="30"
+                                Color="White" />
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1">
+                            <Label
+                                FontFamily="RobotoBold"
+                                FontSize="22"
+                                HorizontalTextAlignment="Start"
+                                Text="Aguarde"
+                                TextColor="#1F2125" />
+                            <Label
+                                FontFamily="RobotoBold"
+                                FontSize="16"
+                                HorizontalTextAlignment="Start"
+                                Text="Validação em progresso"
+                                TextColor="#959595" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+            </Grid>
+            <Grid
+                Grid.Row="1"
+                BackgroundColor="#000000"
+                Opacity="0.75" />
+        </Grid>
 
+    </Grid>
 
-        </StackLayout>
-
-    </VerticalStackLayout>
 </ContentPage>

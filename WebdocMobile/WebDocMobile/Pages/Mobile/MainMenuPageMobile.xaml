@@ -1,155 +1,481 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:telerik="http://schemas.telerik.com/2022/xaml/maui"
-             xmlns:models="clr-namespace:WebDocMobile.Models"
-             x:Class="WebDocMobile.Pages.Mobile.MainMenuPageMobile"
-             Title="Menu Principal"
-             BackgroundColor="#F6F6F6">
 
-    <VerticalStackLayout BackgroundColor="#F6F6F6">
 
-        <Frame BackgroundColor="#262930"
-               CornerRadius="0"
-               Scale="1.1"
-               HeightRequest="320">
-            <StackLayout Margin="20,16,0,0"
-                         Spacing="40">
-                <Grid>
-                    <Grid>
-                        <Button Margin="250,0,0, 0"
-                                HeightRequest="37"
-                                WidthRequest="37"
-                                CornerRadius="4"
-                                BackgroundColor="Transparent"
-                                BorderColor="#FFFFFF"
-                                BorderWidth="1"
-                                Opacity="0.15" />
-                        <Image Source="icon_pesquisar"
-                               HeightRequest="16"
-                               Margin="250,0,0,0" />
+<ContentPage
+    x:Class="WebDocMobile.Pages.Mobile.MainMenuPageMobile"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:customControl="clr-namespace:WebDocMobile.CustomControls"
+    xmlns:local="clr-namespace:WebDocMobile.Models.DashBoard"
+    xmlns:locals="clr-namespace:WebDocMobile.Helpers.IndexToColorConverter"
+    xmlns:telerik="http://schemas.telerik.com/2022/xaml/maui"
+    xmlns:vm="clr-namespace:WebDocMobile.PageModels"
+    Title="Menu Principal"
+    BackgroundColor="#F6F6F6">
+    <ContentPage.BindingContext>
+        <vm:MainMenuPageViewModel />
+    </ContentPage.BindingContext>
+
+    <Grid>
+        <!--  Main Content  -->
+        <Grid BackgroundColor="{StaticResource Gray50}" RowDefinitions=".1*,.8*,.1*">
+            <!--  Header  -->
+
+            <customControl:Header>
+                <Grid ColumnDefinitions="auto,*" VerticalOptions="Center">
+                    <!--  User Info  -->
+                    <Grid HorizontalOptions="Start" MaximumWidthRequest="300">
+                        <Label
+                            Margin="0,0,0,0"
+                            FontFamily="RobotoMedium"
+                            FontSize="10"
+                            HorizontalOptions="Start"
+                            Text="{Binding date}"
+                            TextColor="#F1F1F1"
+                            TextTransform="Uppercase" />
+                        <Label
+                            Margin="0,14,0,0"
+                            FontFamily="RobotoBold"
+                            FontSize="25"
+                            HorizontalOptions="StartAndExpand"
+                            Text="{Binding username}"
+                            TextColor="White" />
                     </Grid>
-                    <Label Text="{Binding date}"
-                           TextColor="#F1F1F1"
-                           FontFamily="RobotoMedium"
-                           FontSize="10"
-                           HorizontalOptions="Start"
-                           Margin="0, 0,0, 0" />
-                    <Label Text="{Binding username}"
-                           TextColor="White"
-                           FontFamily="RobotoBold"
-                           FontSize="18"
-                           HorizontalOptions="StartAndExpand"
-                           Margin="0, 14, 0, 0" />
-                </Grid>
-                <Grid RowDefinitions="*, Auto"
-                      ColumnDefinitions="*,*,*"
-                      ColumnSpacing="15"
-                      RowSpacing="1.5"
-                      Margin="5,0,0,0"
-                      HorizontalOptions="StartAndExpand">
-                    <Button Grid.Row="0"
-                            Grid.Column="0"
-                            HeightRequest="25"
-                            WidthRequest="25"
+
+                    <!--  Search Button  -->
+                    <Grid Grid.Column="1" HorizontalOptions="End">
+                        <Button
                             BackgroundColor="Transparent"
-                            Command="{Binding ToggleChartCommand}"
-                            CommandParameter="documents" />
-                    <Image Source="icon_documentos"
-                           Margin="0,0,0,0"
-                           HeightRequest="18"
-                           Grid.Row="0"
-                           Grid.Column="0" />
-                    <Rectangle Fill="#0074C8" HeightRequest="4" WidthRequest="24" Grid.Column="0" Grid.Row="1">
-                        <Rectangle.Triggers>
-                            <DataTrigger TargetType="Rectangle" Binding="{Binding IsShowingDocuments}" Value="False">
-                                <Setter Property="Opacity" Value="0" />
-                            </DataTrigger>
-                            <DataTrigger TargetType="Rectangle" Binding="{Binding IsShowingDocuments}" Value="True">
-                                <Setter Property="Opacity" Value="1" />
-                            </DataTrigger>
-                        </Rectangle.Triggers>
-                    </Rectangle>
-
-                    <Button Grid.Row="0"
-                            Grid.Column="1"
-                            HeightRequest="26"
-                            WidthRequest="26"
-                            BackgroundColor="#262930"
-                            Command="{Binding ToggleChartCommand}"
-                            CommandParameter="processes" />
-                    <Image Source="icon_processos"
-                           Margin="0,0,0,0"
-                           HeightRequest="18"
-                           Grid.Row="0"
-                           Grid.Column="1" />
-                    <Rectangle Fill="#0074C8" HeightRequest="4" WidthRequest="24" Grid.Column="1" Grid.Row="1">
-                        <Rectangle.Triggers>
-                            <DataTrigger TargetType="Rectangle" Binding="{Binding IsShowingDocuments}" Value="True">
-                                <Setter Property="Opacity" Value="0" />
-                            </DataTrigger>
-                            <DataTrigger TargetType="Rectangle" Binding="{Binding IsShowingDocuments}" Value="False">
-                                <Setter Property="Opacity" Value="1" />
-                            </DataTrigger>
-                        </Rectangle.Triggers>
-                    </Rectangle>
+                            BorderColor="#FFFFFF"
+                            BorderWidth="1"
+                            Command="{Binding NavToSearchPageCommand}"
+                            CornerRadius="4"
+                            HeightRequest="37"
+                            Opacity="0.15"
+                            WidthRequest="37" />
+                        <Image HeightRequest="16" Source="icon_pesquisar" />
+                    </Grid>
                 </Grid>
+            </customControl:Header>
 
-                <!-- This Grid replaces the fragile overlapping layout with a clear two-column structure. -->
-                <Grid ColumnDefinitions="*, Auto" Margin="0,-75,20,0" ColumnSpacing="10">
+            <!--  Page  -->
+            <ScrollView Grid.Row="1" Padding="0,0,0,10">
+                <ScrollView.Content>
+                    <VerticalStackLayout Spacing="20">
 
-                    <!-- Column 0: The Chart -->
-                    <telerik:RadPieChart Grid.Column="0" x:Name="pieChart">
-                        <telerik:RadPieChart.Palette>
-                            <telerik:ChartPalette>
-                                <telerik:ChartPalette.Entries>
-                                    <telerik:PaletteEntry Fill="#072B8E" />
-                                    <telerik:PaletteEntry Fill="#1161FC" />
-                                    <telerik:PaletteEntry Fill="#63B6E3" />
-                                </telerik:ChartPalette.Entries>
-                            </telerik:ChartPalette>
-                        </telerik:RadPieChart.Palette>
-                        <telerik:RadPieChart.Series>
-                            <telerik:DonutSeries ItemsSource="{Binding ChartData}"
-                                                 RadiusFactor="0.5"
-                                                 InnerRadiusFactor="0.5"
-                                                 ShowLabels="False">
-                                <telerik:DonutSeries.ValueBinding>
-                                    <telerik:PropertyNameDataPointBinding PropertyName="Value" />
-                                </telerik:DonutSeries.ValueBinding>
-                                <telerik:DonutSeries.LegendTitleBinding>
-                                    <telerik:PropertyNameDataPointBinding PropertyName="Category" />
-                                </telerik:DonutSeries.LegendTitleBinding>
-                                <!-- The DataPointStyle is removed. Colors are now controlled by the ChartPalette. -->
-                            </telerik:DonutSeries>
-                        </telerik:RadPieChart.Series>
-                    </telerik:RadPieChart>
+                        <!--  Info Section  -->
+                        <Frame
+                            BackgroundColor="{StaticResource Primary}"
+                            CornerRadius="0"
+                            Scale="1.1">
+                            <Grid ColumnDefinitions="*,*">
+                                <VerticalStackLayout
+                                    Grid.Column="0"
+                                    Padding="10,0"
+                                    HorizontalOptions="Start">
+                                    <HorizontalStackLayout Margin="10,0,0,0" Spacing="10">
+                                        <Grid>
+                                            <Button
+                                                x:Name="documentsButton"
+                                                BackgroundColor="Transparent"
+                                                Clicked="DocumentsButtonClicked"
+                                                Command="{Binding ShowDocumentDetailsCommand}"
+                                                HeightRequest="25"
+                                                WidthRequest="25" />
+                                            <VerticalStackLayout Spacing="5">
+                                                <Image HeightRequest="18" Source="icon_documentos" />
+                                                <Rectangle
+                                                    x:Name="documentsSelected"
+                                                    Fill="{StaticResource Secondary}"
+                                                    HeightRequest="4"
+                                                    Opacity="1"
+                                                    WidthRequest="24" />
+                                            </VerticalStackLayout>
+                                        </Grid>
+                                        <Grid>
+                                            <Button
+                                                x:Name="processesButton"
+                                                BackgroundColor="Transparent"
+                                                Clicked="ProcessesButtonClicked"
+                                                Command="{Binding ShowProccessDetailsCommand}"
+                                                HeightRequest="25"
+                                                WidthRequest="25" />
+                                            <VerticalStackLayout Spacing="5">
+                                                <Image
+                                                    Grid.Row="0"
+                                                    Grid.Column="1"
+                                                    HeightRequest="18"
+                                                    Source="icon_processos" />
+                                                <Rectangle
+                                                    x:Name="processesSelected"
+                                                    Fill="{StaticResource Secondary}"
+                                                    HeightRequest="4"
+                                                    Opacity="0"
+                                                    VerticalOptions="Start"
+                                                    WidthRequest="24" />
+                                            </VerticalStackLayout>
+                                        </Grid>
+                                    </HorizontalStackLayout>
+                                    <telerik:RadPieChart HeightRequest="150" WidthRequest="120">
+                                        <telerik:RadPieChart.Palette>
+                                            <telerik:ChartPalette>
+                                                <telerik:ChartPalette.Entries>
+                                                    <telerik:PaletteEntry FillColor="#072B8E" StrokeColor="#072B8E" />
+                                                    <telerik:PaletteEntry FillColor="#1161FC" StrokeColor="#1161FC" />
+                                                    <telerik:PaletteEntry FillColor="#63B6E3" StrokeColor="#63B6E3" />
+                                                </telerik:ChartPalette.Entries>
+                                            </telerik:ChartPalette>
+                                        </telerik:RadPieChart.Palette>
+                                        <telerik:RadPieChart.BindingContext>
+                                            <vm:MainMenuPageViewModel />
+                                        </telerik:RadPieChart.BindingContext>
 
-                    <!-- Column 1: The Data-Bound Legend using a CollectionView -->
-                    <!-- This is a standard MAUI control and should be more robust against compiler issues. -->
-                    <CollectionView Grid.Column="1"
-                                    ItemsSource="{Binding ChartData}"
-                                    VerticalOptions="Center">
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate x:DataType="models:CategoricalData">
-                                <Grid ColumnDefinitions="Auto, *" ColumnSpacing="10" Margin="0,0,0,15">
-                                    <Ellipse Grid.Column="0" Fill="{Binding Color}" HeightRequest="14" WidthRequest="14" VerticalOptions="Center"/>
-                                    <StackLayout Grid.Column="1" Spacing="-2">
-                                        <Label TextColor="#FFFFFF" Text="{Binding Value}" FontSize="22" FontFamily="RobotoBold" />
-                                        <Label TextColor="#F1F1F1" Text="{Binding Category}" FontSize="14" FontFamily="RobotoRegular" />
-                                    </StackLayout>
+                                        <telerik:RadPieChart.Series>
+                                            <telerik:DonutSeries
+                                                x:Name="df"
+                                                InnerRadiusFactor="0.5"
+                                                RadiusFactor="1"
+                                                SelectedPointOffset="0.25"
+                                                ShowLabels="False"
+                                                ValueBinding="Value" />
+                                        </telerik:RadPieChart.Series>
+                                    </telerik:RadPieChart>
+                                </VerticalStackLayout>
+
+                                <VerticalStackLayout
+                                    Grid.Column="1"
+                                    Padding="10,0"
+                                    HorizontalOptions="Start"
+                                    Spacing="10">
+                                    <!--  MyDocumentsNumber Count  -->
+                                    <Grid
+                                        ColumnDefinitions="auto,*"
+                                        ColumnSpacing="5"
+                                        RowDefinitions="*,*">
+                                        <Ellipse
+                                            Grid.Row="0"
+                                            Grid.Column="0"
+                                            Fill="#072B8E"
+                                            HeightRequest="14"
+                                            WidthRequest="14" />
+                                        <Label
+                                            x:Name="Comigo"
+                                            Grid.Row="0"
+                                            Grid.Column="1"
+                                            FontFamily="RobotoBold"
+                                            FontSize="22"
+                                            Text="{Binding MyDocumentsNumber}"
+                                            TextColor="#FFFFFF" />
+                                        <Label
+                                            Grid.Row="1"
+                                            Grid.Column="1"
+                                            FontFamily="RobotoRegular"
+                                            FontSize="16"
+                                            Text="Comigo"
+                                            TextColor="#F1F1F1" />
+                                    </Grid>
+                                    <!--  DepartmentDocumentsNumber Count  -->
+                                    <Grid
+                                        ColumnDefinitions="auto,*"
+                                        ColumnSpacing="5"
+                                        RowDefinitions="*,*">
+                                        <Ellipse
+                                            Grid.Row="0"
+                                            Grid.Column="0"
+                                            Fill="#63B6E3"
+                                            HeightRequest="14"
+                                            WidthRequest="14" />
+                                        <Label
+                                            x:Name="Departamento"
+                                            Grid.Row="0"
+                                            Grid.Column="1"
+                                            FontFamily="RobotoBold"
+                                            FontSize="22"
+                                            Text="{Binding DepartmentDocumentsNumber}"
+                                            TextColor="#FFFFFF" />
+                                        <Label
+                                            Grid.Row="1"
+                                            Grid.Column="1"
+                                            FontFamily="RobotoRegular"
+                                            FontSize="16"
+                                            Text="Departamento"
+                                            TextColor="#F1F1F1" />
+                                    </Grid>
+                                    <!--  KnownDocumentsNumber Count  -->
+                                    <Grid
+                                        ColumnDefinitions="auto,*"
+                                        ColumnSpacing="5"
+                                        RowDefinitions="*,*">
+                                        <Ellipse
+                                            Grid.Row="0"
+                                            Grid.Column="0"
+                                            Fill="#1161FC"
+                                            HeightRequest="14"
+                                            WidthRequest="14" />
+                                        <Label
+                                            x:Name="Conhecimento"
+                                            Grid.Row="0"
+                                            Grid.Column="1"
+                                            FontFamily="RobotoBold"
+                                            FontSize="22"
+                                            Text="{Binding KnownDocumentsNumber}"
+                                            TextColor="#FFFFFF" />
+                                        <Label
+                                            Grid.Row="1"
+                                            Grid.Column="1"
+                                            FontFamily="RobotoRegular"
+                                            FontSize="16"
+                                            Text="Conhecimento"
+                                            TextColor="#F1F1F1" />
+                                    </Grid>
+                                </VerticalStackLayout>
+                            </Grid>
+                        </Frame>
+
+                        <!--  Documents Section  -->
+                        <Grid RowDefinitions="*,*" RowSpacing="10">
+                            <!--  Documents Header  -->
+                            <Frame
+                                Margin="0,15,0,0"
+                                Padding="20,0,20,0"
+                                BackgroundColor="Transparent"
+                                BorderColor="Transparent"
+                                CornerRadius="0">
+                                <Grid ColumnDefinitions="*,*" RowDefinitions="*,*">
+                                    <Label
+                                        FontAttributes="Bold"
+                                        FontFamily="RobotoBold"
+                                        FontSize="22"
+                                        Text="Documentos"
+                                        TextColor="#1F2125"
+                                        VerticalOptions="Start" />
+                                    <Label
+                                        Grid.Row="1"
+                                        Grid.ColumnSpan="2"
+                                        FontAttributes="None"
+                                        FontFamily="Roboto"
+                                        FontSize="15"
+                                        Text="{Binding AllDocumentsNumber}"
+                                        TextColor="#959595" />
+
+                                    <telerik:RadButton
+                                        Grid.Column="1"
+                                        Padding="5"
+                                        AutomationId="hottestRecipesButton"
+                                        BorderColor="{StaticResource Gray400}"
+                                        BorderThickness="0,0,0,1"
+                                        Command="{Binding HandleSeeDocumentsButtonCommand}"
+                                        CommandParameter="Hottest Recipes"
+                                        CornerRadius="20"
+                                        FontAttributes="Bold"
+                                        FontSize="13"
+                                        HorizontalOptions="End"
+                                        Text="VER TODOS"
+                                        TextColor="Black"
+                                        VerticalOptions="Center" />
                                 </Grid>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
-                </Grid>
-            </StackLayout>
-        </Frame>
+                            </Frame>
 
-        <Button Command="{Binding HandleSignOutButtonCommand}"
-                IsVisible="true"
-                Text="Terminar Sessão -> Temporário"
-                Margin="30"/>
+                            <!--  Documents Cards  -->
+                            <ScrollView Grid.Row="1" Orientation="Horizontal">
+                                <HorizontalStackLayout Padding="20,5" Spacing="20">
+                                    <CollectionView
+                                        HorizontalOptions="StartAndExpand"
+                                        ItemsSource="{Binding Documents}"
+                                        SelectionChanged="CollectionView_SelectionChanged"
+                                        SelectionMode="Single">
+                                        <CollectionView.ItemsLayout>
+                                            <LinearItemsLayout ItemSpacing="20" Orientation="Horizontal" />
+                                        </CollectionView.ItemsLayout>
+                                        <CollectionView.ItemTemplate>
+                                            <DataTemplate>
+                                                <customControl:DocumentCard
+                                                    DateTimeText="{Binding dateString}"
+                                                    DescriptionText="{Binding subject}"
+                                                    NumberTagText="{Binding number}"
+                                                    StatusText="{Binding workflowState}" />
+                                            </DataTemplate>
+                                        </CollectionView.ItemTemplate>
+                                    </CollectionView>
+                                </HorizontalStackLayout>
+                            </ScrollView>
+                        </Grid>
 
-    </VerticalStackLayout>
+                        <!--  Process Section  -->
+                        <Grid
+                            Padding="20,0,20,0"
+                            RowDefinitions="*,*"
+                            RowSpacing="10">
+                            <!--  Process Header  -->
+                            <Grid ColumnDefinitions="*,*" RowDefinitions="*,*">
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontFamily="RobotoBold"
+                                    FontSize="22"
+                                    Text="Processos"
+                                    TextColor="#1F2125"
+                                    VerticalOptions="Start" />
+
+                                <Label
+                                    Grid.Row="1"
+                                    Grid.ColumnSpan="2"
+                                    FontAttributes="None"
+                                    FontFamily="Roboto"
+                                    FontSize="15"
+                                    Text="{Binding AllProcessesNumber}"
+                                    TextColor="#959595" />
+
+                                <telerik:RadButton
+                                    Grid.Column="1"
+                                    Padding="5"
+                                    AutomationId="hottestRecipesButton"
+                                    BorderColor="{StaticResource Gray400}"
+                                    BorderThickness="0,0,0,1"
+                                    Command="{Binding HandleSeeProcessesButtonCommand}"
+                                    CommandParameter="Hottest Recipes"
+                                    CornerRadius="20"
+                                    FontAttributes="Bold"
+                                    FontSize="13"
+                                    HorizontalOptions="End"
+                                    Text="VER TODOS"
+                                    TextColor="Black"
+                                    VerticalOptions="Center" />
+                            </Grid>
+
+                            <!--  Process Cards  -->
+
+                            <VerticalStackLayout Grid.Row="1" Spacing="3">
+                                <CollectionView
+                                    HorizontalOptions="StartAndExpand"
+                                    ItemsSource="{Binding Proceses}"
+                                    SelectionChanged="CollectionView_SelectionChanged_1"
+                                    SelectionMode="Single">
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate>
+                                            <customControl:ProcessCard
+                                                Margin="0,15,0,0"
+                                                Padding="10"
+                                                DateTimeText="{Binding dateString}"
+                                                DescriptionText="{Binding subject}"
+                                                NumberTagText="{Binding number}"
+                                                StatusText="{Binding workflowState}" />
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                </CollectionView>
+                            </VerticalStackLayout>
+                        </Grid>
+
+
+                    </VerticalStackLayout>
+                </ScrollView.Content>
+            </ScrollView>
+
+            <!--  NAVBAR  -->
+            <customControl:Navbar Grid.Row="2" />
+
+        </Grid>
+
+        <!--  Modal Alert  -->
+        <Grid
+            x:Name="ModalAtentionAlert"
+            IsVisible="{Binding GbModalError}"
+            RowDefinitions="*,auto">
+            <Grid
+                Grid.Row="0"
+                BackgroundColor="#000000"
+                Opacity="0.75" />
+            <Grid
+                Grid.Row="1"
+                BackgroundColor="#BF000000"
+                Opacity="1">
+                <Border
+                    Padding="15"
+                    Background="White"
+                    StrokeShape="RoundRectangle 16,16,0,0"
+                    StrokeThickness="1">
+                    <StackLayout Spacing="20">
+                        <Image HeightRequest="55" Source="{Binding GbIconModalError}" />
+                        <Label
+                            FontFamily="RobotoBold"
+                            FontSize="22"
+                            HorizontalTextAlignment="Center"
+                            Text="{Binding GbTitleModalError}"
+                            TextColor="Black" />
+                        <Label
+                            FontFamily="RobotoRegular"
+                            FontSize="16"
+                            HorizontalTextAlignment="Center"
+                            Text="{Binding GbTextModalError}"
+                            TextColor="#959595" />
+                        <Button
+                            Padding="10"
+                            BackgroundColor="#003962"
+                            BorderWidth="2"
+                            Command="{Binding FecharModalClickedCommand}"
+                            CornerRadius="4"
+                            FontFamily="RobotoBold"
+                            FontSize="16"
+                            Text="Fechar"
+                            TextColor="White" />
+                    </StackLayout>
+                </Border>
+            </Grid>
+        </Grid>
+
+        <!--  Modal Loader  -->
+        <Grid
+            x:Name="ModalLoader"
+            IsVisible="{Binding GbLoader}"
+            RowDefinitions="auto,*">
+            <Grid
+                Grid.Row="0"
+                Padding="20"
+                BackgroundColor="#BF000000"
+                Opacity="1">
+                <Border
+                    Padding="15"
+                    Background="White"
+                    StrokeShape="RoundRectangle 16"
+                    StrokeThickness="1">
+                    <Grid ColumnDefinitions="auto,*" ColumnSpacing="10">
+                        <Border
+                            Grid.Column="0"
+                            Padding="5"
+                            Background="{StaticResource Secondary}"
+                            HeightRequest="54"
+                            StrokeShape="RoundRectangle 50"
+                            StrokeThickness="1"
+                            WidthRequest="54">
+                            <ActivityIndicator
+                                BackgroundColor="Transparent"
+                                HeightRequest="30"
+                                IsRunning="True"
+                                WidthRequest="30"
+                                Color="White" />
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1">
+                            <Label
+                                FontFamily="RobotoBold"
+                                FontSize="22"
+                                HorizontalTextAlignment="Start"
+                                Text="Aguarde"
+                                TextColor="#1F2125" />
+                            <Label
+                                FontFamily="RobotoBold"
+                                FontSize="16"
+                                HorizontalTextAlignment="Start"
+                                Text="Validação em progresso"
+                                TextColor="#959595" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+            </Grid>
+            <Grid
+                Grid.Row="1"
+                BackgroundColor="#000000"
+                Opacity="0.75" />
+        </Grid>
+
+    </Grid>
 </ContentPage>
+

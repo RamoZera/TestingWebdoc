@@ -1,135 +1,145 @@
-﻿﻿﻿﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System.Collections.ObjectModel;
-using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Text;
+using System.Text.Json;
+using System.Threading.Tasks;
+using WebDocMobile.Helpers;
 using WebDocMobile.Models;
-using WebDocMobile.Pages.Desktop;
 using WebDocMobile.Pages.Mobile;
 using WebDocMobile.Services;
 
 namespace WebDocMobile.PageModels
 {
-    // Inherit from ObservableObject for MVVM helpers.
     public partial class PINPageViewModel : ObservableObject
     {
-        // --- Properties ---
-        [ObservableProperty]
-        [NotifyPropertyChangedFor(nameof(CanDeleteDigit))]
-        private string pin = string.Empty;
-
-        public ObservableCollection<PinDigitViewModel> PinDigits { get; }
-
-        // --- Services ---
+        private readonly INavigation _navigationService;
+        private string currentPIN;
+        private int currentDigit;
         private readonly IAlertService _alertService;
-        private readonly ISettingsService _settingsService;
+        [ObservableProperty]
+        public bool gbLoader;
 
-        // --- Constructor ---
-        public PINPageViewModel(IAlertService alertService, ISettingsService settingsService)
+        public PINPageViewModel(INavigation navigation)
         {
-            _alertService = alertService;
-            _settingsService = settingsService;
-
-            // Initialize the collection that the UI will bind to.
-            PinDigits = new ObservableCollection<PinDigitViewModel>(
-                Enumerable.Range(0, 6).Select(_ => new PinDigitViewModel())
-            );
+            _navigationService = navigation;
+            _alertService = new AlertService();
+            InitialPINSet();
         }
 
-        // --- Computed Properties ---
-        public bool CanDeleteDigit => !string.IsNullOrEmpty(Pin);
-
-        // --- Commands ---
-        [RelayCommand]
-        private async Task AddDigit(string digit)
+        private async void PINComplete()
         {
-            if (Pin?.Length >= 6)
+            if (currentDigit == 6 && currentPIN.Length == 6)
             {
-                return;
+                GbLoader = true;
+                await Task.Delay(100);
+                App.UserDetails.PIN = currentPIN;
+                App.UserDetails.Save();
+                await _navigationService._PushAsyncWithCleanup(new MainMenuPageMobile());
             }
-
-            Pin += digit;
-            UpdatePinCircles();
-
-            if (Pin.Length == 6)
-            {
-                await CheckPinAsync();
-            }
-        }
-
-        [RelayCommand(CanExecute = nameof(CanDeleteDigit))]
-        private void DeleteDigit()
-        {
-            if (CanDeleteDigit)
-            {
-                Pin = Pin.Substring(0, Pin.Length - 1);
-                UpdatePinCircles();
-            }
-        }
-
-        private async Task CheckPinAsync()
-        {
-            // Use the injected service to get user info.
-            var userInfo = _settingsService.UserInfo;
-            if (userInfo is null)
-            {
-                await _alertService.ShowAlert("Error", "User session not found. Please log in again.");
-                await Shell.Current.GoToAsync($"//{nameof(LoginPageMobile)}");
-                return;
-            }
-
-            // Scenario 1: First time setting the PIN.
-            if (string.IsNullOrEmpty(userInfo.PIN))
-            {
-                var newUserInfo = userInfo with { PIN = this.Pin };
-
-                // Use the service to save the updated user info.
-                _settingsService.UserInfo = newUserInfo;
-
-                await _alertService.ShowAlert("Success", "PIN has been set!");
-                await GoToMainMenuAsync();
-            }
-            // Scenario 2: Verifying an existing PIN.
             else
             {
-                // On the initial PIN setup page, if a PIN already exists, we just proceed.
-                // A more robust implementation might ask for PIN confirmation.
-                await GoToMainMenuAsync();
+                InitialPINSet();
             }
         }
 
         [RelayCommand]
-        private async Task ConfigureLaterButtonPressed()
+        private void Digit1Pressed()
         {
-            await _alertService.ShowAlert("Warning", "We advise you to have a PIN for the protection of your data and information");
-            await GoToMainMenuAsync();
+            currentPIN += "1";
+            currentDigit++;
+            if (currentDigit == 6) { PINComplete(); }
         }
-
         [RelayCommand]
-        private async Task ConfigureBiometricsLaterButtonPressed()
+        private void Digit2Pressed()
         {
-            await _alertService.ShowAlert("Warning", "You should have the biometrics for more security unless it's not implemented :)");
-            await GoToMainMenuAsync();
+            currentPIN += "2";
+            currentDigit++;
+            if (currentDigit == 6) { PINComplete(); }
         }
-
         [RelayCommand]
-        private async Task ActivateBiometricsButtonPressed()
+        private void Digit3Pressed()
         {
-            await _alertService.ShowAlert("Error", "Functionality not implemented");
+            currentPIN += "3";
+            currentDigit++;
+            if (currentDigit == 6) { PINComplete(); }
         }
-
-        private Task GoToMainMenuAsync()
+        [RelayCommand]
+        private void Digit4Pressed()
         {
-            return Shell.Current.GoToAsync($"//{nameof(MainMenuPageMobile)}");
+            currentPIN += "4";
+            currentDigit++;
+            if (currentDigit == 6) { PINComplete(); }
         }
-
-        private void UpdatePinCircles()
+        [RelayCommand]
+        private void Digit5Pressed()
         {
-            for (int i = 0; i < PinDigits.Count; i++)
+            currentPIN += "5";
+            currentDigit++;
+            if (currentDigit == 6) { PINComplete(); }
+        }
+        [RelayCommand]
+        private void Digit6Pressed()
+        {
+            currentPIN += "6";
+            currentDigit++;
+            if (currentDigit == 6) { PINComplete(); }
+        }
+        [RelayCommand]
+        private void Digit7Pressed()
+        {
+            currentPIN += "7";
+            currentDigit++;
+            if (currentDigit == 6) { PINComplete(); }
+        }
+        [RelayCommand]
+        private void Digit8Pressed()
+        {
+            currentPIN += "8";
+            currentDigit++;
+            if (currentDigit == 6) { PINComplete(); }
+        }
+        [RelayCommand]
+        private void Digit9Pressed()
+        {
+            currentPIN += "9";
+            currentDigit++;
+            if (currentDigit == 6) { PINComplete(); }
+        }
+        [RelayCommand]
+        private void Digit0Pressed()
+        {
+            currentPIN += "0";
+            currentDigit++;
+            if (currentDigit == 6) { PINComplete(); }
+        }
+        [RelayCommand]
+        private void DeleteDigitPressed()
+        {
+            if (currentDigit > 0)
             {
-                // If the current index is less than the PIN length, the circle should be filled.
-                PinDigits[i].IsFilled = i < Pin.Length;
+                string newPIN = currentPIN.Substring(0, currentPIN.Length - 1);
+                currentPIN = newPIN;
+                currentDigit--;
             }
-            OnPropertyChanged(nameof(CanDeleteDigit)); // Manually trigger update for the command
+        }
+        [RelayCommand]
+        private async void ConfigureLaterButtonPressed()
+        {
+            GbLoader = true;
+            await Task.Delay(100);
+            await _navigationService._PushAsyncWithCleanup(new MainMenuPageMobile());
+            //_alertService.ShowAlert("Warning", "We advice you to have a PIN for the protection of your data and information");
+        }
+        [RelayCommand]
+
+        private void InitialPINSet()
+        {
+            currentDigit = 0;
+            currentPIN = string.Empty;
         }
     }
 }

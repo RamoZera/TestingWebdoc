@@ -1,28 +1,17 @@
-﻿﻿﻿﻿using CommunityToolkit.Mvvm.Input;
-using WebDocMobile.Pages.Mobile;
-using WebDocMobile.Services;
-using WebDocMobile.PageModels.StandardViewModels;
+﻿using WebDocMobile.Pages.Mobile;
 
 namespace WebDocMobile.PageModels.StandardViewModels
 {
     public partial class AppShellViewModel : BaseViewModel
     {
-        private readonly ISettingsService _settingsService;
-        private readonly IAppStateService _appStateService;
-
-        public AppShellViewModel(ISettingsService settingsService, IAppStateService appStateService)
+        //[ICommand]
+        async void SignOut()
         {
-            _settingsService = settingsService;
-            _appStateService = appStateService;
-        }
-
-        [RelayCommand]
-        async Task SignOut()
-        {
-            _settingsService.ClearAllData();
-            _appStateService.ClearState();
-
-            await Shell.Current.GoToAsync($"//{nameof(SelectEntityCodePageMobile)}");
+            if (Preferences.ContainsKey(nameof(App.UserDetails)))
+            {
+                Preferences.Remove(nameof(App.UserDetails));
+            }
+            await Shell.Current.GoToAsync($"//{nameof(LoginPageMobile)}");
         }
     }
 }

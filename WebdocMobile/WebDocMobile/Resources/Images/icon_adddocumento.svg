@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50">
+  <g id="icon-adddocumento" transform="translate(-193 -302)">
+    <g id="circle" transform="translate(193 308)" fill="#262930" stroke="rgba(255,255,255,0.15)" stroke-width="1">
+      <circle cx="22" cy="22" r="22" stroke="none"/>
+      <circle cx="22" cy="22" r="21.5" fill="none"/>
+    </g>
+    <path id="icon-documentos" d="M32.437,9.6H16.812A2.8,2.8,0,0,0,14,12.412V30.787A2.8,2.8,0,0,0,16.812,33.6H32.437a2.8,2.8,0,0,0,2.812-2.812V12.412A2.8,2.8,0,0,0,32.437,9.6ZM19.656,17.631h5.25a.937.937,0,1,1,0,1.875h-5.25a.937.937,0,0,1,0-1.875ZM29.781,27.662H19.469a.937.937,0,0,1,0-1.875H29.781a.937.937,0,0,1,0,1.875Zm0-4.156H19.469a.937.937,0,1,1,0-1.875H29.781a.937.937,0,0,1,0,1.875Z" transform="translate(190 308.4)" fill="#0074c8"/>
+    <g id="circl" transform="translate(219 302)" fill="#1f2125" stroke="rgba(255,255,255,0.15)" stroke-width="1">
+      <circle cx="12" cy="12" r="12" stroke="none"/>
+      <circle cx="12" cy="12" r="11.5" fill="none"/>
+    </g>
+    <path id="icon-novo" d="M181.756-776.756H175v-2.462h6.756V-786h2.462v6.782H191v2.462h-6.782V-770h-2.462Z" transform="translate(48 1092)" fill="#0074c8"/>
+  </g>
+</svg>

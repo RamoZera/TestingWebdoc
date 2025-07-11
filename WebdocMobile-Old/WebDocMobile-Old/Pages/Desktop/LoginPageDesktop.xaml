@@ -14,20 +14,20 @@
                      Spacing="10">
             <Entry x:Name="strUserName"
                    Placeholder="Nome Utilizador"
-                   Text="{Binding strUserName}"
+                   Text="{Binding StrUserName}"
                    IsTextPredictionEnabled="False"
                    IsSpellCheckEnabled="False" />
 
             <Entry x:Name="strPassword"
                    Placeholder="Palavra-Passe"
                    IsTextPredictionEnabled="False"
-                   Text="{Binding strPassword}"
+                   Text="{Binding StrPassword}"
                    IsSpellCheckEnabled="False"
                    IsPassword="True" />
 
             <Entry x:Name="strDomainName"
                    Placeholder="Domínio"
-                   Text="{Binding strDomainName}"
+                   Text="{Binding StrDomainName}"
                    IsReadOnly="True" />
         </StackLayout>
 

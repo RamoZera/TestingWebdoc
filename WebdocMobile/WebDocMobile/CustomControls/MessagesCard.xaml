@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<telerik:RadBorder
+    x:Class="WebDocMobile.CustomControls.MessagesCard"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:telerik="http://schemas.telerik.com/2022/xaml/maui"
+    x:Name="this"
+    Grid.ColumnSpan="3"
+    BackgroundColor="{StaticResource White}"
+    BorderColor="{StaticResource Gray100}"
+    BorderThickness="1"
+    CornerRadius="10"
+    IsVisible="{Binding Source={x:Reference this}, Path=Visible}"
+    WidthRequest="320">
+    <Grid ColumnDefinitions=".2*,*">
+        <Grid VerticalOptions="Center">
+            <RoundRectangle
+                BackgroundColor="{Binding Source={x:Reference this}, Path=BackgroundIconColor}"
+                CornerRadius="20"
+                HeightRequest="40"
+                VerticalOptions="Center"
+                WidthRequest="40" />
+            <Image
+                HeightRequest="24"
+                Source="{Binding Source={x:Reference this}, Path=IconSource}"
+                VerticalOptions="Center"
+                WidthRequest="24" />
+        </Grid>
+
+        <Grid
+            Grid.Column="1"
+            Padding="0,10,0,5"
+            RowDefinitions="*,*,*"
+            RowSpacing="10">
+            <Label
+                FontAttributes="Bold"
+                FontFamily="RobotoBold"
+                FontSize="14"
+                Text="{Binding Source={x:Reference this}, Path=PrimaryText}"
+                TextColor="#1F2125" />
+            <Label
+                Padding="15,0,0,0"
+                FontFamily="Roboto"
+                FontSize="12"
+                HorizontalTextAlignment="End"
+                Text="{Binding Source={x:Reference this}, Path=HourText}"
+                TextColor="#959595" />
+            <Label
+                Grid.Row="1"
+                Grid.ColumnSpan="3"
+                Margin="0,0,0,10"
+                FontFamily="Roboto"
+                FontSize="12"
+                Text="{Binding Source={x:Reference this}, Path=SecondaryText}"
+                TextColor="#1F2125" />
+
+
+
+        </Grid>
+
+
+
+    </Grid>
+</telerik:RadBorder>
